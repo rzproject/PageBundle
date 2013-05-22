@@ -1,0 +1,28 @@
+{
+    "name": "rz/page-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 Bundle SonataPageBundle Extension",
+    "keywords": ["symfony2", "Sonata Project", "RZProject"],
+    "homepage": "https://github.com/rzproject/PageBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mell zamora",
+            "email": "mell@rzproject.org",
+            "homepage": "http://www.rzproject.org"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "rmzamora/page-bundle": "2.2.*@dev"
+    },
+    "autoload": {
+        "psr-0": { "Rz\\PageBundle": "" }
+    },
+    "target-dir": "Rz/PageBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.2.x-dev"
+        }
+    }
+}
