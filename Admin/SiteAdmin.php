@@ -3,8 +3,6 @@
 namespace  Rz\PageBundle\Admin;
 
 use Sonata\PageBundle\Admin\SiteAdmin as BaseSiteAdmin;
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -70,6 +68,5 @@ class SiteAdmin extends BaseSiteAdmin
             ->add('name', null ,array('operator_options'=> array('expanded' => true)))
         ;
     }
-
 
 }

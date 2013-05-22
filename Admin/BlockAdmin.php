@@ -3,15 +3,8 @@
 namespace  Rz\PageBundle\Admin;
 
 use Sonata\PageBundle\Admin\BlockAdmin as BaseBlockAdmin;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
-
-use Sonata\CacheBundle\Cache\CacheManagerInterface;
-
-use Sonata\BlockBundle\Block\BlockServiceManagerInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Admin class for the Block model
@@ -32,7 +25,6 @@ class BlockAdmin extends BaseBlockAdmin
             ->add('enabled', null, array('footable'=>array('attr'=>array('data_hide'=>'phone'))))
         ;
     }
-
 
     /**
      * {@inheritdoc}

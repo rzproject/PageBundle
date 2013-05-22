@@ -4,10 +4,6 @@ namespace  Rz\PageBundle\Admin;
 
 use Sonata\PageBundle\Admin\SnapshotAdmin as BaseSnapshotAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
-
-use Sonata\CacheBundle\Cache\CacheManagerInterface;
 
 /**
  * Admin definition for the Snapshot class
@@ -16,7 +12,6 @@ use Sonata\CacheBundle\Cache\CacheManagerInterface;
  */
 class SnapshotAdmin extends BaseSnapshotAdmin
 {
-
 
     /**
      * {@inheritdoc}

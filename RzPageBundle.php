@@ -16,7 +16,6 @@ class RzPageBundle extends Bundle
         return 'SonataPageBundle';
     }
 
-
     /**
      * {@inheritDoc}
      */

@@ -1,19 +1,16 @@
 <?php
 
-
 namespace Rz\PageBundle\Block;
 
 use Sonata\PageBundle\Block\ChildrenPagesBlockService as BaseChildrenPagesBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\BlockBundle\Block\BaseBlockService;
 
 use Sonata\PageBundle\Exception\PageNotFoundException;
 use Sonata\PageBundle\Site\SiteSelectorInterface;

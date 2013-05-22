@@ -3,24 +3,14 @@
 namespace  Rz\PageBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
-use Sonata\PageBundle\Exception\PageNotFoundException;
-use Sonata\PageBundle\Exception\InternalErrorException;
 use Sonata\PageBundle\Model\PageInterface;
-use Sonata\PageBundle\Model\PageManagerInterface;
-use Sonata\PageBundle\Model\SiteManagerInterface;
 
 use Sonata\PageBundle\Admin\PageAdmin as BasePageAdmin;
-
-use Sonata\CacheBundle\Cache\CacheManagerInterface;
-
-use Knp\Menu\ItemInterface as MenuItemInterface;
 
 /**
  * Admin definition for the Page class
