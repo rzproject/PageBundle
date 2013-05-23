@@ -1,0 +1,75 @@
+/* sonata top bar style */
+.sonata-bc {
+ background-color: #EEE;
+}
+
+.sonata-page-top-bar label {
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
+/*
+#page-action-enabled-edit, #page-action-enabled-editable {
+    margin-top: -3px;
+    padding-right: 10px;
+}
+
+#page-action-save-position{
+    margin-top: -5px;
+}
+
+*/
+.cms-edit-mode .cms-block {
+    outline: 1px dotted #C62626;
+}
+
+.cms-edit-mode .cms-container {
+    border: none !important;
+    outline: 1px dotted #09F;
+    min-width: 150px;
+}
+
+.cms-edit-mode .cms-layout-role-container > .cms-layout-title {
+    background-color: rgba(0, 153, 255, 0.5);
+    width: auto;
+    padding-right: 10px;
+    border:1px dotted #09F;
+    *border:0;
+    -webkit-border-radius:0 0 4px 0;
+    -moz-border-radius:0 0 4px 0;
+    border-radius:0 0 4px 0;
+    cursor: pointer;
+}
+
+.cms-edit-mode .cms-layout-role-block > .cms-layout-title {
+    background-color: rgba(198, 38, 38, 0.5);
+    padding-right: 10px;
+    border:1px dotted #c62626;
+    *border:0;
+    border-bottom-color:#c62626;
+    -webkit-border-radius:0 0 4px 0;
+    -moz-border-radius:0 0 4px 0;
+    border-radius:0 0 4px 0;
+}
+
+.cms-edit-mode .cms-layout-title span {
+    font-size: 11px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.cms-edit-mode .cms-layout-role-block, .cms-edit-mode .cms-layout-role-container {
+    background-color: rgba(238, 238, 238, 0.5);
+}
+
+.cms-block-editable {
+    cursor: pointer;
+}
+
+.cms-block-editable-enabled:hover {
+    outline: 1px dotted #09F;
+}
+
+.cms-block-editable-enabled:focus {
+    outline: 1px dotted #C62626;
+}

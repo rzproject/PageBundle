@@ -1,0 +1,11 @@
+<div id="cms-block-{{ block.id }}"
+     class="cms-block{% if block.hasParent() %} cms-block-element{% endif %}{% if block.type == 'sonata.block.service.text'%} cms-block-editable{% endif %}{% block block_class %}{% endblock %}"
+    {% if sonata_page.isEditor and block.page is defined %}
+        data-id="{{ block.id }}"
+        data-name="{{ block.name }}"
+        data-role="{% block block_role %}block{% endblock %}"
+        data-page-id="{{ block.page.id }}"
+    {% endif %}
+    >
+    {% block block %}EMPTY CONTENT{% endblock %}
+</div>
