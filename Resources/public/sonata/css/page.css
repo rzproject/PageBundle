@@ -1,6 +1,6 @@
 /* sonata top bar style */
 .sonata-page-top-bar {
-    height: 45px;
+    height: 43px;
 }
 .sonata-page-top-bar label {
     color: #BFBFBF;
@@ -34,7 +34,7 @@
     display: inline-block;
     padding: 2px;
     font-size: 12pt;
-    color: #ffffff;
+    color: #9da0a4;
 }
 .cms-edit-mode .cms-layout-role-container > .cms-layout-title {
     display: block;

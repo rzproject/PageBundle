@@ -273,6 +273,7 @@ Sonata.Page = {
  	enableZone: function() {
         this.editMode = 'zone';
         jQuery('body').addClass('cms-edit-mode');
+        jQuery('.cms-container').sortable({handle: '.cms-layout-title'})
         jQuery('.cms-container').sortable('enable');
         jQuery('#page-action-save-position').show();
         this.buildLayers();
@@ -330,17 +331,18 @@ Sonata.Page = {
                 name    = block.attr('data-name') || 'missing data-name',
                 id      = block.attr('data-id') || 'missing data-id',
                 classes = [],
-                layer;
+                layer, title;
 
             classes.push('cms-layout-layer');
             classes.push('cms-layout-role-'+role);
+            classes.push('span12');
 
             // build layer
             layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
             layer.css({
                 position: "absolute",
-                left: 0,
-                top: 0,
+                left: '-1px',
+                top: '-1px',
                 width: '100%',
                 height: '100%',
                 zIndex: 2
@@ -354,7 +356,12 @@ Sonata.Page = {
                 top: 0,
                 zIndex: 2
             });
-            title.html('<span>'+name+'</span>');
+            if (role == 'block') {
+                title.html('<span class="cms-layout-title-name-'+role+'"><i class="icon-move icon-large"></i> '+name+'</span>');
+            } else {
+                title.html('<span class="cms-layout-title-name-'+role+'">'+name+'</span>');
+            }
+
             layer.append(title);
 
             block.prepend(layer);
