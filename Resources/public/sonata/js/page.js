@@ -383,8 +383,8 @@ Sonata.Page = {
             var layer = jQuery(this),
                 block = layer.parent();
 
-            layer.css('width', block.width());
-            layer.css('height', block.height());
+            layer.css('min-width', block.width());
+            layer.css('min-height', block.height());
         });
     },
 
