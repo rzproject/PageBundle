@@ -57,8 +57,7 @@
                         jQuery(document).ready(function() {
                             Sonata.Page.init({
                                 debug: true,
-                                rmz_editor_config_toolbar: {{ rz_ckeditor_config('toolbar', 'inline_editor') | json_encode | raw }},
-                                rmz_editor_config_remove: {{ rz_ckeditor_config('removePlugins', 'inline_editor') | json_encode | raw }},
+                                rmz_editor_config: {{ rz_ckeditor_config('', 'inline_editor') | json_encode | raw }},
                                 url: {
                                     block_save_position: '{{ path('admin_sonata_page_block_savePosition') }}',
                                     block_edit:          '{{ path('admin_sonata_page_block_edit', {'id': 'BLOCK_ID'}) }}'

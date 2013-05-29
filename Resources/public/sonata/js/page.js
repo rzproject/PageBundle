@@ -17,10 +17,8 @@ Sonata.Page = {
     /**
      * Inline editor configurations
      */
-    rmz_editor_config_toolbar: null,
-    rmz_editor_config_extraplugins: null,
+    rmz_editor_config: null,
     rmz_editor_config_rmzmedia: null,
-    rmz_editor_config_remove: null,
     rmz_editor_modified_blocks: [],
 
     /**
@@ -302,9 +300,7 @@ Sonata.Page = {
         this.log(this.rmz_editor_config_extraplugins);
         this.log(this.rmz_editor_config_rmzmedia);
         //setconfiguration
-        CKEDITOR.config.toolbar =  this.rmz_editor_config_toolbar;
-        CKEDITOR.config.removePlugins =  this.rmz_editor_config_remove;
-        CKEDITOR.config.extraPlugins = this.rmz_editor_config_extraplugins;
+        CKEDITOR.config =  this.rmz_editor_config;
         CKEDITOR.inlineAll();
     },
 
