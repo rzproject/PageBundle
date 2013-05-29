@@ -296,11 +296,12 @@ Sonata.Page = {
         jQuery('.cms-block-editable').addClass('cms-block-editable-enabled');
         jQuery('#page-action-save').show();
         //debug mode
-        this.log(this.rmz_editor_config_toolbar);
-        this.log(this.rmz_editor_config_extraplugins);
+        this.log(this.rmz_editor_config);
         this.log(this.rmz_editor_config_rmzmedia);
         //setconfiguration
-        CKEDITOR.config =  this.rmz_editor_config;
+        jQuery.each(this.rmz_editor_config, function(i, item) {
+            CKEDITOR.config[i] = item;
+        })
         CKEDITOR.inlineAll();
     },
 
