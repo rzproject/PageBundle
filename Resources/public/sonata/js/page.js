@@ -299,6 +299,7 @@ Sonata.Page = {
         this.log(this.rmz_editor_config);
         this.log(this.rmz_editor_config_rmzmedia);
         //setconfiguration
+        //CKEDITOR.config =  this.rmz_editor_config;
         jQuery.each(this.rmz_editor_config, function(i, item) {
             CKEDITOR.config[i] = item;
         })
