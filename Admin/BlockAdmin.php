@@ -11,17 +11,25 @@
 
 namespace  Rz\PageBundle\Admin;
 
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\PageBundle\Admin\BlockAdmin as BaseBlockAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 
-/**
- * Admin class for the Block model
- *
- * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
- */
 class BlockAdmin extends BaseBlockAdmin
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('savePosition', 'save-position');
+        $collection->add('saveTextBlock', 'save-text-block',
+                         array('_controller' => sprintf('%s:%s', $this->baseControllerName, 'saveTextBlock')));
+
+        $collection->add('view', $this->getRouterIdParameter().'/view');
+    }
 
     /**
      * {@inheritdoc}

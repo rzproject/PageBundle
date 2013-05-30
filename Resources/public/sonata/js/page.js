@@ -2,6 +2,8 @@
  * Manages the Page Editor
  *
  * @author Olivier Paradis <paradis.olivier@gmail.com>
+ *
+ * @modified mell m. zamora <mell@rzproject.org>
  */
 var Sonata = Sonata || {};
 
@@ -422,7 +424,7 @@ Sonata.Page = {
         this.log(data);
 
         // generate URL require FOSJsRoutingBundle
-        var url = Routing.generate('rmzamora_admin_block_post_block', null, true);
+        var url = Routing.generate('admin_sonata_page_block_saveTextBlock', null, true);
         this.log(url);
 
         //this.block();
