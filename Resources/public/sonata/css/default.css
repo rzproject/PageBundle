@@ -134,9 +134,7 @@ a.sonata-media-gallery-media-item-link:hover {
 }
 
 
-.btn-primary,
-.chzn-container .chzn-results .highlighted,
-.chzn-container-multi .chzn-choices .search-choice {
+.sonata-bc .btn-primary {
     background-color: hsl(221, 38%, 16%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#253454", endColorstr="#192338");
@@ -155,7 +153,7 @@ a.sonata-media-gallery-media-item-link:hover {
     font-family:"Ubuntu Condensed";
 }
 
-.btn-info {
+.sonata-bc .btn-info {
     background-color: hsl(222, 34%, 37%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4b6399", endColorstr="#3e517e");
@@ -174,7 +172,7 @@ a.sonata-media-gallery-media-item-link:hover {
     font-family:"Ubuntu Condensed";
 }
 
-.btn-success {
+.sonata-bc .btn-success {
     background-color: hsl(132, 42%, 27%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#337e42", endColorstr="#276133");
@@ -193,7 +191,7 @@ a.sonata-media-gallery-media-item-link:hover {
     font-family:"Ubuntu Condensed";
 }
 
-.btn-warning {
+.sonata-bc .btn-warning {
     background-color: hsl(42, 69%, 41%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d39f26", endColorstr="#b08520");
@@ -212,8 +210,7 @@ a.sonata-media-gallery-media-item-link:hover {
     font-family:"Ubuntu Condensed";
 }
 
-.btn-danger,
-.chzn-container .chzn-results .no-results{
+.sonata-bc .btn-danger{
     background-color: hsl(360, 76%, 25%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#941414", endColorstr="#700f0f");
@@ -232,7 +229,7 @@ a.sonata-media-gallery-media-item-link:hover {
     font-family:"Ubuntu Condensed";
 }
 
-.btn-inverse {
+.sonata-bc .btn-inverse {
     background-color: hsl(360, 0%, 2%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#191919", endColorstr="#050505");
@@ -251,7 +248,7 @@ a.sonata-media-gallery-media-item-link:hover {
     font-family:"Ubuntu Condensed";
 }
 
-.btn-rz {
+.sonata-bc .btn-rz {
     background-color: hsl(216, 100%, 30%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0049b7", endColorstr="#003d99");
@@ -270,7 +267,7 @@ a.sonata-media-gallery-media-item-link:hover {
     font-family:"Ubuntu Condensed";
 }
 
-.navbar-inner {
+.sonata-bc .navbar-inner {
     background-color: hsl(221, 38%, 16%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#253454", endColorstr="#192338");
@@ -288,25 +285,25 @@ a.sonata-media-gallery-media-item-link:hover {
     text-transform: uppercase;
     font-family:"Ubuntu Condensed";
 }
-.navbar .nav > li > a {
+.sonata-bc .navbar .nav > li > a {
     color: #c1dce7;
     text-shadow: none !important;
 }
-.navbar .nav > li:hover > a {
+.sonata-bc .navbar .nav > li:hover > a {
     color:#fff;
 }
-.navbar .nav .active > a, .navbar .nav .active > a:hover {
+.sonata-bc .navbar .nav .active > a, .navbar .nav .active > a:hover {
     background: #253454 !important;
     color: #fff;
 }
-.navbar .divider-vertical {
+.sonata-bc .navbar .divider-vertical {
     border-left-color:#253454;
     border-right-color:#192338;
 }
 
-.dropdown-menu li > a:hover, .dropdown-menu .active > a,
-.dropdown-menu .active > a:hover,
-.nav-list > .active > a, .nav-list > .active > a:hover {
+.sonata-bc .dropdown-menu li > a:hover, .dropdown-menu .active > a,
+.sonata-bc .dropdown-menu .active > a:hover,
+.sonata-bc .nav-list > .active > a, .nav-list > .active > a:hover {
     background-color: hsl(221, 38%, 16%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#253454", endColorstr="#192338");
@@ -324,10 +321,15 @@ a.sonata-media-gallery-media-item-link:hover {
 }
 
 /* element separation */
-.sepH_a {margin-bottom:5px}.sepH_b {margin-bottom:10px}.sepH_c {margin-bottom:20px}
-.sepV_a {margin-right:5px}.sepV_b {margin-right:10px}.sepV_c {margin-right:20px}
-.sepH_a_line {padding-bottom:6px;margin-bottom:18px;border-bottom:1px solid #dcdcdc}
-.sepH_no {margin-bottom:0}
+.sonata-bc .sepH_a {margin-bottom:5px}.sepH_b {margin-bottom:10px}.sepH_c {margin-bottom:20px}
+.sonata-bc .sepV_a {margin-right:5px}.sepV_b {margin-right:10px}.sepV_c {margin-right:20px}
+.sonata-bc .sepH_a_line {padding-bottom:6px;margin-bottom:18px;border-bottom:1px solid #dcdcdc}
+.sonata-bc .sepH_no {margin-bottom:0}
 
-.tac {text-align:center}
-.line_sep {border-bottom: 1px solid #dcdcdc;margin-bottom: 18px;padding-bottom: 5px}
+.sonata-bc .tac {text-align:center}
+.sonata-bc .line_sep {border-bottom: 1px solid #dcdcdc;margin-bottom: 18px;padding-bottom: 5px}
+
+.sonata-bc .cms-block .overlay{
+ display: none;
+ position: absolute;
+}
