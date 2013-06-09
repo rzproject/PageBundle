@@ -34,5 +34,6 @@ class RzPageExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('admin_orm.xml');
         $loader->load('block.xml');
+        $loader->load('listener.xml');
     }
 }

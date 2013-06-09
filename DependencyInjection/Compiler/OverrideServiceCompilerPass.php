@@ -36,5 +36,8 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition('sonata.page.block.children_pages');
         $definition->setClass($container->getParameter('rz_page.block.children_pages.class'));
 
+        $definition = $container->getDefinition('sonata.page.response_listener');
+        $definition->setClass($container->getParameter('rz_page.response_listener.class'));
+
     }
 }
