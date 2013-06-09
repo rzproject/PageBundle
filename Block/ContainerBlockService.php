@@ -18,6 +18,8 @@ use Sonata\BlockBundle\Model\BlockInterface;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Sonata\PageBundle\Model\SnapshotPageProxy;
+
 /**
  * Render children pages
  *
@@ -57,5 +59,18 @@ class ContainerBlockService extends BaseContainerBlockService
             'class'       => '',
             'template'    => 'SonataPageBundle:Block:block_container.html.twig',
         ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheKeys(BlockInterface $block)
+    {
+        return array(
+            'block_id'   => $block->getId(),
+            'page_id'    => $block->getPage()->getId(),
+            'manager'    => $block->getPage() instanceof SnapshotPageProxy ? 'snapshot' : 'page',
+            'updated_at' => $block->getUpdatedAt()->format('U'),
+        );
     }
 }
