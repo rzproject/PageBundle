@@ -10,8 +10,15 @@
             <link rel="stylesheet" href="{{ asset('bundles/rzpage/sonata/css/default.css') }}" type="text/css" media="all" />
             <link rel="stylesheet" href="{{ asset('bundles/rmzamorajquery/jquery-plugins/nivo-gallery/nivo-gallery.css') }}" type="text/css" media="all" />
             {% if sonata_page.isEditor or (app.security and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+                {# modal #}
+                <link href="{{ asset('bundles/rmzamorabootstrap/plugins/modal/css/modal.css') }}" type="text/css" media="all" rel="stylesheet"/>
                 {# gritter #}
                 <link href="{{ asset('bundles/rmzamorajquery/jquery-plugins/gritter/css/gritter.css') }}" type="text/css" media="all" rel="stylesheet"/>
+
+                {# icons #}
+                <link href="{{ asset('bundles/rzadmin/css/font-awesome/font-awesome.css') }}" type="text/css" media="all" rel="stylesheet"/>
+                <link href="{{ asset('bundles/rzadmin/css/pictonic/css/pictonic.css') }}" type="text/css" media="all" rel="stylesheet"/>
+                <link href="{{ asset('bundles/rzadmin/css/icomoon/icomoon.css') }}" type="text/css" media="all" rel="stylesheet"/>
             {% endif %}
         {% endblock %}
 
@@ -38,9 +45,15 @@
                 <script src="{{ asset('bundles/rzadmin/js/rz/gritter.js') }}" type="text/javascript"></script>
                 {# gritter #}
                 <script src="{{ asset('bundles/rmzamorajquery/jquery-plugins/gritter/js/gritter.js') }}"  type="text/javascript"></script>
+                {# modal #}
+                <script src="{{ asset('bundles/rmzamorabootstrap/plugins/modal/js/modalmanager.js') }}" type="text/javascript"></script>
+                <script src="{{ asset('bundles/rmzamorabootstrap/plugins/modal/js/modal.js') }}" type="text/javascript"></script>
                 {# FOS #}
                 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
                 <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+                {# sonata #}
+                <script src="{{ asset('bundles/rzadmin/js/sonata-base.js') }}" type="text/javascript"></script>
             {% endif %}
         {% endblock %}
     </head>

@@ -2,7 +2,7 @@
 
 namespace Rz\PageBundle\Controller;
 
-use Sonata\PageBundle\Controller\BlockAdminController as Controller;
+use Rz\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -99,4 +99,14 @@ class BlockAdminController extends Controller
             return $obj;
         }
     }
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createAction()
+    {
+        return $this->render('SonataPageBundle:BlockAdmin:create.html.twig', array(
+            'action' => 'create'
+        ));
+    }
+
 }

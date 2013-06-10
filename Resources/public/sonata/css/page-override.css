@@ -163,9 +163,9 @@
 
 }
 
-.cms-edit-mode .dropdown-menu {
-    z-index: 9999;
-}
+/*.cms-edit-mode .dropdown-menu {*/
+    /*z-index: 9999;*/
+/*}*/
 
 .cms-edit-mode .block-wrapper {
     padding: 10px;

@@ -371,7 +371,7 @@ Sonata.Page = {
             } else {
                 var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                     "<ul class='dropdown-menu'>"+
-                    "<li><a href='#'>Edit</a></li>"+
+                    "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
                     "<li><a href='#'>Delete</a></li>"+
                     "</ul></div>";
                 layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
@@ -780,7 +780,9 @@ Sonata.Page = {
 
                 jQuery('#'+id).html(html);
 
-//                jQuery('a:not([class*="admin-ajax-ignore-event"], [class*="admin-ajax-ignore-tabbable"]), a[class*="rz-admin-filter-reset-button"]', jQuery('#'+id).on('click', jQuery('#'+id));
+
+
+//                jQuery('a:not([class*="admin-ajax-ignore-event"], [class*="admin-ajax-ignore-tabbable"]), a[class*="rz-admin-filter-reset-button"]', jQuery('#'+id).on('click', jQuery('#'+id)));
 //                jQuery('form, a:not([class*="rz-admin-filter-reset-button"])', jQuery('#'+id).on('submit', jQuery('#'+id)));
 
                 var init_width = Math.round(jQuery(window).width() - (jQuery(window).width() * .2));
@@ -798,8 +800,8 @@ Sonata.Page = {
                 });
 
                 jQuery('#'+id).on('shown', function (event) {
-//                    Admin.add_filters(jQuery(this));
-//                    Admin.initElements(jQuery(this));
+                    Admin.add_filters(jQuery(this));
+                    Admin.initElements(jQuery(this));
                 });
 
             })
