@@ -138,7 +138,7 @@ Sonata.Page = {
         this.blocks = jQuery(this.blockSelector);
 
         this.blocks.mouseover(jQuery.proxy(this.handleBlockHover, this));
-        this.blocks.dblclick(jQuery.proxy(this.handleBlockClick, this));
+        //this.blocks.dblclick(jQuery.proxy(this.handleBlockClick, this));
     },
 
     /**
@@ -198,6 +198,17 @@ Sonata.Page = {
      * @param event
      */
     handleBlockClick: function(event) {
+        var target = event.currentTarget,
+            id = jQuery(target).attr('data-id');
+
+        //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
+        this.showPopup(this.initializeSettingsPopup(id),this.url.block_edit.replace(/BLOCK_ID/, id));
+
+        event.preventDefault();
+        event.stopPropagation();
+    },
+
+    handleBlockEdit: function(event) {
         var target = event.currentTarget,
             id = jQuery(target).attr('data-id');
 
@@ -282,6 +293,7 @@ Sonata.Page = {
         jQuery('#page-action-save-position').show();
         this.buildLayers();
         this.initializeShowZone();
+        jQuery('.cms-edit-link').on('click', jQuery.proxy(this.handleBlockEdit, this));
     },
 
     /**
@@ -345,49 +357,25 @@ Sonata.Page = {
 
             // build layer
             layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
-//            layer.css({
-//                position: "absolute",
-//                left: '-1px',
-//                top: '-1px',
-//                width: '100%',
-//                height: '100%',
-//                zIndex: 2
-//            });
 
-            // build layer title
-//            title = jQuery('<div class="cms-layout-title span12"></div>');
-//            title.css({
-//                position: "absolute",
-//                left: 0,
-//                top: 0,
-//                zIndex: 2
-//            });
             if (role == 'block') {
                 block.html(jQuery("<div class='row-wrapper row-fluid'></div>").append(jQuery("<div class='block-wrapper span12'></div>").append(block.html())));
 
                 var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                     "<ul class='dropdown-menu'>"+
-                        "<li><a href='#'>Action</a></li>"+
-                        "<li><a href='#'>Another action</a></li>"+
-                        "<li><a href='#'>Something else here</a></li>"+
-                        "<li class='divider'></li>"+
-                        "<li><a href='#'>Separated link</a></li>"+
+                        "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
+                        "<li><a href='#'>Delete</a></li>"+
                     "</ul></div>";
                 layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-danger"><i class="icon-move icon-large"></i></span>'+button);
 
             } else {
                 var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                     "<ul class='dropdown-menu'>"+
-                    "<li><a href='#'>Action</a></li>"+
-                    "<li><a href='#'>Another action</a></li>"+
-                    "<li><a href='#'>Something else here</a></li>"+
-                    "<li class='divider'></li>"+
-                    "<li><a href='#'>Separated link</a></li>"+
+                    "<li><a href='#'>Edit</a></li>"+
+                    "<li><a href='#'>Delete</a></li>"+
                     "</ul></div>";
                 layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
             }
-
-
 
             //layer.append(title);
 
