@@ -365,11 +365,25 @@ Sonata.Page = {
             if (role == 'block') {
                 block.html(jQuery("<div class='row-wrapper row-fluid'></div>").append(jQuery("<div class='block-wrapper span12'></div>").append(block.html())));
 
-                var button =  "<a class='btn btn-small btn-danger' data-toggle='popover' title='' data-content='And heres some amazing content. Its very engaging. right?' ><i class='micon-cog icon-large'></i></a>";
+                var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
+                    "<ul class='dropdown-menu'>"+
+                        "<li><a href='#'>Action</a></li>"+
+                        "<li><a href='#'>Another action</a></li>"+
+                        "<li><a href='#'>Something else here</a></li>"+
+                        "<li class='divider'></li>"+
+                        "<li><a href='#'>Separated link</a></li>"+
+                    "</ul></div>";
                 layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-danger"><i class="icon-move icon-large"></i></span>'+button);
 
             } else {
-                var button =  "<a class='btn btn-small btn-danger' data-toggle='popover' title='' data-content='And heres some amazing content. Its very engaging. right?' ><i class='micon-cog icon-large'></i></a>";
+                var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
+                    "<ul class='dropdown-menu'>"+
+                    "<li><a href='#'>Action</a></li>"+
+                    "<li><a href='#'>Another action</a></li>"+
+                    "<li><a href='#'>Something else here</a></li>"+
+                    "<li class='divider'></li>"+
+                    "<li><a href='#'>Separated link</a></li>"+
+                    "</ul></div>";
                 layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
             }
 
@@ -412,7 +426,7 @@ Sonata.Page = {
                 block = layer.parent();
 
             layer.css('min-width', block.width());
-            layer.css('min-height', block.height());
+            //layer.css('min-height', block.height());
         });
     },
 
