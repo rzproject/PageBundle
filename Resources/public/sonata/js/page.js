@@ -336,60 +336,58 @@ Sonata.Page = {
                 name    = block.attr('data-name') || 'missing data-name',
                 id      = block.attr('data-id') || 'missing data-id',
                 classes = [],
-                layer, title;
+                layer, title, container;
 
             classes.push('cms-layout-layer');
             classes.push('cms-layout-role-'+role);
+            classes.push('cms-layout-title');
             classes.push('span12');
 
             // build layer
             layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
-            layer.css({
-                position: "absolute",
-                left: '-1px',
-                top: '-1px',
-                width: '100%',
-                height: '100%',
-                zIndex: 2
-            });
+//            layer.css({
+//                position: "absolute",
+//                left: '-1px',
+//                top: '-1px',
+//                width: '100%',
+//                height: '100%',
+//                zIndex: 2
+//            });
 
             // build layer title
-            title = jQuery('<div class="cms-layout-title"></div>');
-            title.css({
-                position: "absolute",
-                left: 0,
-                top: 0,
-                zIndex: 2
-            });
+//            title = jQuery('<div class="cms-layout-title span12"></div>');
+//            title.css({
+//                position: "absolute",
+//                left: 0,
+//                top: 0,
+//                zIndex: 2
+//            });
             if (role == 'block') {
-                var button = "<div class='btn-group'>"+
-                "<button data-toggle='dropdown' class='btn btn-small dropdown-toggle'><i class='micon-cog icon-large'></i></button>"+
-                "<ul class='dropdown-menu'>"+
-                    "<li><a href='#'>Action</a></li>"+
-                    "<li><a href='#'>Another action</a></li>"+
-                "<li><a href='#'>Something else here</a></li>"+
-                "<li class='divider'></li>"+
-                    "<li><a href='#'>Separated link</a></li>"+
-                "</ul>"+
-                "</div>";
-                title.html('<span class="cms-layout-drag cms-layout-drag-'+role+' btn"><i class="icon-move icon-large"></i></span>'+button);
+                block.html(jQuery("<div class='row-wrapper row-fluid'></div>").append(jQuery("<div class='block-wrapper span12'></div>").append(block.html())));
+
+                var button =  "<a class='btn btn-small btn-danger' data-toggle='popover' title='' data-content='And heres some amazing content. Its very engaging. right?' ><i class='micon-cog icon-large'></i></a>";
+                layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-danger"><i class="icon-move icon-large"></i></span>'+button);
+
             } else {
-                var button = "<div class='btn-group'>"+
-                    "<button data-toggle='dropdown' class='btn btn-small dropdown-toggle'><i class='micon-cog icon-large'></i></button>"+
-                    "<ul class='dropdown-menu'>"+
-                    "<li><a href='#'>Action</a></li>"+
-                    "<li><a href='#'>Another action</a></li>"+
-                    "<li><a href='#'>Something else here</a></li>"+
-                    "<li class='divider'></li>"+
-                    "<li><a href='#'>Separated link</a></li>"+
-                    "</ul>"+
-                    "</div>";
-                title.html('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
+                var button =  "<a class='btn btn-small btn-danger' data-toggle='popover' title='' data-content='And heres some amazing content. Its very engaging. right?' ><i class='micon-cog icon-large'></i></a>";
+                layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
             }
 
-            layer.append(title);
+
+
+            //layer.append(title);
 
             block.prepend(layer);
+
+            if (role != 'container') {
+                 block.wrap("<div class='row-wrapper row-fluid'></div>").wrap("<div class='block-wrapper span12'></div>");
+            }
+
+            jQuery("a[data-toggle=popover]")
+                .popover()
+                .click(function(e) {
+                    e.preventDefault()
+                });
         });
     },
 
@@ -398,6 +396,11 @@ Sonata.Page = {
      */
     removeLayers: function() {
         jQuery('.cms-layout-layer').remove();
+        jQuery('.block-wrapper').unwrap();
+        jQuery.each( jQuery('.block-wrapper'), function( key, value ) {
+            var temp = jQuery(value).contents();
+            jQuery(value).replaceWith(temp);
+        });
     },
 
     /**
