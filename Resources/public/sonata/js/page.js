@@ -285,10 +285,24 @@ Sonata.Page = {
      * Enable zone
      */
  	enableZone: function() {
-        this.editMode = 'zone';
+        var that = this;
+        that.editMode = 'zone';
         jQuery('body').addClass('cms-edit-mode');
         //jQuery('.cms-container').sortable({handle: '.cms-layout-title'});
-        jQuery('.cms-container').sortable({handle: '.cms-layout-drag'});
+
+        jQuery('.cms-container').sortable(
+            {
+                handle: '.cms-layout-drag',
+                start: function( event, ui ) {
+                    that.unWrapBlock(jQuery(ui.item));
+                },
+                stop: function( event, ui ) {
+                    that.wrapBlock(ui.item);
+                }
+
+            }
+        );
+
         jQuery('.cms-container').sortable('enable');
         jQuery('#page-action-save-position').show();
         this.buildLayers();
@@ -342,13 +356,16 @@ Sonata.Page = {
      * Build block layers
      */
     buildLayers:function() {
-        this.blocks.each(function(index) {
+        var that = this;
+        that.blocks.each(function(index) {
             var block   = jQuery(this),
                 role    = block.attr('data-role') || 'block',
                 name    = block.attr('data-name') || 'missing data-name',
                 id      = block.attr('data-id') || 'missing data-id',
                 classes = [],
                 layer, title, container;
+
+
 
             classes.push('cms-layout-layer');
             classes.push('cms-layout-role-'+role);
@@ -359,14 +376,15 @@ Sonata.Page = {
             layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
 
             if (role == 'block') {
-                block.html(jQuery("<div class='row-wrapper row-fluid'></div>").append(jQuery("<div class='block-wrapper span12'></div>").append(block.html())));
+
+                block = that.manualWrapBlock(block);
 
                 var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                     "<ul class='dropdown-menu'>"+
                         "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
                         "<li><a href='#'>Delete</a></li>"+
                     "</ul></div>";
-                layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-danger"><i class="icon-move icon-large"></i></span>'+button);
+                layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-success"><i class="icon-move icon-large"></i></span>'+button);
 
             } else {
                 var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
@@ -382,15 +400,32 @@ Sonata.Page = {
             block.prepend(layer);
 
             if (role != 'container') {
-                 block.wrap("<div class='row-wrapper row-fluid'></div>").wrap("<div class='block-wrapper span12'></div>");
+                 block = that.wrapBlock(block);
             }
 
-            jQuery("a[data-toggle=popover]")
-                .popover()
-                .click(function(e) {
-                    e.preventDefault()
-                });
+//            jQuery('#cms-block-'+id).hover(function() {
+//                console.log('show');
+//                jQuery('.contenthover', this).show({'duration': 400 });
+//            }, function() {
+//                jQuery('.contenthover', this).hide({'duration': 400 });
+//                console.log('hide');
+//            });
+
         });
+    },
+
+    wrapBlock: function(block) {
+        return block.wrap("<div class='row-wrapper row-fluid'></div>").wrap("<div class='block-wrapper span12'></div>");
+    },
+
+    manualWrapBlock: function(block) {
+        return jQuery(block.html(jQuery("<div class='row-wrapper row-fluid'></div>").append(jQuery("<div class='block-wrapper span12'></div>").append(block.html()))));
+    },
+
+    unWrapBlock: function(block) {
+//        console.log(block.parent().parent());
+        jQuery(block.parent()).unwrap();
+        jQuery(block).unwrap();
     },
 
     /**

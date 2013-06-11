@@ -1,5 +1,5 @@
 <div id="cms-block-{{ block.id }}"
-     class="{% if block.type == 'sonata.page.block.container'%}{% if block.hasParent() %}span12{% else %}row-fluid{% endif %}{% else %} span12{% endif %} cms-block{% if block.hasParent() %} cms-block-element{% endif %}{% if block.type == 'sonata.block.service.text'%} cms-block-editable{% endif %}{% block block_class %}{% endblock %}"
+     class="{% if sonata_page.isEditor and block.page is defined %}rz-cms{% if block.type == 'sonata.page.block.container'%}{% if block.hasParent() %} span12{% else %} row-fluid{% endif %}{% else %} span12{% endif %} cms-block{% if block.hasParent() %} cms-block-element{% endif %}{% if block.type == 'sonata.block.service.text'%} cms-block-editable{% endif %}{% endif %}{% block block_class %}{% endblock %}"
     {% if sonata_page.isEditor and block.page is defined %}
         data-id="{{ block.id }}"
         data-name="{{ block.name }}"
