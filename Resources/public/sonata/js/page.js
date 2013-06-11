@@ -780,11 +780,6 @@ Sonata.Page = {
 
                 jQuery('#'+id).html(html);
 
-
-
-//                jQuery('a:not([class*="admin-ajax-ignore-event"], [class*="admin-ajax-ignore-tabbable"]), a[class*="rz-admin-filter-reset-button"]', jQuery('#'+id).on('click', jQuery('#'+id)));
-//                jQuery('form, a:not([class*="rz-admin-filter-reset-button"])', jQuery('#'+id).on('submit', jQuery('#'+id)));
-
                 var init_width = Math.round(jQuery(window).width() - (jQuery(window).width() * .2));
                 init_width = (init_width > 980) ? 980 :  init_width;
                 jQuery('#'+id).modal({'width': init_width });
