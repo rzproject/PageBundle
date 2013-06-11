@@ -365,8 +365,6 @@ Sonata.Page = {
                 classes = [],
                 layer, title, container;
 
-
-
             classes.push('cms-layout-layer');
             classes.push('cms-layout-role-'+role);
             classes.push('cms-layout-title');
@@ -402,14 +400,6 @@ Sonata.Page = {
             if (role != 'container') {
                  block = that.wrapBlock(block);
             }
-
-//            jQuery('#cms-block-'+id).hover(function() {
-//                console.log('show');
-//                jQuery('.contenthover', this).show({'duration': 400 });
-//            }, function() {
-//                jQuery('.contenthover', this).hide({'duration': 400 });
-//                console.log('hide');
-//            });
 
         });
     },
@@ -781,7 +771,7 @@ Sonata.Page = {
 
     initializeSettingsPopup: function(id) {
         var popupTempId = 'popup_settings_'+id;
-        var div = "<div class='modal hide fade' data-backdrop='static' id="+popupTempId+"  aria-hidden='false'></div>";
+        var div = "<div class='rz-cms modal hide fade' data-backdrop='static' id="+popupTempId+"  aria-hidden='false'></div>";
         jQuery(document.body).append(div);
         return popupTempId;
     },
