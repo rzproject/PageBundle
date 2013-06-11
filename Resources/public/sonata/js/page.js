@@ -379,7 +379,7 @@ Sonata.Page = {
 
                 block = that.manualWrapBlock(block);
 
-                var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
+                var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                     "<ul class='dropdown-menu'>"+
                         "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
                         "<li><a href='#'>Delete</a></li>"+
@@ -387,7 +387,7 @@ Sonata.Page = {
                 layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-success"><i class="icon-move icon-large"></i></span>'+button);
 
             } else {
-                var button =  "<div class='btn-group'><button class='btn btn-small btn-danger dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
+                var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='icon-cogs icon-large'></i></button>"+
                     "<ul class='dropdown-menu'>"+
                     "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
                     "<li><a href='#'>Delete</a></li>"+
