@@ -192,28 +192,28 @@ Sonata.Page = {
         this.refreshLayers();
     },
 
-    /**
-     * Handle a click on the block
-     *
-     * @param event
-     */
-    handleBlockClick: function(event) {
-        var target = event.currentTarget,
-            id = jQuery(target).attr('data-id');
-
-        //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
-        this.showPopup(this.initializeSettingsPopup(id),this.url.block_edit.replace(/BLOCK_ID/, id));
-
-        event.preventDefault();
-        event.stopPropagation();
-    },
+//    /**
+//     * Handle a click on the block
+//     *
+//     * @param event
+//     */
+//    handleBlockClick: function(event) {
+//        var target = event.currentTarget,
+//            id = jQuery(target).attr('data-id');
+//
+//        //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
+//        this.showPopup(this.initializeSettingsPopup(id),this.url.block_edit.replace(/BLOCK_ID/, id));
+//
+//        event.preventDefault();
+//        event.stopPropagation();
+//    },
 
     handleBlockEdit: function(event) {
         var target = event.currentTarget,
             id = jQuery(target).attr('data-id');
 
         //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
-        this.showPopup(this.initializeSettingsPopup(id),this.url.block_edit.replace(/BLOCK_ID/, id));
+        this.showPopup(this.initializeSettingsPopup(id), 'popup_settings_'+id,this.url.block_edit.replace(/BLOCK_ID/, id));
 
         event.preventDefault();
         event.stopPropagation();
@@ -770,10 +770,10 @@ Sonata.Page = {
     },
 
     initializeSettingsPopup: function(id) {
-        var popupTempId = 'popup_settings_'+id;
-        var div = "<div class='rz-cms modal hide fade' data-backdrop='static' id="+popupTempId+"  aria-hidden='false'></div>";
-        jQuery(document.body).append(div);
-        return popupTempId;
+        //var popupTempId = 'popup_settings_'+id;
+        return jQuery("<div class='rz-cms modal hide fade' data-backdrop='static' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
+        //jQuery(document.body).append(div);
+        //return popupTempId;
     },
 
     initializeShowZone: function() {
@@ -794,7 +794,11 @@ Sonata.Page = {
 
     },
 
-    showPopup: function(id, url) {
+    showPopup: function(modal, id, url) {
+
+        if (jQuery('#'+id).length <= 0) {
+            jQuery(modal).appendTo(document.body);
+        }
 
         // retrieve the form element from the related admin generator
         jQuery.ajax({
@@ -802,20 +806,25 @@ Sonata.Page = {
             dataType: 'html'
         })
             .done(function(html, textStatus, jqXHR) {
-
                 jQuery('#'+id).html(html);
 
+                var is_closed = false;
                 var init_width = Math.round(jQuery(window).width() - (jQuery(window).width() * .2));
                 init_width = (init_width > 980) ? 980 :  init_width;
                 jQuery('#'+id).modal({'width': init_width });
                 jQuery('#'+id).on('hidden', function (event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
                     if (jQuery(event.target).hasClass('admin-filter-ajax')) {
                         return false;
                     } else {
                         jQuery('a:not([class*="admin-ajax-ignore-event"], [class*="admin-ajax-ignore-tabbable"]), a[class*="rz-admin-filter-reset-button"]', jQuery(this)).off('click');
                         jQuery('form, a:not([class*="rz-admin-filter-reset-button"])', jQuery(this)).off('submit');
                         jQuery(this).empty();
-                        jQuery('#'+id).remove();
+                        jQuery(this).remove();
+                        return false;
                     }
                 });
 
@@ -823,7 +832,6 @@ Sonata.Page = {
                     Admin.add_filters(jQuery(this));
                     Admin.initElements(jQuery(this));
                 });
-
             })
             .fail(function(jqXHR, textStatus, errorThrown){
                 console.log('fail');
