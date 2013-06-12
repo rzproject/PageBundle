@@ -796,6 +796,8 @@ Sonata.Page = {
 
     showPopup: function(modal, id, url) {
 
+        var that = this;
+
         if (jQuery('#'+id).length <= 0) {
             jQuery(modal).appendTo(document.body);
         }
@@ -808,11 +810,19 @@ Sonata.Page = {
             .done(function(html, textStatus, jqXHR) {
                 jQuery('#'+id).html(html);
 
+                var dialog =   jQuery('#'+id);
+
+                jQuery('a:not([data-toggle="tab"],[data-toggle="pill"])',dialog).on('click', jQuery.Proxy(function(event){
+
+                }, dialog));
+
+                jQuery('form', dialog).on('submit', field_dialog_form_action_{{ id }});
+
                 var is_closed = false;
                 var init_width = Math.round(jQuery(window).width() - (jQuery(window).width() * .2));
                 init_width = (init_width > 980) ? 980 :  init_width;
-                jQuery('#'+id).modal({'width': init_width });
-                jQuery('#'+id).on('hidden', function (event) {
+                dialog.modal({'width': init_width });
+                dialog.on('hidden', function (event) {
 
                     event.preventDefault();
                     event.stopPropagation();
@@ -828,7 +838,7 @@ Sonata.Page = {
                     }
                 });
 
-                jQuery('#'+id).on('shown', function (event) {
+                dialog.on('shown', function (event) {
                     Admin.add_filters(jQuery(this));
                     Admin.initElements(jQuery(this));
                 });
@@ -839,5 +849,11 @@ Sonata.Page = {
             .always(function() {
                 console.log('always');
             });
+    },
+
+    processDialogLinks: function(id) {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log(event.target;
     }
 }
