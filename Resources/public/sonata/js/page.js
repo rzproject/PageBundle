@@ -796,6 +796,8 @@ Sonata.Page = {
 
     showPopup: function(modal, id, url) {
 
+        jQuery.blockUI({ message: Admin.loadingMessage(null)});
+
         var that = this;
 
         if (jQuery('#'+id).length <= 0) {
@@ -812,11 +814,16 @@ Sonata.Page = {
 
                 var dialog =   jQuery('#'+id);
 
-                jQuery('a:not([data-toggle="tab"],[data-toggle="pill"])',dialog).on('click', jQuery.Proxy(function(event){
-
+                jQuery('a:not([data-toggle="tab"],[data-toggle="pill"])',dialog).on('click', jQuery.proxy(function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
                 }, dialog));
 
-                jQuery('form', dialog).on('submit', field_dialog_form_action_{{ id }});
+                jQuery('form', dialog).on('submit', jQuery.proxy(function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    that.processDialogSubmit(event.target, dialog);
+                }, dialog));
 
                 var is_closed = false;
                 var init_width = Math.round(jQuery(window).width() - (jQuery(window).width() * .2));
@@ -851,9 +858,57 @@ Sonata.Page = {
             });
     },
 
-    processDialogLinks: function(id) {
-        event.preventDefault();
-        event.stopPropagation();
-        console.log(event.target;
+    processDialogSubmit: function(link, dialog) {
+
+        jQuery.blockUI({ message: Admin.loadingMessage(null)});
+
+        var form = jQuery(link);
+        if (form.is('FORM')) {
+            var url  = form.attr('action');
+            var type = form.attr('method');
+            var dataType = 'json';
+            var data = {_xml_http_request: true}
+        } else {
+            alert('unexpected element : @' + this.nodeName + '@');
+            return;
+        }
+        // the ajax post
+        jQuery(form).ajaxSubmit({
+            url: url,
+            type: type,
+            data: data,
+            dataType: dataType,
+            success: jQuery.proxy(function(data) {
+                if (data.result == 'ok') {
+                    dialog.modal('hide');
+                }
+            }, dialog)
+        });
+
+        return;
     }
+
+
+//
+//        if (this.nodeName == 'FORM') {
+//            var url  = linkObject.attr('action');
+//            var type = linkObject.attr('method');
+//            var dataType = 'json';
+//        } else if (linkObject.nodeName == 'A') {
+//            var url  = element.attr('href');
+//            var type = 'GET';
+//            var dataType = null;
+//        } else {
+//            alert('unexpected element : @' + this.nodeName + '@');
+//            return;
+//        }
+//
+//        if (linkObject.hasClass('sonata-ba-action')) {
+//            console.log('reserved action stop catch all events');
+//            return;
+//        }
+
+        //console.log(url);
+//        var data = {_xml_http_request: true}
+//        var form = jQuery(this);
 }
