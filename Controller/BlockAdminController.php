@@ -5,6 +5,8 @@ namespace Rz\PageBundle\Controller;
 use Rz\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Sonata\BlockBundle\Exception\BlockNotFoundException;
+use Sonata\BlockBundle\Model\BlockInterface;
 
 /**
  * Block Admin Controller
@@ -107,6 +109,27 @@ class BlockAdminController extends Controller
         return $this->render('SonataPageBundle:BlockAdmin:create.html.twig', array(
             'action' => 'create'
         ));
+    }
+
+    public function cmsBlockRenderAction($blockId = null)
+    {
+        if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
+            throw new AccessDeniedException();
+        }
+
+        $cmsManagerSelector = $this->get('sonata.page.cms_manager_selector');
+        $cmsManager = $cmsManagerSelector->retrieve();
+
+        $block = $cmsManager->getBlock($blockId);
+
+        if (!$block instanceof BlockInterface) {
+            throw new BlockNotFoundException(sprintf('Unable to find block identifier "%s".', $blockId));
+        }
+
+        $context = $this->get('sonata.block.context_manager')->get($block);
+        $response = $this->get('sonata.block.renderer')->render($context);
+
+        return $response;
     }
 
 }

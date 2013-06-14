@@ -771,7 +771,7 @@ Sonata.Page = {
 
     initializeSettingsPopup: function(id) {
         //var popupTempId = 'popup_settings_'+id;
-        return jQuery("<div class='rz-cms modal hide fade' data-backdrop='static' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
+        return jQuery("<div class='rz-cms modal hide fade' data-backdrop='static' data-id='"+id+"' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
         //jQuery(document.body).append(div);
         //return popupTempId;
     },
@@ -862,6 +862,10 @@ Sonata.Page = {
 
         jQuery.blockUI({ message: Admin.loadingMessage(null)});
 
+        var params = {'id': dialog.attr('data-id'), 'dialog': dialog};
+
+        console.log(params);
+
         var form = jQuery(link);
         if (form.is('FORM')) {
             var url  = form.attr('action');
@@ -880,9 +884,12 @@ Sonata.Page = {
             dataType: dataType,
             success: jQuery.proxy(function(data) {
                 if (data.result == 'ok') {
-                    dialog.modal('hide');
+                    console.log('here');
+                    var url = Routing.generate('admin_sonata_page_block_cmsBlockRender', {'blockId': params.id}, true);
+                    console.log(url);
+                    params.dialog.modal('hide');
                 }
-            }, dialog)
+            }, params)
         });
 
         return;
