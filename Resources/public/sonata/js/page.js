@@ -357,51 +357,54 @@ Sonata.Page = {
      */
     buildLayers:function() {
         var that = this;
-        that.blocks.each(function(index) {
-            var block   = jQuery(this),
-                role    = block.attr('data-role') || 'block',
-                name    = block.attr('data-name') || 'missing data-name',
-                id      = block.attr('data-id') || 'missing data-id',
-                classes = [],
-                layer, title, container;
+        that.blocks.each(jQuery.proxy(function(index, obj) {
+              that.buildLayer(obj);
+        }, that));
+    },
 
-            classes.push('cms-layout-layer');
-            classes.push('cms-layout-role-'+role);
-            classes.push('cms-layout-title');
-            classes.push('span12');
+    buildLayer: function(currentBlock) {
+        var block   = jQuery(currentBlock),
+            role    = block.attr('data-role') || 'block',
+            name    = block.attr('data-name') || 'missing data-name',
+            id      = block.attr('data-id') || 'missing data-id',
+            classes = [],
+            layer, title, container;
 
-            // build layer
-            layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
+        classes.push('cms-layout-layer');
+        classes.push('cms-layout-role-'+role);
+        classes.push('cms-layout-title');
+        classes.push('span12');
 
-            if (role == 'block') {
+        // build layer
+        layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
 
-                block = that.manualWrapBlock(block);
+        if (role == 'block') {
 
-                var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
-                    "<ul class='dropdown-menu'>"+
-                        "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
-                        "<li><a href='#'>Delete</a></li>"+
-                    "</ul></div>";
-                layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-success"><i class="icon-move icon-large"></i></span>'+button);
+            block = this.manualWrapBlock(block);
 
-            } else {
-                var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='icon-cogs icon-large'></i></button>"+
-                    "<ul class='dropdown-menu'>"+
-                    "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
-                    "<li><a href='#'>Delete</a></li>"+
-                    "</ul></div>";
-                layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
-            }
+            var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
+                "<ul class='dropdown-menu'>"+
+                "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
+                "<li><a href='#'>Delete</a></li>"+
+                "</ul></div>";
+            layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-success"><i class="icon-move icon-large"></i></span>'+button);
 
-            //layer.append(title);
+        } else {
+            var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='icon-cogs icon-large'></i></button>"+
+                "<ul class='dropdown-menu'>"+
+                "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
+                "<li><a href='#'>Delete</a></li>"+
+                "</ul></div>";
+            layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
+        }
 
-            block.prepend(layer);
+        //layer.append(title);
 
-            if (role != 'container') {
-                 block = that.wrapBlock(block);
-            }
+        block.prepend(layer);
 
-        });
+        if (role != 'container') {
+            block = this.wrapBlock(block);
+        }
     },
 
     wrapBlock: function(block) {
@@ -862,7 +865,8 @@ Sonata.Page = {
 
         jQuery.blockUI({ message: Admin.loadingMessage(null)});
 
-        var params = {'id': dialog.attr('data-id'), 'dialog': dialog};
+        var that = this;
+        var params = {'id': dialog.attr('data-id'), 'dialog': dialog, 'that': that };
 
         console.log(params);
 
@@ -884,15 +888,36 @@ Sonata.Page = {
             dataType: dataType,
             success: jQuery.proxy(function(data) {
                 if (data.result == 'ok') {
-                    console.log('here');
-                    var url = Routing.generate('admin_sonata_page_block_cmsBlockRender', {'blockId': params.id}, true);
-                    console.log(url);
+                    params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
                     params.dialog.modal('hide');
                 }
             }, params)
         });
 
         return;
+    },
+
+    renderBlock: function(params) {
+        jQuery.blockUI({ message: Admin.loadingMessage(null)});
+        
+        var that = this;
+        var url = Routing.generate('admin_sonata_page_block_cmsBlockRender', {'blockId': params.id}, true);
+        // retrieve the form element from the related admin generator
+        jQuery.ajax({
+            url: url,
+            dataType: 'html'
+        })
+            .done(jQuery.proxy(function(html, textStatus, jqXHR) {
+                var block = jQuery('.block-wrapper', jQuery('#cms-block-'+params.id));
+                block.html(jQuery(html).html());
+            }, params))
+            .fail(function(jqXHR, textStatus, errorThrown){
+                console.log('fail');
+            })
+            .always(function() {
+                console.log('always');
+            });
+
     }
 
 
