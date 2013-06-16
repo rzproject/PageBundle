@@ -100,6 +100,8 @@ Sonata.Page = {
         block_edit: null
     },
 
+    htmlCopy: null,
+
     /**
      * Initialize Page editor mode
      */
@@ -891,8 +893,8 @@ Sonata.Page = {
             dataType: dataType,
             success: jQuery.proxy(function(data) {
                 if (data.result == 'ok') {
-                    location.reload();
-                    //params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
+                    //location.reload();
+                    params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
                     params.dialog.modal('hide');
                 }
             }, params)
@@ -912,10 +914,16 @@ Sonata.Page = {
             dataType: 'html'
         })
             .done(jQuery.proxy(function(html, textStatus, jqXHR) {
-                //location.reload();
-                var content = jQuery(html).wrap('<div id="temp-container-'+params.id+'">');
-                params.that.disableZone();
-                jQuery('#cms-block-'+params.id).replaceWith(content.html()).delay(3000);
+                params.that.togglePreviewMode();
+                jQuery('#cms-block-'+params.id).replaceWith(html);
+                params.that.initInterface();
+                params.that.initBlocks();
+                params.that.initContainers();
+                params.that.initBlockData();
+
+                params.that.toggleEditMode();
+
+                //console.log(temp);
             }, params))
             .fail(function(jqXHR, textStatus, errorThrown){
                 console.log('fail');
