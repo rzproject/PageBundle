@@ -111,7 +111,7 @@ class BlockAdminController extends Controller
         ));
     }
 
-    public function cmsBlockRenderAction($blockId = null)
+    public function cmsBlockRenderAction($pageId = null,$blockId = null)
     {
         if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
             throw new AccessDeniedException();
@@ -120,13 +120,14 @@ class BlockAdminController extends Controller
         $cmsManagerSelector = $this->get('sonata.page.cms_manager_selector');
         $cmsManager = $cmsManagerSelector->retrieve();
 
+        $page  = $cmsManager->getPageById($pageId);
         $block = $cmsManager->getBlock($blockId);
 
         if (!$block instanceof BlockInterface) {
             throw new BlockNotFoundException(sprintf('Unable to find block identifier "%s".', $blockId));
         }
-
         $context = $this->get('sonata.block.context_manager')->get($block);
+
         $response = $this->get('sonata.block.renderer')->render($context);
 
         return $response;

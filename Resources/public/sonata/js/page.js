@@ -305,7 +305,7 @@ Sonata.Page = {
 
         jQuery('.cms-container').sortable('enable');
         jQuery('#page-action-save-position').show();
-        this.buildLayers();
+        this.buildLayers(this.blocks);
         this.initializeShowZone();
         jQuery('.cms-edit-link').on('click', jQuery.proxy(this.handleBlockEdit, this));
     },
@@ -355,9 +355,9 @@ Sonata.Page = {
     /**
      * Build block layers
      */
-    buildLayers:function() {
+    buildLayers:function(blocks) {
         var that = this;
-        that.blocks.each(jQuery.proxy(function(index, obj) {
+        blocks.each(jQuery.proxy(function(index, obj) {
               that.buildLayer(obj);
         }, that));
     },
@@ -880,6 +880,9 @@ Sonata.Page = {
             alert('unexpected element : @' + this.nodeName + '@');
             return;
         }
+
+        that.CKupdate();
+
         // the ajax post
         jQuery(form).ajaxSubmit({
             url: url,
@@ -888,7 +891,8 @@ Sonata.Page = {
             dataType: dataType,
             success: jQuery.proxy(function(data) {
                 if (data.result == 'ok') {
-                    params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
+                    location.reload();
+                    //params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
                     params.dialog.modal('hide');
                 }
             }, params)
@@ -899,17 +903,19 @@ Sonata.Page = {
 
     renderBlock: function(params) {
         jQuery.blockUI({ message: Admin.loadingMessage(null)});
-        
         var that = this;
-        var url = Routing.generate('admin_sonata_page_block_cmsBlockRender', {'blockId': params.id}, true);
+        pageId = jQuery(root).attr('data-page-id');
+        var url = Routing.generate('admin_sonata_page_block_cmsBlockRender', {'pageId':pageId,'blockId': params.id}, true);
         // retrieve the form element from the related admin generator
         jQuery.ajax({
             url: url,
             dataType: 'html'
         })
             .done(jQuery.proxy(function(html, textStatus, jqXHR) {
-                var block = jQuery('.block-wrapper', jQuery('#cms-block-'+params.id));
-                block.html(jQuery(html).html());
+                //location.reload();
+                var content = jQuery(html).wrap('<div id="temp-container-'+params.id+'">');
+                params.that.disableZone();
+                jQuery('#cms-block-'+params.id).replaceWith(content.html()).delay(3000);
             }, params))
             .fail(function(jqXHR, textStatus, errorThrown){
                 console.log('fail');
@@ -917,30 +923,10 @@ Sonata.Page = {
             .always(function() {
                 console.log('always');
             });
+    },
 
+    CKupdate: function(){
+        for ( instance in CKEDITOR.instances )
+            CKEDITOR.instances[instance].updateElement();
     }
-
-
-//
-//        if (this.nodeName == 'FORM') {
-//            var url  = linkObject.attr('action');
-//            var type = linkObject.attr('method');
-//            var dataType = 'json';
-//        } else if (linkObject.nodeName == 'A') {
-//            var url  = element.attr('href');
-//            var type = 'GET';
-//            var dataType = null;
-//        } else {
-//            alert('unexpected element : @' + this.nodeName + '@');
-//            return;
-//        }
-//
-//        if (linkObject.hasClass('sonata-ba-action')) {
-//            console.log('reserved action stop catch all events');
-//            return;
-//        }
-
-        //console.log(url);
-//        var data = {_xml_http_request: true}
-//        var form = jQuery(this);
 }
