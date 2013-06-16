@@ -57,10 +57,15 @@ class ChildrenPagesBlockService extends BaseChildrenPagesBlockService
         } elseif ($settings['pageId']) {
             $page = $settings['pageId'];
         } else {
-            try {
-                $page = $cmsManager->getPage($this->siteSelector->retrieve(), '/');
-            } catch (PageNotFoundException $e) {
-                $page = false;
+            if ($this->siteSelector->retrieve()) {
+                try {
+                    $page = $cmsManager->getPage($this->siteSelector->retrieve(), '/');
+                } catch (PageNotFoundException $e) {
+                    $page = false;
+                }
+            } else {
+                $block = $blockContext->getBlock();
+                $page = $block->getPage();
             }
         }
 

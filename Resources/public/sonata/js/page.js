@@ -88,6 +88,8 @@ Sonata.Page = {
 
     editMode: 'preview',
 
+    settingsPopup: null,
+
     /**
      * URLs to use when performing ajax operations
      *
@@ -136,7 +138,7 @@ Sonata.Page = {
         this.blocks = jQuery(this.blockSelector);
 
         this.blocks.mouseover(jQuery.proxy(this.handleBlockHover, this));
-        this.blocks.dblclick(jQuery.proxy(this.handleBlockClick, this));
+        //this.blocks.dblclick(jQuery.proxy(this.handleBlockClick, this));
     },
 
     /**
@@ -154,7 +156,7 @@ Sonata.Page = {
             dropOnEmpty:          true,
             forcePlaceholderSize: this.dropPlaceHolderSize,
             opacity:              1,
-            cursor:               'move',
+            //cursor:               'move',
             start:                jQuery.proxy(this.startContainerSort, this),
             stop:                 jQuery.proxy(this.stopContainerSort, this)
         }).sortable('disable');
@@ -190,16 +192,28 @@ Sonata.Page = {
         this.refreshLayers();
     },
 
-    /**
-     * Handle a click on the block
-     *
-     * @param event
-     */
-    handleBlockClick: function(event) {
+//    /**
+//     * Handle a click on the block
+//     *
+//     * @param event
+//     */
+//    handleBlockClick: function(event) {
+//        var target = event.currentTarget,
+//            id = jQuery(target).attr('data-id');
+//
+//        //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
+//        this.showPopup(this.initializeSettingsPopup(id),this.url.block_edit.replace(/BLOCK_ID/, id));
+//
+//        event.preventDefault();
+//        event.stopPropagation();
+//    },
+
+    handleBlockEdit: function(event) {
         var target = event.currentTarget,
             id = jQuery(target).attr('data-id');
 
-        window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
+        //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
+        this.showPopup(this.initializeSettingsPopup(id), 'popup_settings_'+id,this.url.block_edit.replace(/BLOCK_ID/, id));
 
         event.preventDefault();
         event.stopPropagation();
@@ -271,12 +285,29 @@ Sonata.Page = {
      * Enable zone
      */
  	enableZone: function() {
-        this.editMode = 'zone';
+        var that = this;
+        that.editMode = 'zone';
         jQuery('body').addClass('cms-edit-mode');
-        jQuery('.cms-container').sortable({handle: '.cms-layout-title'})
+        //jQuery('.cms-container').sortable({handle: '.cms-layout-title'});
+
+        jQuery('.cms-container').sortable(
+            {
+                handle: '.cms-layout-drag',
+                start: function( event, ui ) {
+                    that.unWrapBlock(jQuery(ui.item));
+                },
+                stop: function( event, ui ) {
+                    that.wrapBlock(ui.item);
+                }
+
+            }
+        );
+
         jQuery('.cms-container').sortable('enable');
         jQuery('#page-action-save-position').show();
-        this.buildLayers();
+        this.buildLayers(this.blocks);
+        this.initializeShowZone();
+        jQuery('.cms-edit-link').on('click', jQuery.proxy(this.handleBlockEdit, this));
     },
 
     /**
@@ -324,48 +355,70 @@ Sonata.Page = {
     /**
      * Build block layers
      */
-    buildLayers:function() {
-        this.blocks.each(function(index) {
-            var block   = jQuery(this),
-                role    = block.attr('data-role') || 'block',
-                name    = block.attr('data-name') || 'missing data-name',
-                id      = block.attr('data-id') || 'missing data-id',
-                classes = [],
-                layer, title;
+    buildLayers:function(blocks) {
+        var that = this;
+        blocks.each(jQuery.proxy(function(index, obj) {
+              that.buildLayer(obj);
+        }, that));
+    },
 
-            classes.push('cms-layout-layer');
-            classes.push('cms-layout-role-'+role);
-            classes.push('span12');
+    buildLayer: function(currentBlock) {
+        var block   = jQuery(currentBlock),
+            role    = block.attr('data-role') || 'block',
+            name    = block.attr('data-name') || 'missing data-name',
+            id      = block.attr('data-id') || 'missing data-id',
+            classes = [],
+            layer, title, container;
 
-            // build layer
-            layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
-            layer.css({
-                position: "absolute",
-                left: '-1px',
-                top: '-1px',
-                width: '100%',
-                height: '100%',
-                zIndex: 2
-            });
+        classes.push('cms-layout-layer');
+        classes.push('cms-layout-role-'+role);
+        classes.push('cms-layout-title');
+        classes.push('span12');
 
-            // build layer title
-            title = jQuery('<div class="cms-layout-title"></div>');
-            title.css({
-                position: "absolute",
-                left: 0,
-                top: 0,
-                zIndex: 2
-            });
-            if (role == 'block') {
-                title.html('<span class="cms-layout-title-name-'+role+'"><i class="icon-move icon-large"></i> '+name+'</span>');
-            } else {
-                title.html('<span class="cms-layout-title-name-'+role+'">'+name+'</span>');
-            }
+        // build layer
+        layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
 
-            layer.append(title);
+        if (role == 'block') {
 
-            block.prepend(layer);
-        });
+            block = this.manualWrapBlock(block);
+
+            var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
+                "<ul class='dropdown-menu'>"+
+                "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
+                "<li><a href='#'>Delete</a></li>"+
+                "</ul></div>";
+            layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-success"><i class="icon-move icon-large"></i></span>'+button);
+
+        } else {
+            var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='icon-cogs icon-large'></i></button>"+
+                "<ul class='dropdown-menu'>"+
+                "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
+                "<li><a href='#'>Delete</a></li>"+
+                "</ul></div>";
+            layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
+        }
+
+        //layer.append(title);
+
+        block.prepend(layer);
+
+        if (role != 'container') {
+            block = this.wrapBlock(block);
+        }
+    },
+
+    wrapBlock: function(block) {
+        return block.wrap("<div class='row-wrapper row-fluid'></div>").wrap("<div class='block-wrapper span12'></div>");
+    },
+
+    manualWrapBlock: function(block) {
+        return jQuery(block.html(jQuery("<div class='row-wrapper row-fluid'></div>").append(jQuery("<div class='block-wrapper span12'></div>").append(block.html()))));
+    },
+
+    unWrapBlock: function(block) {
+//        console.log(block.parent().parent());
+        jQuery(block.parent()).unwrap();
+        jQuery(block).unwrap();
     },
 
     /**
@@ -373,6 +426,11 @@ Sonata.Page = {
      */
     removeLayers: function() {
         jQuery('.cms-layout-layer').remove();
+        jQuery('.block-wrapper').unwrap();
+        jQuery.each( jQuery('.block-wrapper'), function( key, value ) {
+            var temp = jQuery(value).contents();
+            jQuery(value).replaceWith(temp);
+        });
     },
 
     /**
@@ -384,7 +442,7 @@ Sonata.Page = {
                 block = layer.parent();
 
             layer.css('min-width', block.width());
-            layer.css('min-height', block.height());
+            //layer.css('min-height', block.height());
         });
     },
 
@@ -690,7 +748,7 @@ Sonata.Page = {
                     title:	title,
                     text:	message,
                     sticky: isSticky,
-                    time: 8000,
+                    time: 8000
         });
     },
 
@@ -712,5 +770,163 @@ Sonata.Page = {
         } catch(e) {
 
         }
+    },
+
+    initializeSettingsPopup: function(id) {
+        //var popupTempId = 'popup_settings_'+id;
+        return jQuery("<div class='rz-cms modal hide fade' data-backdrop='static' data-id='"+id+"' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
+        //jQuery(document.body).append(div);
+        //return popupTempId;
+    },
+
+    initializeShowZone: function() {
+        jQuery('.cms-block').hoverIntent({
+            over: function() {
+                jQuery(this).find('.overlay').stop(true, true).fadeIn(330);
+                jQuery(this).find('.plugin-stats').stop(true, true).animate({bottom: 0}, 330, 'easeOutQuad');
+            },
+
+            out: function() {
+                jQuery(this).find('.overlay').stop(true, true).fadeOut(300);
+                jQuery(this).find('.plugin-stats').stop(true, true).animate({bottom: -33}, 300, 'easeOutQuad');
+            },
+
+            interval: 0,
+            timeout: 0
+        });
+
+    },
+
+    showPopup: function(modal, id, url) {
+
+        jQuery.blockUI({ message: Admin.loadingMessage(null)});
+
+        var that = this;
+
+        if (jQuery('#'+id).length <= 0) {
+            jQuery(modal).appendTo(document.body);
+        }
+
+        // retrieve the form element from the related admin generator
+        jQuery.ajax({
+            url: url,
+            dataType: 'html'
+        })
+            .done(function(html, textStatus, jqXHR) {
+                jQuery('#'+id).html(html);
+
+                var dialog =   jQuery('#'+id);
+
+                jQuery('a:not([data-toggle="tab"],[data-toggle="pill"])',dialog).on('click', jQuery.proxy(function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                }, dialog));
+
+                jQuery('form', dialog).on('submit', jQuery.proxy(function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    that.processDialogSubmit(event.target, dialog);
+                }, dialog));
+
+                var is_closed = false;
+                var init_width = Math.round(jQuery(window).width() - (jQuery(window).width() * .2));
+                init_width = (init_width > 980) ? 980 :  init_width;
+                dialog.modal({'width': init_width });
+                dialog.on('hidden', function (event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    if (jQuery(event.target).hasClass('admin-filter-ajax')) {
+                        return false;
+                    } else {
+                        jQuery('a:not([class*="admin-ajax-ignore-event"], [class*="admin-ajax-ignore-tabbable"]), a[class*="rz-admin-filter-reset-button"]', jQuery(this)).off('click');
+                        jQuery('form, a:not([class*="rz-admin-filter-reset-button"])', jQuery(this)).off('submit');
+                        jQuery(this).empty();
+                        jQuery(this).remove();
+                        return false;
+                    }
+                });
+
+                dialog.on('shown', function (event) {
+                    Admin.add_filters(jQuery(this));
+                    Admin.initElements(jQuery(this));
+                });
+            })
+            .fail(function(jqXHR, textStatus, errorThrown){
+                console.log('fail');
+            })
+            .always(function() {
+                console.log('always');
+            });
+    },
+
+    processDialogSubmit: function(link, dialog) {
+
+        jQuery.blockUI({ message: Admin.loadingMessage(null)});
+
+        var that = this;
+        var params = {'id': dialog.attr('data-id'), 'dialog': dialog, 'that': that };
+
+        console.log(params);
+
+        var form = jQuery(link);
+        if (form.is('FORM')) {
+            var url  = form.attr('action');
+            var type = form.attr('method');
+            var dataType = 'json';
+            var data = {_xml_http_request: true}
+        } else {
+            alert('unexpected element : @' + this.nodeName + '@');
+            return;
+        }
+
+        that.CKupdate();
+
+        // the ajax post
+        jQuery(form).ajaxSubmit({
+            url: url,
+            type: type,
+            data: data,
+            dataType: dataType,
+            success: jQuery.proxy(function(data) {
+                if (data.result == 'ok') {
+                    location.reload();
+                    //params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
+                    params.dialog.modal('hide');
+                }
+            }, params)
+        });
+
+        return;
+    },
+
+    renderBlock: function(params) {
+        jQuery.blockUI({ message: Admin.loadingMessage(null)});
+        var that = this;
+        pageId = jQuery(root).attr('data-page-id');
+        var url = Routing.generate('admin_sonata_page_block_cmsBlockRender', {'pageId':pageId,'blockId': params.id}, true);
+        // retrieve the form element from the related admin generator
+        jQuery.ajax({
+            url: url,
+            dataType: 'html'
+        })
+            .done(jQuery.proxy(function(html, textStatus, jqXHR) {
+                //location.reload();
+                var content = jQuery(html).wrap('<div id="temp-container-'+params.id+'">');
+                params.that.disableZone();
+                jQuery('#cms-block-'+params.id).replaceWith(content.html()).delay(3000);
+            }, params))
+            .fail(function(jqXHR, textStatus, errorThrown){
+                console.log('fail');
+            })
+            .always(function() {
+                console.log('always');
+            });
+    },
+
+    CKupdate: function(){
+        for ( instance in CKEDITOR.instances )
+            CKEDITOR.instances[instance].updateElement();
     }
 }

@@ -28,6 +28,9 @@ class BlockAdmin extends BaseBlockAdmin
         $collection->add('saveTextBlock', 'save-text-block',
                          array('_controller' => sprintf('%s:%s', $this->baseControllerName, 'saveTextBlock')));
 
+        $collection->add('cmsBlockRender', 'cms-render-block/{pageId}/{blockId}',
+                         array('_controller' => sprintf('%s:%s', $this->baseControllerName, 'cmsBlockRender')));
+
         $collection->add('view', $this->getRouterIdParameter().'/view');
     }
 
