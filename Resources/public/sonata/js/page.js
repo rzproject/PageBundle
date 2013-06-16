@@ -369,6 +369,8 @@ Sonata.Page = {
             role    = block.attr('data-role') || 'block',
             name    = block.attr('data-name') || 'missing data-name',
             id      = block.attr('data-id') || 'missing data-id',
+            type    = block.attr('data-block-type') || 'missing data-type',
+            has_parent = block.attr('data-block-has-parent') || false,
             classes = [],
             layer, title, container;
 
@@ -380,9 +382,15 @@ Sonata.Page = {
         // build layer
         layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
 
-        if (role == 'block') {
+        console.log(id+'--->'+type+'--->'+role);
 
-            block = this.manualWrapBlock(block);
+        if (role == 'block') {
+            if (type == 'sonata.page.block.container') {
+                console.log('imhere');
+                block = this.wrapBlock(block);
+            } else {
+                block = this.manualWrapBlock(block);
+            }
 
             var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                 "<ul class='dropdown-menu'>"+
@@ -404,7 +412,7 @@ Sonata.Page = {
 
         block.prepend(layer);
 
-        if (role != 'container') {
+        if (has_parent) {
             block = this.wrapBlock(block);
         }
     },
@@ -920,10 +928,7 @@ Sonata.Page = {
                 params.that.initBlocks();
                 params.that.initContainers();
                 params.that.initBlockData();
-
                 params.that.toggleEditMode();
-
-                //console.log(temp);
             }, params))
             .fail(function(jqXHR, textStatus, errorThrown){
                 console.log('fail');

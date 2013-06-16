@@ -5,6 +5,8 @@
         data-name="{{ block.name }}"
         data-role="{% block block_role %}block{% endblock %}"
         data-page-id="{{ block.page.id }}"
+        data-block-type="{{ block.type }}"
+        data-block-has-parent="{{ block.hasParent() }}"
     {% endif %}
     >
     {% block block %}EMPTY CONTENT{% endblock %}
