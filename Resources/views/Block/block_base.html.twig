@@ -7,6 +7,7 @@
         data-page-id="{{ block.page.id }}"
         data-block-type="{{ block.type }}"
         data-block-has-parent="{{ block.hasParent() }}"
+        data-block-parent-id="{% if block.hasParent() %}{{ block.getParent.getId }}{% else %}{% endif %}"
     {% endif %}
     >
     {% block block %}EMPTY CONTENT{% endblock %}

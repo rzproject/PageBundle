@@ -148,7 +148,8 @@
                                 rmz_editor_config: {{ rz_ckeditor_config('inline_editor') | json_encode | raw }},
                                 url: {
                                     block_save_position: '{{ path('admin_sonata_page_block_savePosition') }}',
-                                    block_edit:          '{{ path('admin_sonata_page_block_edit', {'id': 'BLOCK_ID'}) }}'
+                                    block_edit:          '{{ path('admin_sonata_page_block_edit', {'id': 'BLOCK_ID'}) }}',
+                                    block_delete:        '{{ path('admin_sonata_page_block_delete', {'id': 'BLOCK_ID'}) }}'
                                 }
                             });
 

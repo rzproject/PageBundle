@@ -97,7 +97,8 @@ Sonata.Page = {
      */
     url: {
         block_save_position: null,
-        block_edit: null
+        block_edit: null,
+        block_delete: null
     },
 
     htmlCopy: null,
@@ -215,7 +216,19 @@ Sonata.Page = {
             id = jQuery(target).attr('data-id');
 
         //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
-        this.showPopup(this.initializeSettingsPopup(id), 'popup_settings_'+id,this.url.block_edit.replace(/BLOCK_ID/, id));
+        this.showPopup(this.initializeSettingsPopup(id, null), 'popup_settings_'+id,this.url.block_edit.replace(/BLOCK_ID/, id), 'edit');
+
+        event.preventDefault();
+        event.stopPropagation();
+    },
+
+    handleBlockDelete: function(event) {
+        var target = event.currentTarget,
+            id = jQuery(target).attr('data-id'),
+            parent_id = jQuery(target).attr('data-parent-id');
+
+        //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
+        this.showPopup(this.initializeSettingsPopup(id, parent_id), 'popup_settings_'+id,this.url.block_delete.replace(/BLOCK_ID/, id), 'delete');
 
         event.preventDefault();
         event.stopPropagation();
@@ -310,6 +323,7 @@ Sonata.Page = {
         this.buildLayers(this.blocks);
         this.initializeShowZone();
         jQuery('.cms-edit-link').on('click', jQuery.proxy(this.handleBlockEdit, this));
+        jQuery('.cms-delete-link').on('click', jQuery.proxy(this.handleBlockDelete, this));
     },
 
     /**
@@ -371,6 +385,7 @@ Sonata.Page = {
             id      = block.attr('data-id') || 'missing data-id',
             type    = block.attr('data-block-type') || 'missing data-type',
             has_parent = block.attr('data-block-has-parent') || false,
+            parent_id = block.attr('data-block-parent-id') || null,
             classes = [],
             layer, title, container;
 
@@ -386,7 +401,6 @@ Sonata.Page = {
 
         if (role == 'block') {
             if (type == 'sonata.page.block.container') {
-                console.log('imhere');
                 block = this.wrapBlock(block);
             } else {
                 block = this.manualWrapBlock(block);
@@ -395,7 +409,7 @@ Sonata.Page = {
             var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                 "<ul class='dropdown-menu'>"+
                 "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
-                "<li><a href='#'>Delete</a></li>"+
+                "<li><a class='cms-delete-link' data-id='"+id+"' data-parent-id='"+parent_id+"' href='#' href='#'>Delete</a></li>"+
                 "</ul></div>";
             layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-success"><i class="icon-move icon-large"></i></span>'+button);
 
@@ -403,7 +417,6 @@ Sonata.Page = {
             var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='icon-cogs icon-large'></i></button>"+
                 "<ul class='dropdown-menu'>"+
                 "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
-                "<li><a href='#'>Delete</a></li>"+
                 "</ul></div>";
             layer.append('<span class="cms-layout-title-name-'+role+'">'+button+'</span>');
         }
@@ -782,9 +795,9 @@ Sonata.Page = {
         }
     },
 
-    initializeSettingsPopup: function(id) {
+    initializeSettingsPopup: function(id, parent_id) {
         //var popupTempId = 'popup_settings_'+id;
-        return jQuery("<div class='rz-cms modal hide fade' data-backdrop='static' data-id='"+id+"' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
+        return jQuery("<div class='rz-cms modal hide fade' data-backdrop='static' data-id='"+id+"' data-parent-id='"+parent_id+"' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
         //jQuery(document.body).append(div);
         //return popupTempId;
     },
@@ -807,7 +820,7 @@ Sonata.Page = {
 
     },
 
-    showPopup: function(modal, id, url) {
+    showPopup: function(modal, id, url, popupType) {
 
         jQuery.blockUI({ message: Admin.loadingMessage(null)});
 
@@ -835,7 +848,7 @@ Sonata.Page = {
                 jQuery('form', dialog).on('submit', jQuery.proxy(function(event){
                     event.preventDefault();
                     event.stopPropagation();
-                    that.processDialogSubmit(event.target, dialog);
+                    that.processDialogSubmit(event.target, dialog, popupType);
                 }, dialog));
 
                 var is_closed = false;
@@ -871,12 +884,12 @@ Sonata.Page = {
             });
     },
 
-    processDialogSubmit: function(link, dialog) {
+    processDialogSubmit: function(link, dialog, popupType) {
 
         jQuery.blockUI({ message: Admin.loadingMessage(null)});
 
         var that = this;
-        var params = {'id': dialog.attr('data-id'), 'dialog': dialog, 'that': that };
+        var params = {'id': dialog.attr('data-id'), 'parent_id':dialog.attr('data-parent-id'), 'dialog': dialog, 'that': that };
 
         console.log(params);
 
@@ -891,22 +904,26 @@ Sonata.Page = {
             return;
         }
 
-        that.CKupdate();
+            that.CKupdate();
 
-        // the ajax post
-        jQuery(form).ajaxSubmit({
-            url: url,
-            type: type,
-            data: data,
-            dataType: dataType,
-            success: jQuery.proxy(function(data) {
-                if (data.result == 'ok') {
-                    //location.reload();
-                    params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
-                    params.dialog.modal('hide');
-                }
-            }, params)
-        });
+            // the ajax post
+            jQuery(form).ajaxSubmit({
+                url: url,
+                type: type,
+                data: data,
+                dataType: dataType,
+                success: jQuery.proxy(function(data) {
+                    if (data.result == 'ok') {
+                        //location.reload();
+                        if (popupType == 'edit') {
+                            params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
+                        } else {
+                            params.that.renderBlock({'id':params.parent_id, 'dialog': params.dialog, 'that': params.that});
+                        }
+                        params.dialog.modal('hide');
+                    }
+                }, params)
+            });
 
         return;
     },
