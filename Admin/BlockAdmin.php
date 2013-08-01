@@ -45,32 +45,4 @@ class BlockAdmin extends BaseBlockAdmin
             ->add('enabled', null, array('footable'=>array('attr'=>array('data_hide'=>'phone'))))
         ;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $block = $this->getSubject();
-        // add name on all forms
-        $formMapper->add('name', null, array('attr'=>array('class'=>"span12")));
-
-        $isContainerRoot = $block && $block->getType() == 'sonata.page.block.container' && !$this->hasParentFieldDescription();
-        $isStandardBlock = $block && $block->getType() != 'sonata.page.block.container' && !$this->hasParentFieldDescription();
-
-        if ($isContainerRoot || $isStandardBlock) {
-            $service = $this->blockManager->get($block);
-
-            if ($block->getId() > 0) {
-                $service->buildEditForm($formMapper, $block);
-            } else {
-                $service->buildCreateForm($formMapper, $block);
-            }
-        } else {
-            $formMapper
-                ->add('type', 'sonata_block_service_choice', array('context' => 'cms'))
-                ->add('enabled')
-                ->add('position');
-        }
-    }
 }
