@@ -98,6 +98,7 @@ Sonata.Page = {
     url: {
         block_save_position: null,
         block_edit: null,
+        block_child_edit: null,
         block_delete: null
     },
 
@@ -213,10 +214,19 @@ Sonata.Page = {
 
     handleBlockEdit: function(event) {
         var target = event.currentTarget,
-            id = jQuery(target).attr('data-id');
+            id = jQuery(target).attr('data-id'),
+            page_id = jQuery(target).attr('data-page-id');
+
+        console.log(jQuery(target));
+        console.log('page_id-->'+page_id);
+        console.log('block->'+id);
 
         //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
-        this.showPopup(this.initializeSettingsPopup(id, null), 'popup_settings_'+id,this.url.block_edit.replace(/BLOCK_ID/, id), 'edit');
+        if (page_id) {
+            this.showPopup(this.initializeSettingsPopup(id, null), 'popup_settings_'+id,this.url.block_child_edit.replace(/PAGE_ID/, page_id).replace(/BLOCK_ID/, id), 'edit');
+        } else {
+            this.showPopup(this.initializeSettingsPopup(id, null), 'popup_settings_'+id,this.url.block_edit.replace(/BLOCK_ID/, id), 'edit');
+        }
 
         event.preventDefault();
         event.stopPropagation();
@@ -386,6 +396,7 @@ Sonata.Page = {
             type    = block.attr('data-block-type') || 'missing data-type',
             has_parent = block.attr('data-block-has-parent') || false,
             parent_id = block.attr('data-block-parent-id') || null,
+            page_id = block.attr('data-page-id') || null,
             classes = [],
             layer, title, container;
 
@@ -408,7 +419,7 @@ Sonata.Page = {
 
             var button =  "<div class='btn-group'><button class='btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='micon-cog icon-large'></i></button>"+
                 "<ul class='dropdown-menu'>"+
-                "<li><a class='cms-edit-link' data-id='"+id+"' href='#'>Edit</a></li>"+
+                "<li><a class='cms-edit-link' data-id='"+id+"' data-page-id='"+page_id+"' href='#'>Edit</a></li>"+
                 "<li><a class='cms-delete-link' data-id='"+id+"' data-parent-id='"+parent_id+"' href='#' href='#'>Delete</a></li>"+
                 "</ul></div>";
             layer.append('<span class="cms-layout-drag cms-layout-drag-'+role+' btn btn-success"><i class="icon-move icon-large"></i></span>'+button);

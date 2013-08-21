@@ -149,6 +149,7 @@
                                 url: {
                                     block_save_position: '{{ path('admin_sonata_page_block_savePosition') }}',
                                     block_edit:          '{{ path('admin_sonata_page_block_edit', {'id': 'BLOCK_ID'}) }}',
+                                    block_child_edit:    '{{ path('admin_sonata_page_page_block_edit', {'id': 'PAGE_ID', 'childId': 'BLOCK_ID' }) }}',
                                     block_delete:        '{{ path('admin_sonata_page_block_delete', {'id': 'BLOCK_ID'}) }}'
                                 }
                             });
