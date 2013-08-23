@@ -35,5 +35,6 @@ class RzPageExtension extends Extension
         $loader->load('admin_orm.xml');
         $loader->load('block.xml');
         $loader->load('listener.xml');
+        $loader->load('twig.xml');
     }
 }
