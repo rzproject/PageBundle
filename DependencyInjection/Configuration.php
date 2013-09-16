@@ -13,6 +13,7 @@ namespace Rz\PageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -27,11 +28,127 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('rz_page');
+        $node = $treeBuilder->root('rz_page');
+
+        $this->addBundleSettings($node);
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         return $treeBuilder;
+    }
+
+     /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addBundleSettings(ArrayNodeDefinition $node)
+    {
+        /**
+         * TODO: refactor as not to copy the whole configuration of SonataUserBundle
+         * This section will allow RzBundle to override SonataUserBundle via rz_user configuration
+         */
+
+        $node
+            ->children()
+                ->arrayNode('class')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('block')->defaultValue('Application\\Sonata\\PageBundle\\Entity\\Block')->end()
+                        ->scalarNode('page')->defaultValue('Application\\Sonata\\PageBundle\\Entity\\Page')->end()
+                        ->scalarNode('site')->defaultValue('Application\\Sonata\\PageBundle\\Entity\\Site')->end()
+                        ->scalarNode('snapshot')->defaultValue('Application\\Sonata\\PageBundle\\Entity\\Snapshot')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('class_manager')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('block')->defaultValue('Sonata\\PageBundle\\Entity\\BlockManager')->end()
+                        ->scalarNode('page')->defaultValue('Sonata\\PageBundle\\Entity\\PageManager')->end()
+                        ->scalarNode('site')->defaultValue('Sonata\\PageBundle\\Entity\\SiteManager')->end()
+                        ->scalarNode('snapshot')->defaultValue('Sonata\\PageBundle\\Entity\\SnapshotManager')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('admin')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('block')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue('Rz\\PageBundle\\Admin\\BlockAdmin')->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('SonataPageBundle:BlockAdmin')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataPageBundle')->end()
+                                ->arrayNode('templates')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('list')->defaultValue('SonataAdminBundle:CRUD:list.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('show')->defaultValue('SonataAdminBundle:CRUD:show.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('edit')->defaultValue('SonataAdminBundle:CRUD:edit.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('preview')->defaultValue('SonataAdminBundle:CRUD:preview.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history')->defaultValue('SonataAdminBundle:CRUD:history.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history_revision')->defaultValue('SonataAdminBundle:CRUD:history_revision.html.twig')->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('page')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue('Rz\\PageBundle\\Admin\\PageAdmin')->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('SonataPageBundle:PageAdmin')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataPageBundle')->end()
+                                ->arrayNode('templates')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('list')->defaultValue('SonataAdminBundle:CRUD:list.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('show')->defaultValue('SonataAdminBundle:CRUD:show.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('edit')->defaultValue('SonataAdminBundle:CRUD:edit.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('preview')->defaultValue('SonataAdminBundle:CRUD:preview.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history')->defaultValue('SonataAdminBundle:CRUD:history.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history_revision')->defaultValue('SonataAdminBundle:CRUD:history_revision.html.twig')->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('site')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue('Rz\\PageBundle\\Admin\\SiteAdmin')->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('SonataPageBundle:SiteAdmin')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataPageBundle')->end()
+                                ->arrayNode('templates')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('list')->defaultValue('SonataAdminBundle:CRUD:list.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('show')->defaultValue('SonataAdminBundle:CRUD:show.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('edit')->defaultValue('SonataAdminBundle:CRUD:edit.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('preview')->defaultValue('SonataAdminBundle:CRUD:preview.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history')->defaultValue('SonataAdminBundle:CRUD:history.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history_revision')->defaultValue('SonataAdminBundle:CRUD:history_revision.html.twig')->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('snapshot')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue('Rz\\PageBundle\\Admin\\SnapshotAdmin')->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('SonataPageBundle:SnapshotAdmin')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataPageBundle')->end()
+                                ->arrayNode('templates')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('list')->defaultValue('SonataAdminBundle:CRUD:list.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('show')->defaultValue('SonataAdminBundle:CRUD:show.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('edit')->defaultValue('SonataAdminBundle:CRUD:edit.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('preview')->defaultValue('SonataAdminBundle:CRUD:preview.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history')->defaultValue('SonataAdminBundle:CRUD:history.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('history_revision')->defaultValue('SonataAdminBundle:CRUD:history_revision.html.twig')->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }

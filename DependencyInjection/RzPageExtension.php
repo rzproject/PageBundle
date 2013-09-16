@@ -11,10 +11,13 @@
 
 namespace Rz\PageBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Config\FileLocator;
+
+use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -32,9 +35,108 @@ class RzPageExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('admin_orm.xml');
+        //$loader->load('admin_orm.xml');
         $loader->load('block.xml');
         $loader->load('listener.xml');
         $loader->load('twig.xml');
+
+        $this->configureAdminClass($config, $container);
+//        $this->configureClass($config, $container);
+//        $this->configureClassManager($config, $container);
+//
+//        $this->configureTranslationDomain($config, $container);
+//        $this->configureController($config, $container);
+        $this->configureRzTemplates($config, $container);
+    }
+
+    /**
+     * @param array  $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureClass($config, ContainerBuilder $container)
+    {
+        $container->setParameter('sonata.page.site.class', $config['class']['site']);
+        $container->setParameter('sonata.page.block.class', $config['class']['block']);
+        $container->setParameter('sonata.page.snapshot.class', $config['class']['snapshot']);
+        $container->setParameter('sonata.page.page.class', $config['class']['page']);
+
+        $container->setParameter('sonata.page.admin.site.entity', $config['class']['site']);
+        $container->setParameter('sonata.page.admin.block.entity', $config['class']['block']);
+        $container->setParameter('sonata.page.admin.snapshot.entity', $config['class']['snapshot']);
+        $container->setParameter('sonata.page.admin.page.entity', $config['class']['page']);
+    }
+
+    /**
+     * @param array $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureAdminClass($config, ContainerBuilder $container)
+    {
+        $container->setParameter('sonata.page.admin.site.class', $config['admin']['site']['class']);
+        $container->setParameter('sonata.page.admin.block.class', $config['admin']['block']['class']);
+        $container->setParameter('sonata.page.admin.snapshot.class', $config['admin']['snapshot']['class']);
+        $container->setParameter('sonata.page.admin.page.class', $config['admin']['page']['class']);
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureClassManager($config, ContainerBuilder $container)
+    {
+        // manager configuration
+        $container->setParameter('sonata.page.manager.site.class', $config['class_manager']['site']);
+        $container->setParameter('sonata.page.manager.block.class', $config['class_manager']['block']);
+        $container->setParameter('sonata.page.manager.snapshot.class', $config['class_manager']['snapshot']);
+        $container->setParameter('sonata.page.manager.page.class', $config['class_manager']['page']);
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureTranslationDomain($config, ContainerBuilder $container)
+    {
+        $container->setParameter('sonata.page.admin.site.translation_domain', $config['admin']['site']['translation']);
+        $container->setParameter('sonata.page.admin.block.translation_domain', $config['admin']['block']['translation']);
+        $container->setParameter('sonata.page.admin.snapshot.translation_domain', $config['admin']['snapshot']['translation']);
+        $container->setParameter('sonata.page.admin.page.translation_domain', $config['admin']['page']['translation']);
+    }
+
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureController($config, ContainerBuilder $container)
+    {
+        $container->setParameter('sonata.page.admin.site.controller', $config['admin']['site']['controller']);
+        $container->setParameter('sonata.page.admin.block.controller', $config['admin']['block']['controller']);
+        $container->setParameter('sonata.page.admin.snapshot.controller', $config['admin']['snapshot']['controller']);
+        $container->setParameter('sonata.page.admin.page.controller', $config['admin']['page']['controller']);
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureRzTemplates($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_page.configuration.site.templates', $config['admin']['site']['templates']);
+        $container->setParameter('rz_page.configuration.block.templates', $config['admin']['block']['templates']);
+        $container->setParameter('rz_page.configuration.snapshot.templates', $config['admin']['snapshot']['templates']);
+        $container->setParameter('rz_page.configuration.page.templates', $config['admin']['page']['templates']);
     }
 }

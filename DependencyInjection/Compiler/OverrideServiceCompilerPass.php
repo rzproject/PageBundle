@@ -18,17 +18,17 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        //$rz_definition = $container->getDefinition('rz_user.admin.user');
-
-        //override User Admin
-        $definition = $container->getDefinition('sonata.page.admin.page');
-        $definition->setClass($container->getParameter('rz_page.admin.page.class'));
-
-        $definition = $container->getDefinition('sonata.page.admin.block');
-        $definition->setClass($container->getParameter('rz_page.admin.block.class'));
-
-        $definition = $container->getDefinition('sonata.page.admin.site');
-        $definition->setClass($container->getParameter('rz_page.admin.site.class'));
+//        $definition = $container->getDefinition('sonata.page.admin.page');
+//        $definition->setClass($container->getParameter('rz_page.admin.page.class'));
+//
+//        $definition = $container->getDefinition('sonata.page.admin.block');
+//        $definition->setClass($container->getParameter('rz_page.admin.block.class'));
+//
+//        $definition = $container->getDefinition('sonata.page.admin.snapshot');
+//        $definition->setClass($container->getParameter('rz_page.admin.snapshot.class'));
+//
+//        $definition = $container->getDefinition('sonata.page.admin.site');
+//        $definition->setClass($container->getParameter('rz_page.admin.site.class'));
 
         $definition = $container->getDefinition('sonata.page.block.container');
         $definition->setClass($container->getParameter('rz_page.block.container.class'));
@@ -38,6 +38,28 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('sonata.page.response_listener');
         $definition->setClass($container->getParameter('rz_page.response_listener.class'));
+
+        //Override Templates
+
+        $definition = $container->getDefinition('sonata.page.admin.site');
+        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
+                                        $container->getParameter('rz_page.configuration.site.templates'));
+        $definition->addMethodCall('setTemplates', array($definedTemplates));
+
+        $definition = $container->getDefinition('sonata.page.admin.block');
+        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
+                                        $container->getParameter('rz_page.configuration.block.templates'));
+        $definition->addMethodCall('setTemplates', array($definedTemplates));
+
+        $definition = $container->getDefinition('sonata.page.admin.snapshot');
+        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
+                                        $container->getParameter('rz_page.configuration.snapshot.templates'));
+        $definition->addMethodCall('setTemplates', array($definedTemplates));
+
+        $definition = $container->getDefinition('sonata.page.admin.page');
+        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
+                                        $container->getParameter('rz_page.configuration.page.templates'));
+        $definition->addMethodCall('setTemplates', array($definedTemplates));
 
     }
 }
