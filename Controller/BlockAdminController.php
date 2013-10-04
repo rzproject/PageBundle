@@ -104,13 +104,32 @@ class BlockAdminController extends Controller
 
 
     /**
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws PageNotFoundException
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createAction()
     {
-        return $this->render('SonataPageBundle:BlockAdmin:create.html.twig', array(
-            'action' => 'create'
-        ));
+        if (false === $this->admin->isGranted('CREATE')) {
+            throw new AccessDeniedException();
+        }
+
+        if (!$this->admin->getParent()) {
+            throw new PageNotFoundException('You cannot create a block without a page');
+        }
+
+        $parameters = $this->admin->getPersistentParameters();
+
+        if (!$parameters['type']) {
+            return $this->render('SonataPageBundle:BlockAdmin:select_type.html.twig', array(
+                'services'     => $this->get('sonata.block.manager')->getServices(),
+                'base_template' => $this->getBaseTemplate(),
+                'admin'         => $this->admin,
+                'action'        => 'create'
+            ));
+        }
+
+        return parent::createAction();
     }
 
     public function cmsBlockRenderAction($pageId = null,$blockId = null)
