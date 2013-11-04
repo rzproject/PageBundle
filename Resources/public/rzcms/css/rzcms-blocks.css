@@ -1,0 +1,109 @@
+.rz-cms-edit.cms-edit-mode .rzcms.cms-block.cms-container.cms-container-root {
+    outline: 1px dotted #941414;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.btn {
+    background-image: none !important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none !important;
+    margin: 2px;
+    text-shadow: none;
+}
+
+.rz-cms-edit.cms-edit-mode .rz-cms-row-wrapper {
+    padding: 5px;
+    width: auto;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.cms-block.cms-block-element {
+    outline: 1px dotted #51a351;
+    padding: 5px;
+    width: 100%;
+}
+
+/*.rz-cms-edit.cms-edit-mode .rz-cms-block-wrapper {*/
+    /*outline: 1px dotted #51a351;*/
+    /*padding: 5px;*/
+    /*width: 100%;*/
+/*}*/
+
+.rz-cms-edit.cms-edit-mode .btn-container {
+    background-color: #253454;
+    color: #fff;
+}
+.rz-cms-edit.cms-edit-mode .btn-container:hover,
+.rz-cms-edit.cms-edit-mode .btn-container:active,
+.rz-cms-edit.cms-edit-mode .btn-container:focus{
+    background-color: #07101b;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms-layout-title-name-container .dropdown-menu > li > a:hover,
+.rz-cms-edit.cms-edit-mode .rzcms-layout-title-name-container .dropdown-menu > li > a:focus,
+.rz-cms-edit.cms-edit-mode .rzcms-layout-title-name-container .dropdown-submenu:hover > a,
+.rz-cms-edit.cms-edit-mode .rzcms-layout-title-name-container .dropdown-submenu:focus > a {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #253454;
+    background-image: none;
+}
+
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-menu > li > a:hover,
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-menu > li > a:focus,
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-submenu:hover > a,
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-submenu:focus > a {
+    background-image: none;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-header {
+    border-bottom: 0px;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-body {
+    padding: 0px !important;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .rz-form {
+    margin-bottom: 0px !important;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.rz-cms-edit.cms-edit-mode .rz-cms-admin.theme-darkblue.modal {
+    border: 0px !important;
+}
+
+
+.rz-cms-edit.cms-edit-mode .modal-backdrop {
+    background: #000 !important
+}
+
+.rz-cms-edit.cms-edit-mode .rz-cms-admin .rz-form.form-vertical.form-bordered .control-group:last-child {
+    border-bottom: 0px;
+}
+
+
+.rz-cms-edit.cms-edit-mode .gritter-primary .gritter-item {
+    display: block;
+    background: #253454 !important;
+    border: 0px !important;
+    color: #fff !important;
+    text-shadow: none !important;
+    border-radius: 4px;
+    padding: 7px 10px 10px;
+    box-shadow: none !important;
+    font-family: 'Open Sans', sans-serif !important;
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
+}
