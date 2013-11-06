@@ -107,3 +107,11 @@
     -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
 }
+
+.rz-cms-edit.cms-edit-mode .gritter-primary .gritter-item p,
+.rz-cms-edit.cms-edit-mode .gritter-info .gritter-item p,
+.rz-cms-edit.cms-edit-mode .gritter-success .gritter-item p,
+.rz-cms-edit.cms-edit-mode .gritter-warning .gritter-item p,
+.rz-cms-edit.cms-edit-mode .gritter-danger .gritter-item p {
+    font-family: 'Open Sans', sans-serif !important
+}
