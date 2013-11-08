@@ -54,11 +54,34 @@
 }
 
 .rzcms-admin-cmsmenu .btn {
-    background-image: none !important;
+    background: #eee;
+    border: 0;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    border: none !important;
+    text-shadow: none;
+    color: #fff;
+    padding: 6px 10px !important;
+    filter: none;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: capitalize;
+    -webkit-font-smoothing: antialiased;
+}
+
+.rzcms-admin-cmsmenu .form-inline .btn.btn-success,
+.rzcms-admin-cmsmenu  #rzcms-admin-blocks .btn,
+.rzcms-admin-cmsmenu  #rzcms-admin-blocks-custom .btn{
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
+}
+
+.rzcms-admin-cmsmenu  #rzcms-admin-blocks-custom .btn.btn-primary {
+    background: #253454;
+}
+
+.rzcms-admin-cmsmenu  #rzcms-admin-blocks-custom .btn.btn-primary:hover {
+    background: #192338;
 }
 
 .rzcms-admin-cmsmenu .btn-danger {
