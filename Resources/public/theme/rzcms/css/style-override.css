@@ -1,3 +1,34 @@
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn{
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn-group > .btn {
+    position: relative;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn-group > .btn:first-child {
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-left-radius: 4px;
+}
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn-group > .btn:last-child,
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn-group > .dropdown-toggle {
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-bottom-right-radius: 4px;
+}
+
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin.modal {
     background: transparent !important;
 }
@@ -12,6 +43,9 @@
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn {
     margin: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn:first-child {
@@ -19,7 +53,7 @@
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary { padding: 12px 24px; background:#313941; border: 1px solid #F6F7F0!important; color: #F6F7F0!important; text-transform: uppercase; letter-spacing: 1px; }
-.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:hover {background: #019875;  border: 1px solid #F6F7F0!important; color: #F6F7F0!important;}
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:hover {background: #253454;  border: 1px solid #F6F7F0!important; color: #F6F7F0!important;}
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:active,
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:focus {background: #313941; border: 1px solid #95989C!important; color: #F6F7F0!important; }
 
@@ -32,15 +66,4 @@
     -webkit-border-radius: 4px 4px 0px  0px;
     -moz-border-radius: 4px 4px 0px  0px;
     border-radius: 4px 4px 0px  0px;
-}
-
-.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn.btn-success {
-    background: #7DC692;
-    border-color: #fff;
-}
-
-.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn.btn-success:hover {
-    background: #019875;
-    border-color: #fff;
-
 }
