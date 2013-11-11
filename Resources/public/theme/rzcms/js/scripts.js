@@ -18,7 +18,7 @@ $(document).ready(function() {
 			var $this = $(this);
 			$this.toggleClass('active').next('ul').toggleClass('active');
 		});
-			
+
 /***************************************************
 		PRETTYPHOTO
 ***************************************************/
@@ -42,8 +42,8 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_disableCats: 'on',
 		settings_lightboxlibrary: "prettyphoto",
 		design_categories_pos: 'bottom'
-	});	
-		
+	});
+
 /***************************************************
 	SERVICES PAGE - CLIENT CAROUSEL
 ***************************************************/
@@ -56,7 +56,7 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_lightboxlibrary: "prettyphoto",
 		disable_itemmeta: 'off'
 	});
-	
+
 /***************************************************
 	PORTFOILO
 ***************************************************/
@@ -69,7 +69,7 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_preloadall: 'on',
 		disable_itemmeta:'on'
 	});
-	
+
 /***************************************************
 	PORTFOILO 2
 ***************************************************/
@@ -81,7 +81,7 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_lightboxlibrary: "prettyphoto",
 		settings_preloadall: 'on'
 	});
-	
+
 /***************************************************
 	GALLERY - CAPTION HOVER
 ***************************************************/
@@ -94,7 +94,7 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_disableCats: 'off',
 		design_categories_pos: 'top'
 	});
-	
+
 /***************************************************
 	BLOG
 ***************************************************/
@@ -110,7 +110,7 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_ajax_loadmoremethod: 'button',
 		settings_ajax_pages: ['ajax1.html']
 	});
-	
+
 /***************************************************
 	BLOG - RELATED POSTS CAROUSEL
 ***************************************************/
@@ -123,7 +123,7 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_lightboxlibrary: "prettyphoto",
 		disable_itemmeta: 'off'
 	});
-	
+
 /***************************************************
 	BLOG - RELATED POSTS
 ***************************************************/
@@ -134,20 +134,20 @@ overlay_gallery: false, social_tools: false,  deeplinking: false
 		settings_lightboxlibrary: "prettyphoto",
 		disable_itemmeta: 'off'
 	});
-	
+
 /***************************************************
 	PARALLAX
 ***************************************************/
-	
-if( navigator.userAgent.match(/Android/i) || 
+
+if( navigator.userAgent.match(/Android/i) ||
 	navigator.userAgent.match(/webOS/i) ||
-	navigator.userAgent.match(/iPhone/i) || 
-	navigator.userAgent.match(/iPad/i)|| 
-	navigator.userAgent.match(/iPod/i) || 
+	navigator.userAgent.match(/iPhone/i) ||
+	navigator.userAgent.match(/iPad/i)||
+	navigator.userAgent.match(/iPod/i) ||
 	navigator.userAgent.match(/BlackBerry/i)){
 			$('.parallax').addClass('mobile');
 		}
-	});	
+	});
 
 /***************************************************
 	LARGE IMAGE FADE
@@ -157,30 +157,30 @@ if( navigator.userAgent.match(/Android/i) ||
 /***************************************************
 	GOOGLE MAP - ADD YOUR ADDRESS HERE
 ***************************************************/
-$(window).load(function() {
-	$(".google-maps").gmap3({
-    marker:{
-     
-address:"23, Mornington Crescent, London",options:{icon: "img/marker.png"}},
-    map:{
-      options:{
-styles: [ {
-stylers: [
-{ "visibility": "on" }, { "saturation": -100 }, { "gamma": 1 }]
-}],
-        zoom: 14,
-		scrollwheel: false,
-		mapTypeControl: false,
-		streetViewControl: false,
-		scalControl: false,
-		draggable: false,}
-		}
-	});	
-});	
+//$(window).load(function() {
+//	$(".google-maps").gmap3({
+//    marker:{
+//
+//address:"23, Mornington Crescent, London",options:{icon: "img/marker.png"}},
+//    map:{
+//      options:{
+//styles: [ {
+//stylers: [
+//{ "visibility": "on" }, { "saturation": -100 }, { "gamma": 1 }]
+//}],
+//        zoom: 14,
+//		scrollwheel: false,
+//		mapTypeControl: false,
+//		streetViewControl: false,
+//		scalControl: false,
+//		draggable: false,}
+//		}
+//	});
+//});
 
 /***************************************************
 	DRIBBBLE
-***************************************************/	
+***************************************************/
 (function(e){"use strict";e.jribbble={};var t=function(t,s){e.ajax({type:"GET",url:"http://api.dribbble.com"+t,data:s[1]||{},dataType:"jsonp",success:function(e){e===undefined?s[0]({error:!0}):s[0](e)}})},s={getShotById:"/shots/$/",getReboundsOfShot:"/shots/$/rebounds/",getShotsByList:"/shots/$/",getShotsByPlayerId:"/players/$/shots/",getShotsThatPlayerFollows:"/players/$/shots/following/",getPlayerById:"/players/$/",getPlayerFollowers:"/players/$/followers/",getPlayerFollowing:"/players/$/following/",getPlayerDraftees:"/players/$/draftees/",getCommentsOfShot:"/shots/$/comments/",getShotsThatPlayerLikes:"/players/$/shots/likes/"},o=function(e){return function(){var s=[].slice.call(arguments),o=e.replace("$",s.shift());t(o,s)}};for(var r in s)e.jribbble[r]=o(s[r])})(jQuery,window,document);
 
 /***************************************************
@@ -213,26 +213,26 @@ $("[data-rel=tooltip]").tooltip();
 /***************************************************
 	STICKY MENU
 ***************************************************/
-var sticky = $('.sticky'),
-    stickyHeight = $(sticky).outerHeight(),
-    stickyTop = $(sticky).offset().top,
-    stickyBottom = stickyTop + stickyHeight;
-$(window).scroll(function(){
-  var scrollTop = $(window).scrollTop();
-   if(scrollTop > stickyBottom){
-    if($(sticky).is(':hidden')){
-      $(sticky).slideDown('slow').find('.logo').addClass('spin');
-    }
-  }else{
-    if($(sticky).is(':visible')){
-      $(sticky).fadeOut('fast').find('.logo').removeClass('spin');
-    }
-  }
-});
-
-$(sticky).on('click', '.logo', function(){
-  $('html, body').animate({scrollTop: 0} ,'slow');
-});
+//var sticky = $('.sticky'),
+//    stickyHeight = $(sticky).outerHeight(),
+//    stickyTop = $(sticky).offset().top,
+//    stickyBottom = stickyTop + stickyHeight;
+//$(window).scroll(function(){
+//  var scrollTop = $(window).scrollTop();
+//   if(scrollTop > stickyBottom){
+//    if($(sticky).is(':hidden')){
+//      $(sticky).slideDown('slow').find('.logo').addClass('spin');
+//    }
+//  }else{
+//    if($(sticky).is(':visible')){
+//      $(sticky).fadeOut('fast').find('.logo').removeClass('spin');
+//    }
+//  }
+//});
+//
+//$(sticky).on('click', '.logo', function(){
+//  $('html, body').animate({scrollTop: 0} ,'slow');
+//});
 
 
 

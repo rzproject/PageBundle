@@ -808,7 +808,7 @@ Sonata.Page = {
 
     initializeSettingsPopup: function(id, parent_id) {
         //var popupTempId = 'popup_settings_'+id;
-        return jQuery("<div class='rzcms rz-cms-admin theme-darkblue modal hide fade' data-backdrop='static' data-id='"+id+"' data-parent-id='"+parent_id+"' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
+        return jQuery("<div class='rzcms rz-cms-admin modal hide fade' data-backdrop='static' data-id='"+id+"' data-parent-id='"+parent_id+"' id='popup_settings_"+id+"'  aria-hidden='false'></div>");
         //jQuery(document.body).append(div);
         //return popupTempId;
     },
