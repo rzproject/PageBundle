@@ -1,0 +1,10 @@
+{% extends 'RzPageBundle:theme/rzcms:layout.html.twig' %}
+
+{% block rzcms_body %}
+    {{ parent() }}
+    {% if page is defined %}
+        {% if page.name != 'global'%}
+            {{ sonata_page_render_container('content_bottom', 'global') }}
+        {% endif %}
+    {% endif %}
+{% endblock rzcms_body %}

@@ -90,6 +90,7 @@
 {% endblock %}
 
 {% block sonata_page_container %}
+    {% block rzcms_header %}
     <header class="header">
         <!--logo-->
         <div class="container">
@@ -262,6 +263,10 @@
         </div>
     </header>
     <!-- // header -->
+    {% endblock rzcms_header %}
+
+
+    {% block rzcms_body %}
     <div class="container">
         <div class="row-fluid">
             <div class="span12">
@@ -305,11 +310,9 @@
             </div>
         </div>
     </div>
-    {% if page is defined %}
-        {% if page.name != 'global'%}
-            {{ sonata_page_render_container('content_bottom', 'global') }}
-        {% endif %}
-    {% endif %}
+    {% endblock rzcms_body %}
+
+    {% block rzcms_footer %}
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
@@ -353,4 +356,5 @@
         </div>
     </footer>
     <!-- // END FOOTER -->
+    {% endblock rzcms_footer %}
 {% endblock %}
