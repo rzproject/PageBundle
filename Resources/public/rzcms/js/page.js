@@ -417,7 +417,7 @@ Sonata.Page = {
                 block = this.manualWrapBlock(block);
             }
 
-            var button =  "<div class='btn-group'><button class='rzcms btn btn-small btn-primary dropdown-toggle' data-toggle='dropdown'><i class='icon-cog icon-large'></i></button>"+
+            var button =  "<div class='btn-group'><button class='rzcms btn btn-small btn-block dropdown-toggle' data-toggle='dropdown'><i class='icon-cog icon-large'></i></button>"+
                 "<ul class='dropdown-menu'>"+
                 "<li><a class='cms-edit-link' data-id='"+id+"' data-page-id='"+page_id+"' href='#'>Edit</a></li>"+
                 "<li><a class='cms-delete-link' data-id='"+id+"' data-parent-id='"+parent_id+"' href='#' href='#'>Delete</a></li>"+

@@ -1,5 +1,5 @@
 .rz-cms-edit.cms-edit-mode .rzcms.cms-block.cms-container.cms-container-root {
-    outline: 1px dotted #941414;
+    outline: 1px dotted #E8554E;
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -20,7 +20,7 @@
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.cms-block.cms-block-element {
-    outline: 1px dotted #51a351;
+    outline: 1px dotted #7DC692;
     padding: 5px;
     width: 100%;
 }
@@ -37,13 +37,13 @@
 /*}*/
 
 .rz-cms-edit.cms-edit-mode .btn-container {
-    background-color: #253454;
+    background-color: #E8554E;
     color: #fff;
 }
 .rz-cms-edit.cms-edit-mode .btn-container:hover,
 .rz-cms-edit.cms-edit-mode .btn-container:active,
 .rz-cms-edit.cms-edit-mode .btn-container:focus{
-    background-color: #07101b;
+    background-color: #313941;
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms-layout-title-name-container .dropdown-menu > li > a:hover,
@@ -52,15 +52,41 @@
 .rz-cms-edit.cms-edit-mode .rzcms-layout-title-name-container .dropdown-submenu:focus > a {
     text-decoration: none;
     color: #ffffff;
-    background-color: #253454;
-    background-image: none;
+    background: #e8554e none;
 }
 
 .rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-menu > li > a:hover,
 .rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-menu > li > a:focus,
 .rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-submenu:hover > a,
-.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-submenu:focus > a {
-    background-image: none;
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .dropdown-submenu:focus > a{
+    background: #5a6989 none;
+}
+
+.rz-cms-edit.cms-edit-mode .btn-block {
+    background-color: #5a6989;
+    color: #fff;
+    min-width: 30px;
+    margin-top: 3px !important;
+}
+
+.rz-cms-edit.cms-edit-mode .btn-block:hover,
+.rz-cms-edit.cms-edit-mode .btn-block:active,
+.rz-cms-edit.cms-edit-mode .btn-block:focus{
+    background-color: #253454;
+}
+
+
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .btn.btn-success {
+    background-color: #7DC692;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .btn.btn-success:hover,
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .btn.btn-success:active,
+.rz-cms-edit.cms-edit-mode .rz-cms-layout-layer.cms-layout-role-block .btn.btn-success:focus{
+    background-color: #019875;
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-header {

@@ -1,4 +1,4 @@
-.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn{
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -19,6 +19,7 @@
     -moz-border-radius-bottomleft: 4px;
     border-bottom-left-radius: 4px;
 }
+
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn-group > .btn:last-child,
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .btn-group > .dropdown-toggle {
     -webkit-border-top-right-radius: 4px;
@@ -30,15 +31,15 @@
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin.modal {
-    background: transparent !important;
+    background: transparent !important
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-header h3 {
-    text-align: left;
+    text-align: left
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer {
-    text-align: right;
+    text-align: right
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn {
@@ -49,16 +50,36 @@
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn:first-child {
-    margin-right: 5px;
+    margin-right: 5px
 }
 
-.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary { padding: 12px 24px; background:#313941; border: 1px solid #F6F7F0!important; color: #F6F7F0!important; text-transform: uppercase; letter-spacing: 1px; }
-.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:hover {background: #253454;  border: 1px solid #F6F7F0!important; color: #F6F7F0!important;}
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary,
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-delete {
+    padding: 12px 24px;
+    background: #313941;
+    border: 1px solid #F6F7F0!important;
+    color: #F6F7F0!important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:hover,
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-delete:hover{
+    background: #253454;
+    border: 1px solid #F6F7F0!important;
+    color: #F6F7F0!important;
+}
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-delete:active,
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-delete:focus,
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:active,
-.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:focus {background: #313941; border: 1px solid #95989C!important; color: #F6F7F0!important; }
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer .btn.btn-primary:focus {
+    background: #313941;
+    border: 1px solid #95989C!important;
+    color: #F6F7F0!important;
+}
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-body {
-    background-color: #fff;
+    background-color: #fff
 }
 
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin #main .box.box-bordered.box-color .box-title,
@@ -67,3 +88,26 @@
     -moz-border-radius: 4px 4px 0px  0px;
     border-radius: 4px 4px 0px  0px;
 }
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-body .modal-delete {
+    margin: 0px 10px 25px 10px;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-body .modal-delete p {
+    color: #313941;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-footer form {
+    margin: 0px;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-body .modal-delete .box.box-bordered.box-color.red .box-title {
+    border-color: #313941 !important;
+    background: #313941 !important;
+}
+
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-body .modal-delete .box.box-bordered.box-color.red .box-content {
+    border-color: #313941 !important
+}
+
+
