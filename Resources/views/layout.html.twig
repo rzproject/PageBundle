@@ -90,6 +90,7 @@
 {% endblock %}
 
 {% block sonata_page_container %}
+<header class="header">
     <header class="header">
         <!--logo-->
         <div class="container">
@@ -185,7 +186,7 @@
                     <div class="navbar">
                         <!--logo-->
                         <div class="logo-sticky">
-                            <a href="#"><img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png') }}" alt="" /></a>
+                            <a href="index.html"><img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png') }}" alt="" /></a>
                         </div>
                         <!--menu-->
                         <nav id="menu" class="menu menu-sticky">
@@ -262,54 +263,54 @@
         </div>
     </header>
     <!-- // header -->
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="row-fluid">
-                    <div class="span12 content">
-                    {% if page is defined %}
-                        <div class="span12">
-                            <div class="row-fluid">
-                            {% if page.name != 'global'%}
-                                {{ sonata_page_render_container('content_top', 'global') }}
-                            {% endif %}
-                            {{ sonata_page_render_container('content_top', page) }}
-                            </div>
+</header>
+<div class="container">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span12 content">
+                {% if page is defined %}
+                    <div class="span12">
+                        <div class="row-fluid">
+                        {% if page.name != 'global'%}
+                            {{ sonata_page_render_container('content_top', 'global') }}
+                        {% endif %}
+                        {{ sonata_page_render_container('content_top', page) }}
                         </div>
-                    {% endif %}
+                    </div>
+                {% endif %}
 
+                <div class="row-fluid">
+                    <div class="span12">
+                    {% if content is defined %}
+                        {{ content|raw }}
+                    {% else %}
+                        {% set content = block('content') %}
+                        {% if content|length > 0 %}
+                            {{ content|raw }}
+                        {% elseif page is defined %}
+                            {{ sonata_page_render_container('content', page) }}
+                        {% endif %}
+                    {% endif %}
+                    </div>
+                </div>
+
+                {% if page is defined %}
                     <div class="row-fluid">
                         <div class="span12">
-                        {% if content is defined %}
-                            {{ content|raw }}
-                        {% else %}
-                            {% set content = block('content') %}
-                            {% if content|length > 0 %}
-                                {{ content|raw }}
-                            {% elseif page is defined %}
-                                {{ sonata_page_render_container('content', page) }}
-                            {% endif %}
+                        {{ sonata_page_render_container('content_bottom', page) }}
+
+                        {% if page.name != 'global'%}
+                            {{ sonata_page_render_container('content_bottom', 'global') }}
                         {% endif %}
                         </div>
                     </div>
-
-                    {% if page is defined %}
-                        <div class="row-fluid">
-                            <div class="span12">
-                            {{ sonata_page_render_container('content_bottom', page) }}
-                            </div>
-                        </div>
-                    {% endif %}
-                    </div>
+                {% endif %}
                 </div>
             </div>
         </div>
     </div>
-    {% if page is defined %}
-        {% if page.name != 'global'%}
-            {{ sonata_page_render_container('content_bottom', 'global') }}
-        {% endif %}
-    {% endif %}
+</div>
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
