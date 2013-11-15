@@ -275,9 +275,6 @@
                     {% if page is defined %}
                         <div class="span12">
                             <div class="row-fluid">
-                            {% if page.name != 'global'%}
-                                {{ sonata_page_render_container('content_top', 'global') }}
-                            {% endif %}
                             {{ sonata_page_render_container('content_top', page) }}
                             </div>
                         </div>
