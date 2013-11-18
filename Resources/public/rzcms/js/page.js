@@ -465,6 +465,8 @@ Sonata.Page = {
             var temp = jQuery(value).contents();
             jQuery(value).replaceWith(temp);
         });
+
+        jQuery('body').trigger('css-class-changed-remove');
     },
 
     /**

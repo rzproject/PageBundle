@@ -97,6 +97,10 @@
     padding: 0px !important;
 }
 
+.rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .modal-body.modal-list {
+    padding: 0px 20px 20px 20px !important;
+}
+
 .rz-cms-edit.cms-edit-mode .rzcms.rz-cms-admin .rz-form {
     margin-bottom: 0px !important;
 }
