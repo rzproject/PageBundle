@@ -238,6 +238,8 @@ Sonata.Page = {
             parent_id = jQuery(target).attr('data-parent-id');
 
         //window.open(this.url.block_edit.replace(/BLOCK_ID/, id), '_newtab');
+
+        console.log(this.url.block_delete.replace(/BLOCK_ID/, id));
         this.showPopup(this.initializeSettingsPopup(id, parent_id), 'popup_settings_'+id,this.url.block_delete.replace(/BLOCK_ID/, id), 'delete');
 
         event.preventDefault();
@@ -270,6 +272,8 @@ Sonata.Page = {
             this.disableEditable();
         }
         this.editMode = 'preview';
+
+        jQuery('body').trigger('css-class-changed-preview');
     },
 
     /**
@@ -408,7 +412,8 @@ Sonata.Page = {
         // build layer
         layer = jQuery('<div class="'+classes.join(' ')+'" ></div>');
 
-        console.log(id+'--->'+type+'--->'+role);
+        console.log(id+'--->'+type+'--->'+role+'--parentid->'+parent_id);
+
 
         if (role == 'block') {
             if (type == 'sonata.page.block.container') {
@@ -466,7 +471,7 @@ Sonata.Page = {
             jQuery(value).replaceWith(temp);
         });
 
-        jQuery('body').trigger('css-class-changed-remove');
+        jQuery('body').trigger('css-class-changed-zone');
     },
 
     /**
@@ -927,6 +932,8 @@ Sonata.Page = {
             dataType: dataType,
             success: jQuery.proxy(function(data) {
                 if (data.result == 'ok') {
+
+                    console.log(popupType);
                     //location.reload();
                     if (popupType == 'edit') {
                         params.that.renderBlock({'id':params.id, 'dialog': params.dialog, 'that': params.that});
@@ -943,6 +950,8 @@ Sonata.Page = {
 
     renderBlock: function(params) {
         jQuery.blockUI({ message: rzadmin.loadingMessage(null)});
+
+        console.log(params);
         var that = this;
         pageId = jQuery(root).attr('data-page-id');
         var url = Routing.generate('admin_sonata_page_block_cmsBlockRender', {'pageId':pageId,'blockId': params.id}, true);
