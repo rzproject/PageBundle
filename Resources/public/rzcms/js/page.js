@@ -892,6 +892,7 @@ Sonata.Page = {
                 dialog.on('shown', function (event) {
                     rzadmin.addFilters(jQuery(this));
                     rzadmin.initElements(jQuery(this));
+
                 });
             })
             .fail(function(jqXHR, textStatus, errorThrown){
