@@ -1,0 +1,17 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="sonata-page-menu-container {{ settings.class }}">
+        {% if settings.title %}<h3>{{ settings.title }}</h3>{% endif %}
+
+        <div class="nav-collapse collapse">
+            <ul class="sonata-page-menu-chilren-list nav pull-right">
+                {% if page %}
+                    {% for child in page.children %}
+                        <li class="sonata-page-menu-children-element"><a href="{{ path(child) }}" title="{{ child.name|escape }}">{{ child.name }}</a></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

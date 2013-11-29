@@ -1,0 +1,23 @@
+{% extends 'SonataAdminBundle:CRUD:action.html.twig' %}
+
+{% block title %}{{ 'title_select_block_type'|trans({}, 'SonataPageBundle') }}{% endblock %}
+
+{% block content %}
+    <div class="box box-color box-bordered">
+        <div class="box-title">
+            <h3>
+                <i class="icon-reorder"></i>
+                {{ 'title_select_block_type'|trans({}, 'SonataPageBundle') }}
+            </h3>
+        </div>
+        <div class="box-content">
+            <ul class="unstyled">
+                {% for code, service in services %}
+                    <li><a href="{{ admin.generateUrl('create', {'type': code}) }}">{{ service.name }}</a></li>
+                {% else %}
+                    <li>{{ 'no_type_available'|trans({}, 'SonataPageBundle') }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

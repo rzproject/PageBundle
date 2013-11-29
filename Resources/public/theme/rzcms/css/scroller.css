@@ -1,0 +1,294 @@
+/* -- functional styling */
+.advancedscroller-con {
+  position: relative;
+  width: 100%; }
+
+.advancedscroller {
+  position: relative;
+  width: 100%; }
+
+/* ----reset ul style */
+.advancedscroller ul {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.advancedscroller ul > li {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.advancedscroller:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  clear: both; }
+
+.advancedscroller ul:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  clear: both; }
+
+.advancedscroller .item-tobe {
+  position: relative;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.advancedscroller .thumbsCon {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  z-index: 3; }
+
+.advancedscroller .bulletsCon {
+  display: block;
+  position: relative;
+  z-index: 4; }
+
+.advancedscroller .thumbsClip {
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transition-property: left;
+  transition-duration: 0.9s;
+  transition-timing-function: ease-out;
+  -moz-transition-property: left;
+  -moz-transition-duration: 0.9s;
+  -moz-transition-timing-function: ease-out;
+  -webkit-transition-property: left;
+  -webkit-transition-duration: 0.9s;
+  -webkit-transition-timing-function: ease-out;
+  -o-transition-property: left;
+  -o-transition-duration: 0.9s;
+  -o-transition-timing-function: ease-out;
+  -ms-transition-property: left;
+  -ms-transition-duration: 0.9s;
+  -ms-transition-timing-function: ease-out;
+  -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  /* older webkit */
+  -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  -moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  -ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  -o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  /* easeOutBack */ }
+
+.advancedscroller .thumbsClip > * {
+  display: block;
+  float: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.advancedscroller.no-need-for-nav .bulletsCon {
+  display: none; }
+
+.advancedscroller.no-need-for-nav .arrowsCon {
+  display: none; }
+
+img.fullwidth {
+  width: 100%;
+  display: block; }
+
+.advancedscroller.dzsportfolio {
+  overflow: visible; }
+
+.advancedscroller.dzsportfolio .items {
+  display: none; }
+
+/* -- styling */
+.advancedscroller { font-size: 11px; }
+
+.advancedscroller .the-thumb-con {
+  position: relative; }
+
+.advancedscroller .item .the-thumb {
+  width: 100%;
+  height: 100%;
+  background-size: cover; }
+
+.advancedscroller .preloader {
+  width: 128px;
+  height: 40px;
+  background: transparent url(../img/preloader.gif) center center no-repeat;
+  margin-left: -64px;
+  margin-top: -20px;
+  position: absolute;
+  top: 50%;
+  left: 50%; }
+
+.advancedscroller.swipe-enabled {
+  cursor: move;
+  cursor: -moz-grab;
+  cursor: grab;
+  cursor: url(img/openhand.cur) 4 4, move; }
+
+.advancedscroller.swipe-enabled.closedhand {
+  cursor: url(img/closedhand.cur) 4 4, move; }
+
+.advancedscroller.swipe-enabled.closedhand .thumbsClip {
+  transition-property: left;
+  transition-duration: 0s;
+  transition-timing-function: linear;
+  -moz-transition-property: left;
+  -moz-transition-duration: 0s;
+  -moz-transition-timing-function: linear;
+  -webkit-transition-property: left;
+  -webkit-transition-duration: 0s;
+  -webkit-transition-timing-function: linear;
+  -o-transition-property: left;
+  -o-transition-duration: 0s;
+  -o-transition-timing-function: linear;
+  -ms-transition-property: left;
+  -ms-transition-duration: 0s;
+  -ms-transition-timing-function: linear; }
+
+.advancedscroller .thumbsClip > * {
+  padding: 0px 10px;
+  border-right: 0px solid rgba(0, 0, 0, 0.3);
+  transition-property: border, padding;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
+  -moz-transition-property: border, padding;
+  -moz-transition-duration: 0.5s;
+  -moz-transition-timing-function: ease-out;
+  -webkit-transition-property: border, padding;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-out;
+  -o-transition-property: border, padding;
+  -o-transition-duration: 0.5s;
+  -o-transition-timing-function: ease-out;
+  -ms-transition-property: border, padding;
+  -ms-transition-duration: 0.5s;
+  -ms-transition-timing-function: ease-out; }
+
+
+
+.advancedscroller .bulletsCon {
+  height: 20px;
+  text-align: center;
+  margin: 10px auto;
+  cursor: pointer; }
+
+.advancedscroller .bulletsCon span.bullet {
+  width: 10px;
+  height: 10px;
+  background-repeat: no-repeat;
+  background-position: 0 0%;
+  background-color: transparent;
+  background-image: url(../img/bullet.png);
+  display: inline-block;
+  margin-right: 3px;
+  }
+
+.advancedscroller .bulletsCon span.bullet:hover {
+  background-position: 0 -11px; }
+
+.advancedscroller .bulletsCon span.bullet.active {
+  background-position:0px -11px; }
+
+.advancedscroller .name {
+  text-align: center;
+  margin-top: 10px; }
+
+.advancedscroller .arrowsCon > .arrow-left:hover, .advancedscroller .arrowsCon > .arrow-right:hover {
+  opacity: 1; }
+
+img.fullwidth {
+  margin-top: 5px; }
+
+.advancedscroller.mode-onlyoneitem .thumbsClip > * {
+  padding: 0px; }
+
+.advancedscroller.mode-onlyoneitem .thumbsCon {
+  transition-property: height;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  -moz-transition-property: height;
+  -moz-transition-duration: 0.3s;
+  -moz-transition-timing-function: ease-out;
+  -webkit-transition-property: height;
+  -webkit-transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  -o-transition-property: height;
+  -o-transition-duration: 0.3s;
+  -o-transition-timing-function: ease-out;
+  -ms-transition-property: height;
+  -ms-transition-duration: 0.3s;
+  -ms-transition-timing-function: ease-out; }
+
+.advancedscroller.skin-black {
+  margin-top: 10px; }
+
+.advancedscroller.skin-black a {
+  color: inherit;
+  text-decoration: none; }
+
+.advancedscroller.skin-black a:hover {
+  opacity: 0.7; }
+
+.advancedscroller.skin-black .thumbsClip > * {
+  padding: 10px;
+  border-right: 0; }
+
+.advancedscroller.skin-black .thumbsClip > *.first-in-row {
+  padding: 10px;
+  padding-left: 0px;
+  border-right: 0; }
+
+.advancedscroller.skin-black .thumbsClip > *.last-in-row {
+  padding: 10px;
+  padding-right: 0px;
+  border-right: 0; }
+
+.advancedscroller.skin-black .arrowsCon > .arrow-left, .advancedscroller.skin-black .arrowsCon > .arrow-right {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-image: url("../img/arrow-left-black-small.png");
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right:50%;
+  left: auto;
+  top: -15px;
+  margin-top: -15px;
+  cursor: pointer;
+  opacity: 0.69;
+  z-index: 4;
+  transition-property: height;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  -moz-transition-property: height;
+  -moz-transition-duration: 0.3s;
+  -moz-transition-timing-function: ease-out;
+  -webkit-transition-property: height;
+  -webkit-transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  -o-transition-property: height;
+  -o-transition-duration: 0.3s;
+  -o-transition-timing-function: ease-out;
+  -ms-transition-property: height;
+  -ms-transition-duration: 0.3s;
+  -ms-transition-timing-function: ease-out; }
+
+.advancedscroller.skin-black .arrowsCon > .arrow-right {
+  background-image: url("../img/arrow-right-black-small.png");
+  left: auto;
+ left: 50%;
+  top: -15px; }
+
+.advancedscroller.skin-black .arrowsCon > .arrow-left:hover, .advancedscroller.skin-black .arrowsCon > .arrow-right:hover {
+  opacity: 1; }
+

@@ -61,16 +61,16 @@ class ContainerBlockService extends BaseContainerBlockService
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCacheKeys(BlockInterface $block)
-    {
-        return array(
-            'block_id'   => $block->getId(),
-            'page_id'    => $block->getPage()->getId(),
-            'manager'    => $block->getPage() instanceof SnapshotPageProxy ? 'snapshot' : 'page',
-            'updated_at' => $block->getUpdatedAt()->format('U'),
-        );
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function getCacheKeys(BlockInterface $block)
+//    {
+//        return array(
+//            'block_id'   => $block->getId(),
+//            'page_id'    => $block->getPage()->getId(),
+//            'manager'    => $block->getPage() instanceof SnapshotPageProxy ? 'snapshot' : 'page',
+//            'updated_at' => $block->getUpdatedAt()->format('U'),
+//        );
+//    }
 }

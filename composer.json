@@ -15,8 +15,8 @@
     "minimum-stability": "dev",
     "require": {
         "rmzamora/page-bundle": "2.3.*@dev",
-        "rz/admin-bundle": "2.3.*@dev",
-        "rz/doctrine-orm-admin-bundle": "2.3.*@dev"
+        "rz/admin-bundle": "2.3.1.*@dev",
+        "rz/doctrine-orm-admin-bundle": "2.3.1.*@dev"
     },
     "autoload": {
         "psr-0": { "Rz\\PageBundle": "" }
@@ -24,8 +24,7 @@
     "target-dir": "Rz/PageBundle",
     "extra": {
         "branch-alias": {
-            "dev-2.2": "2.2.x-dev",
-            "dev-master": "2.3.x-dev"
+            "dev-2.3.1": "2.3.1.x-dev"
         }
     }
 }

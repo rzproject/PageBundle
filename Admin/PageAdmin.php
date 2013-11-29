@@ -86,7 +86,7 @@ class PageAdmin extends BasePageAdmin
                               'model_manager' => $this->getModelManager(),
                               'class'         => $this->getClass(),
                               'required'      => false,
-                              'chosen_enabled'=>true,
+                              'select2'=>true,
                           ))
             ->end();
 
@@ -100,7 +100,7 @@ class PageAdmin extends BasePageAdmin
                                   'class'         => $this->getClass(),
                                   'filter_choice' => array('request_method' => 'all'),
                                   'required'      => false,
-                                  'chosen_enabled'=>true,
+                                  'select2'=>true,
                               ))
                 ->end()
             ;

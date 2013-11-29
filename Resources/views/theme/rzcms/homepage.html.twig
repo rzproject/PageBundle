@@ -1,0 +1,17 @@
+{% extends 'RzPageBundle:theme/rzcms:layout.html.twig' %}
+
+{% block rzcms_body %}
+    {% if page is defined and page.name != 'global'%}
+        <div class="row-fluid">
+            <div class="span12">
+                {{ sonata_page_render_container('content_top', 'global') }}
+            </div>
+        </div>
+    {% endif %}
+    {{ parent() }}
+    {% if page is defined %}
+        {% if page.name != 'global'%}
+            {{ sonata_page_render_container('content_bottom', 'global') }}
+        {% endif %}
+    {% endif %}
+{% endblock rzcms_body %}

@@ -31,7 +31,7 @@ class ResponseListener extends BaseResponseListener
      */
     public function onCoreResponse(FilterResponseEvent $event)
     {
-        $cms = $this->cmsSelector->retrieve();
+$cms = $this->cmsSelector->retrieve();
 
         $response = $event->getResponse();
         $request  = $event->getRequest();
@@ -49,9 +49,9 @@ class ResponseListener extends BaseResponseListener
         // display a validation page before redirecting, so the editor can edit the current page
         if ($page && $response->isRedirection() && $this->cmsSelector->isEditor() && !$request->get('_sonata_page_skip')) {
             $response = new Response($this->templating->render('SonataPageBundle:Page:redirect.html.twig', array(
-                                                                                                             'response'   => $response,
-                                                                                                             'page'       => $page,
-                                                                                                         )));
+                'response'   => $response,
+                'page'       => $page,
+            )));
 
             $response->setPrivate();
 
@@ -77,7 +77,10 @@ class ResponseListener extends BaseResponseListener
             return;
         }
 
-        $parameters = array('content' => $response->getContent());
+        $parameters = array(
+            'content' => $response->getContent()
+        );
+
         $response = $this->pageServiceManager->execute($page, $request, $parameters, $response);
 
         if (!$this->cmsSelector->isEditor() && $page->isCms()) {

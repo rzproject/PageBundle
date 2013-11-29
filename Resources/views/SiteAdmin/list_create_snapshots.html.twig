@@ -1,0 +1,8 @@
+{% extends 'RzAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <a href="{{ admin.generateObjectUrl('snapshots', object) }}" class="btn btn-primary">
+        <i class="icon-camera-retro"></i>
+        <span class="hidden-phone hidden-tablet visible-desktop"> {{ "link_create_snapshots"|trans({}, "SonataPageBundle")}}</span>
+    </a>
+{% endblock %}
