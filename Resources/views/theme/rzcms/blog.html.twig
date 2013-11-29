@@ -1,0 +1,52 @@
+{% extends 'RzPageBundle:theme/rzcms:layout.html.twig' %}
+
+{% block rzcms_body %}
+<div class="container">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span12 content">
+                    {% if page is defined %}
+                        <div class="span12">
+                            <div class="row-fluid">
+                                {{ sonata_page_render_container('content_top', page) }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <h1>{{ 'title_archive'|trans({}, 'RzNewsBundle') }}</h1>
+                            <div class="row-fluid sonata-blog-post-list">
+                                <div class="span8">
+                                    {% if content is defined %}
+                                        {{ content|raw }}
+                                    {% else %}
+                                        {% set content = block('content') %}
+                                        {% if content|length > 0 %}
+                                            {{ content|raw }}
+                                        {% elseif page is defined %}
+                                            {{ sonata_page_render_container('content', page) }}
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <div class="sidebar span4">
+                                    {{ sonata_page_render_container('content_right', page) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if page is defined %}
+                        <div class="row-fluid">
+                            <div class="span12">
+                                {{ sonata_page_render_container('content_bottom', page) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock rzcms_body %}
