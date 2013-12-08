@@ -17,6 +17,19 @@
     <link rel="stylesheet" type="text/css" href="{{  asset('bundles/rzpage/theme/rzcms/css/prettyphoto.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{  asset('bundles/rzpage/theme/rzcms/css/dzsportfolio.css')}}"/>
 
+    {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+    {# block service css#}
+    {# bxslider #}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.css')}}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rzmedia/css/block/rzmedia-bxslider.css')}}" />
+    {# featured gallery #}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rzmedia/css/block/rzmedia-featured-gallery.css')}}" />
+    {# featured post #}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rznews/css/featured_post_block.css')}}" />
+    {%  endif %}
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/style-override.css')}}" />
+
     <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/style-override.css')}}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/theme-override.css')}}" />
 {% endblock %}
@@ -29,6 +42,18 @@
     <link rel="stylesheet" href="{{  asset('bundles/rzpage/theme/rzcms/css/font-awesome-ie7.min.css')}}">
     <link rel="stylesheet" href="{{  asset('bundles/rzpage/theme/rzcms/css/fontello-ie7.css')}}">
     <![endif]-->
+
+    {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+    {# block service js#}
+    {# bxslider #}
+    <script type="text/javascript" src="{{  asset('/bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.js')}}"></script>
+    <script type="text/javascript" src="{{  asset('/bundles/rzmedia/js/block/rzmedia-bxslider.js')}}"></script>
+    {# featured gallery #}
+    <script type="text/javascript" src="{{  asset('/bundles/rmzamorajquery/jquery-plugins/imgLiquid/js/imgLiquid.js')}}"></script>
+    <script type="text/javascript" src="{{  asset('/bundles/rzmedia/js/block/rzmedia-featured-gallery.js')}}"></script>
+    {# featured post #}
+    <script type="text/javascript" src="{{  asset('/bundles/rmzamorajquery/jquery-plugins/eqheight/jquery.eqheight.js')}}"></script>
+    {% endif %}
     <script type="text/javascript" src="{{  asset('bundles/rzpage/theme/rzcms/js/jquery.themepunch.revolution.min.js')}}"></script>
     <script type="text/javascript" src="{{  asset('bundles/rzpage/theme/rzcms/js/jquery.themepunch.plugins.min.js')}}"></script>
     <script src="{{  asset('bundles/rzpage/theme/rzcms/js/dzsportfolio.js') }}" type="text/javascript"></script>
