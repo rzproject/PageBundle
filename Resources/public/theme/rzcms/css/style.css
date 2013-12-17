@@ -1108,7 +1108,7 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 /*	09: BLOG
 /*-----------------------------------------------------------------------------------*/
 
-h1.blog { font-size: 26px; line-height:32px; font-weight: 400; text-align: left; letter-spacing: 2px; margin:15px 0 20px;  }
+h1.blog { font-size: 26px; line-height:32px; font-weight: 400; text-align: left; letter-spacing: 2px; margin:15px 0 15px;  }
 
 /* META*/
 .post-meta { width: 100%; display: inline-block; }
