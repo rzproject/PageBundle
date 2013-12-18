@@ -1005,7 +1005,7 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 /*-----------------------------------------------------------------------------------*/
 .google-maps { height: 450px; margin:-35px 0 30px;  }
 
-#ajax-contact-form textarea { height: 250px!important;}
+.contact-form textarea { height: 250px!important;}
 .form_info {
 	color: #666;
 	text-transform: uppercase;
@@ -1015,7 +1015,7 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 	margin-bottom: 3px;
 	height: 30px;
 }
-#ajax-contact-form input, #ajax-contact-form  textarea {
+.contact-form input, .contact-form  textarea {
 	background: #f0f0f0;
 	color: #7f7d79;
 	-webkit-border-radius: 0px;
@@ -1028,7 +1028,7 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 	height: 30px;
 	font-weight:400;
 }
-#ajax-contact-form input.btn {
+.contact-form input.btn {
 	margin-top: 10px;
 	background: #5a6989;
 	border: 1px solid #F6F7F0!important;
@@ -1039,7 +1039,7 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 	height: 43px;
 	letter-spacing: 1px;
 }
-#ajax-contact-form input.btn:hover, #ajax-contact-form input.btn:focus {
+.contact-form input.btn:hover, .contact-form input.btn:focus {
 	background: transparent;
 	border: 1px solid #F6F7F0!important; color: #F6F7F0!important;
 	background: #253454;
@@ -1964,6 +1964,40 @@ iframe { width: 100%; height: 100%!important; }
 .btn-rzcms.mobile:hover {background: #253454;  border: 1px solid #F6F7F0!important; color: #F6F7F0!important;}
 .btn-rzcms.mobile:active, .btn-rzcms.mobile:focus {background: #313941; border: 1px solid #95989C!important; color: #F6F7F0!important; }
 .phone-marg { margin-top: 0px; }
+}
+
+
+/*GIST*/
+.gist .highlight {
+    background-color: #ffffff;
+}
+
+.gist .line-numbers {
+    background: none !important;
+}
+
+.gist .gist-meta {
+    background: none !important;
+}
+
+/*blog override*/
+ul.recent-post-sidebar li small,
+ul.recent-comment-sidebar li small{
+ margin-left: 10px;
+}
+
+ul.recent-post-sidebar li,
+ul.recent-comment-sidebar li{
+    margin-bottom: 10px;
+    line-height: 20px;
+}
+
+ul.recent-comment-sidebar li p {
+    margin-bottom: 0px;
+}
+
+.blog-sidebar .span12 {
+    margin-left: 0px !important;
 }
 
 
