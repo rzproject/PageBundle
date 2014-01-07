@@ -1006,7 +1006,7 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 .google-maps { height: 450px; margin:-35px 0 30px;  }
 
 .contact-form textarea { height: 250px!important;}
-.form_info {
+.form_info, .form_info_social {
 	color: #666;
 	text-transform: uppercase;
 	font-weight: 500;
@@ -1014,6 +1014,50 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 	letter-spacing: 2px;
 	margin-bottom: 3px;
 	height: 30px;
+}
+
+.form_info_social {
+    text-align: center;
+}
+
+.contact-form .remember {
+    float: left;
+    margin-top: 5px;
+    margin-left: 1px;
+    display: inline;
+}
+.contact-form .remember label{
+    float: left;
+    margin-left: 10px;
+    display: inline-block !important;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+    height: 30px;
+}
+
+.contact-form .remember .forgot-password {
+    float: right;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+    height: 30px;
+    margin-top: -5px;
+}
+
+.contact-form .remember .forgot-password:hover {
+    color: #253454;
+}
+
+.contact-form .remember .icheckbox_square-aero {
+    display: inline-block !important;
+    float: left;
 }
 .contact-form input, .contact-form  textarea {
 	background: #f0f0f0;
@@ -1025,9 +1069,10 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 	-moz-box-shadow: none;
 	box-shadow: none;
 	border: 0px none;
-	height: 30px;
+	height: 40px;
 	font-weight:400;
 }
+
 .contact-form input.btn {
 	margin-top: 10px;
 	background: #5a6989;
@@ -1039,6 +1084,20 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 	height: 43px;
 	letter-spacing: 1px;
 }
+
+
+.contact-form .registration-submit {
+     text-align: center;
+}
+
+.contact-form .form-errors ul {
+    margin-left: 0px;
+}
+
+.contact-form .form-errors ul li {
+    color: #D34836;
+}
+
 .contact-form input.btn:hover, .contact-form input.btn:focus {
 	background: transparent;
 	border: 1px solid #F6F7F0!important; color: #F6F7F0!important;
@@ -1053,6 +1112,24 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
+.contact-form  .btn-social {
+    margin-left: 0px !important;
+}
+
+.contact-form .btn-social-fb {
+  background-color: #4c66a4 !important;
+}
+
+.contact-form .btn-social-twitter {
+    background-color: #0271bf !important;
+}
+
+.contact-form .btn-social-google {
+    background-color: #D34836 !important;
+}
+
+
+
 .notification_error {
 	color: #fff;
 	background-color:#333;
@@ -2028,6 +2105,17 @@ ul.recent-comment-sidebar li p {
 .masonry-gallery .gallery-item .item_description a:hover{ color:#888; }
 .masonry-gallery .gallery-item .item_description p {
     text-align: left;
+}
+
+.rz-profile-menu .list-group {
+    padding: 10px;
+    border: 4px double #bbb;
+    border-left: 0;
+    border-right: 0;
+}
+.rz-profile-menu .list-group a.list-group-item  {
+    display:block;
+    font-size: 18px !important;
 }
 
 /* Smartphones (portrait) ----------- */
