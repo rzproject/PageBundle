@@ -224,6 +224,11 @@ i.service-icon { margin: 5px auto 25px auto!important; text-align: center!import
 .btn-rzcms-theme:hover {background: #253454; border: 1px solid #F6F7F0!important; color: #F6F7F0!important; }
 .btn-rzcms-theme:active, .btn-rzcms-theme:focus { background: #5a6989; border: 1px solid #F6F7F0!important; color: #F6F7F0!important; }
 
+
+.btn-rzcms-theme-red { padding: 12px 24px;  background: #E8554E; border: 1px solid #F6F7F0!important; color: #F6F7F0!important; text-transform: uppercase; letter-spacing: 1px; }
+.btn-rzcms-theme-red:hover {background: #313941; border: 1px solid #F6F7F0!important; color: #F6F7F0!important; }
+.btn-rzcms-theme-red:active, .btn-rzcms-red:focus { background: #E8554E; border: 1px solid #F6F7F0!important; color: #F6F7F0!important; }
+
 /*-----------------------------------------------------------------------------------*/
 /*	02: HEADER & MENU
 /*-----------------------------------------------------------------------------------*/
@@ -1086,8 +1091,19 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
 }
 
 
-.contact-form .registration-submit {
+.contact-form .registration-submit,
+.contact-form .profile-submit{
      text-align: center;
+}
+
+.contact-form .profile-submit {
+    padding-top: 10px;
+}
+
+.contact-form .profile-submit input.btn {
+    margin-top: 5px;
+    padding: 10px 30px;
+    height: 46px;
 }
 
 .contact-form .form-errors ul {
@@ -2153,6 +2169,89 @@ and (max-width : 320px) {
 }
 
 
+
+.contact-form-profile .input-append .add-on {
+    display: inline-block;
+    width: auto;
+    height: 32px;
+    min-width: 27px;
+    padding: 4px 5px;
+    font-size: 20px;
+    border: 0px solid #ccc;
+    background-color: #5a6989;
+    color: #fff;
+}
+
+.contact-form-profile .input-append .add-on i {
+    line-height: 32px;
+    margin-left: 4px;
+}
+
+
+.datepicker th.switch {
+    font: 16px/28px 'Lato', sans-serif !important;
+    text-rendering: optimizeLegibility;
+}
+.datepicker.datepicker-dropdown:before,
+.datepicker.datepicker-dropdown:after {
+    border: 0
+}
+
+.datepicker.datepicker-dropdown .datepicker-days .active,
+.datepicker.datepicker-dropdown .datepicker-years .active,
+.datepicker.datepicker-dropdown .datepicker-months .active {
+    background: #5a6989
+}
+
+.datepicker.datepicker-dropdown .datepicker-days .active:hover,
+.datepicker.datepicker-dropdown .datepicker-years .active:hover,
+.datepicker.datepicker-dropdown .datepicker-months .active:hover {
+    background: #4b6399;
+    color: #fff;
+}
+
+.datepicker tfoot tr th.clear {
+    background: #5a6989;
+    color: #fff;
+    cursor: pointer !important;
+}
+
+.datepicker table {
+    width: 100%
+}
+
+.daterangepicker:before,
+.daterangepicker:after {
+    border: 0 !important
+}
+
+.daterangepicker th,
+.daterangepicker td,
+.daterangepicker td:hover,
+.daterangepicker td.active,
+.daterangepicker .calendar {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.daterangepicker .active {
+    background: #4b6399;
+    background-image: none !important;
+}
+
+.contact-form-profile .bootstrap-select {
+    background-color: #f0f0f0;
+    color: #7f7d79;
+    height: 42px;
+    padding-top: 2px;
+}
+.contact-form-profile .bootstrap-select .btn {
+    color: #7f7d79;
+}
+.contact-form-profile .bootstrap-select .btn:hover {
+    background-color: #f0f0f0;
+}
 
 
 
