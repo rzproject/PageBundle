@@ -2131,6 +2131,28 @@ and (max-width : 320px) {
 }
 
 
+.user-profile {  margin-bottom: 40px; padding:20px; border:medium double #E9E6E1; background-color: #ffffff; }
+.user-profile h3 {   letter-spacing: 0;}
+.user-profile h4 {  font-size: 20px; font-weight: 400; margin: 5px 0 -5px; }
+.user-profile-row-1 {
+    text-align: center;
+    height: 190px;
+    padding: 10px 0 0;
+    background-color: #495159;
+}
+
+.user-profile:hover {
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-box-shadow: 0 0 15px #888;
+    box-shadow: 0 0 15px #999;
+}
+
+
 
 
 

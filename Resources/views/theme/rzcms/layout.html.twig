@@ -118,6 +118,20 @@
                                 <li class="has-submenu-no">
                                     <a href="{{ path(rz_render_page_url('Gallery')) }}">Gallery</a>
                                 </li>
+                                {% if (app.user is not null and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
+                                <li class="has-submenu">
+                                    <a href="{{ path(rz_render_page_url('sonata_user_profile_show')) }}"><i class="icon-user"></i> {{ app.user }}</a>
+                                    {{ sonata_block_render({'type': 'sonata.user.block.menu', 'settings' : {'template':'RzUserBundle:Block:block_profile_menu.html.twig'} }, {'current_uri': app.request.requestUri}) }}
+                                </li>
+                                {% else %}
+                                    <li class="has-submenu-no">
+                                        <a href="{{ path(rz_render_page_url('fos_user_security_login')) }}">Login</a>
+                                    </li>
+                                    <li class="has-submenu-no">
+                                        <a href="{{ path(rz_render_page_url('fos_user_registration_register')) }}">Register</a>
+                                    </li>
+
+                                {% endif %}
                             </ul>
                         </nav>
                     </div>
@@ -149,6 +163,20 @@
                                 <li class="has-submenu-no">
                                     <a href="{{ path(rz_render_page_url('Gallery')) }}">Gallery</a>
                                 </li>
+                                {% if (app.user is not null and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
+                                    <li class="has-submenu">
+                                        <a href="{{ path(rz_render_page_url('sonata_user_profile_show')) }}"><i class="icon-user"></i> {{ app.user }}</a>
+                                        {{ sonata_block_render({'type': 'sonata.user.block.menu', 'settings' : {'template':'RzUserBundle:Block:block_profile_menu.html.twig'} }, {'current_uri': app.request.requestUri}) }}
+                                    </li>
+                                {% else %}
+                                    <li class="has-submenu-no">
+                                        <a href="{{ path(rz_render_page_url('fos_user_security_login')) }}">Login</a>
+                                    </li>
+                                    <li class="has-submenu-no">
+                                        <a href="{{ path(rz_render_page_url('fos_user_registration_register')) }}">Register</a>
+                                    </li>
+
+                                {% endif %}
                             </ul>
                         </nav>
                     </div>
@@ -212,7 +240,7 @@
                     <img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png')}}" alt="" />
                     <div class="copyright">
                         <p>
-                            <a href="#"><i class="icon icon-facebook marg-right5"></i></a>
+                            {{ sonata_block_render({ 'type': 'sonata.seo.block.facebook.share_button' }) }}
                             <a href="#"><i class="icon icon-twitter marg-right5"></i></a>
                             <a href="#"><i class="icon icon-pinterest marg-right5"></i></a>
                             <a href="#"><i class="icon icon-github marg-right5"></i></a>
@@ -232,5 +260,8 @@
         </div>
     </footer>
     <!-- // END FOOTER -->
+    {% include 'SonataSeoBundle:Block:_facebook_sdk.html.twig' %}
+    {% include 'SonataSeoBundle:Block:_twitter_sdk.html.twig' %}
+    {% include 'SonataSeoBundle:Block:_pinterest_sdk.html.twig' %}
     {% endblock rzcms_footer %}
 {% endblock %}
