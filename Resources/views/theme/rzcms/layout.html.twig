@@ -240,7 +240,7 @@
                     <img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png')}}" alt="" />
                     <div class="copyright">
                         <p>
-                            {{ sonata_block_render({ 'type': 'sonata.seo.block.facebook.share_button' }) }}
+                            <a href="#"><i class="icon icon-facebook marg-right5"></i></a>
                             <a href="#"><i class="icon icon-twitter marg-right5"></i></a>
                             <a href="#"><i class="icon icon-pinterest marg-right5"></i></a>
                             <a href="#"><i class="icon icon-github marg-right5"></i></a>
@@ -260,8 +260,5 @@
         </div>
     </footer>
     <!-- // END FOOTER -->
-    {% include 'SonataSeoBundle:Block:_facebook_sdk.html.twig' %}
-    {% include 'SonataSeoBundle:Block:_twitter_sdk.html.twig' %}
-    {% include 'SonataSeoBundle:Block:_pinterest_sdk.html.twig' %}
     {% endblock rzcms_footer %}
 {% endblock %}
