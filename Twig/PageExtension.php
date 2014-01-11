@@ -2,12 +2,10 @@
 
 namespace Rz\PageBundle\Twig;
 
-use Sonata\PageBundle\Model\PageBlockInterface;
-use Sonata\PageBundle\Model\PageInterface;
 use Sonata\PageBundle\CmsManager\CmsManagerSelectorInterface;
 use Sonata\PageBundle\Site\SiteSelectorInterface;
-use Sonata\PageBundle\Model\SnapshotPageProxy;
 use Symfony\Component\Routing\RouterInterface;
+use Sonata\PageBundle\Exception\PageNotFoundException;
 
 use Sonata\BlockBundle\Templating\Helper\BlockHelper;
 
@@ -80,10 +78,13 @@ class PageExtension extends \Twig_Extension
     public function renderUrlByName($value)
     {
 
-        $cmsManager = $this->cmsManagerSelector->retrieve();
-        $page = $cmsManager->getPageByName($this->siteSelector->retrieve(), $value);
-
-       return $page;
+        try {
+            $cmsManager = $this->cmsManagerSelector->retrieve();
+            $page = $cmsManager->getPageByName($this->siteSelector->retrieve(), $value);
+            return $page;
+        } catch(PageNotFoundException $e) {
+            return;
+        }
     }
 
     public function getName()

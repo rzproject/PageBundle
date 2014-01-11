@@ -109,28 +109,47 @@
                         <a class="menu-link" href="#menu"><i class="icon-reorder white"></i></a>
                         <nav id="menu2" class="menu">
                             <ul>
-                                <li class="has-submenu-no">
-                                    <a href="{{ path(rz_render_page_url('homepage')) }}">Home</a>
-                                </li>
-                                <li class="has-submenu-no">
-                                    <a href="{{ path(rz_render_page_url('News')) }}">News</a>
-                                </li>
-                                <li class="has-submenu-no">
-                                    <a href="{{ path(rz_render_page_url('Gallery')) }}">Gallery</a>
-                                </li>
+                                {% set url = rz_render_page_url('homepage') %}
+                                {% if  url %}
+                                    <li class="has-submenu-no">
+                                        <a href="{{ path(url) }}">Home</a>
+                                    </li>
+                                {% endif %}
+                                {% set url = rz_render_page_url('blog') %}
+                                {% if  url %}
+                                    <li class="has-submenu-no">
+                                        <a href="{{ path(url) }}">Blog</a>
+                                    </li>
+                                {% endif %}
+                                {% set url = rz_render_page_url('gallery') %}
+                                {% if  url %}
+                                    <li class="has-submenu-no">
+                                        <a href="{{ path(url) }}">Gallery</a>
+                                    </li>
+                                {% endif %}
                                 {% if (app.user is not null and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
                                 <li class="has-submenu">
-                                    <a href="{{ path(rz_render_page_url('sonata_user_profile_show')) }}"><i class="icon-user"></i> {{ app.user }}</a>
-                                    {{ sonata_block_render({'type': 'sonata.user.block.menu', 'settings' : {'template':'RzUserBundle:Block:block_profile_menu.html.twig'} }, {'current_uri': app.request.requestUri}) }}
+                                    {% set url = rz_render_page_url('sonata_user_profile_show') %}
+                                    {% if  url %}
+                                        <li class="has-submenu">
+                                            <a href="{{ path(url) }}"><i class="icon-user"></i> {{ app.user }}</a>
+                                            {{ sonata_block_render({'type': 'sonata.user.block.menu', 'settings' : {'template':'RzUserBundle:Block:block_profile_menu.html.twig'} }, {'current_uri': app.request.requestUri}) }}
+                                        </li>
+                                    {% endif %}
                                 </li>
                                 {% else %}
+                                    {% set url = rz_render_page_url('fos_user_security_login') %}
+                                    {% if  url %}
                                     <li class="has-submenu-no">
-                                        <a href="{{ path(rz_render_page_url('fos_user_security_login')) }}">Login</a>
+                                        <a href="{{ path(url) }}">Login</a>
                                     </li>
+                                    {% endif %}
+                                    {% set url = rz_render_page_url('fos_user_registration_register') %}
+                                    {% if  url %}
                                     <li class="has-submenu-no">
-                                        <a href="{{ path(rz_render_page_url('fos_user_registration_register')) }}">Register</a>
+                                        <a href="{{ path(url) }}">Register</a>
                                     </li>
-
+                                    {% endif %}
                                 {% endif %}
                             </ul>
                         </nav>
@@ -154,20 +173,32 @@
                         <!--menu-->
                         <nav id="menu" class="menu menu-sticky">
                             <ul>
+                                {% set url = rz_render_page_url('homepage') %}
+                                {% if  url %}
                                 <li class="has-submenu-no">
-                                    <a href="{{ path(rz_render_page_url('homepage')) }}">Home</a>
+                                    <a href="{{ path(url) }}">Home</a>
                                 </li>
+                                {% endif %}
+                                {% set url = rz_render_page_url('blog') %}
+                                {% if  url %}
                                 <li class="has-submenu-no">
-                                    <a href="{{ path(rz_render_page_url('News')) }}">News</a>
+                                    <a href="{{ path(url) }}">Blog</a>
                                 </li>
+                                {% endif %}
+                                {% set url = rz_render_page_url('gallery') %}
+                                {% if  url %}
                                 <li class="has-submenu-no">
-                                    <a href="{{ path(rz_render_page_url('Gallery')) }}">Gallery</a>
+                                    <a href="{{ path(url) }}">Gallery</a>
                                 </li>
+                                {% endif %}
                                 {% if (app.user is not null and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
+                                    {% set url = rz_render_page_url('sonata_user_profile_show') %}
+                                    {% if  url %}
                                     <li class="has-submenu">
-                                        <a href="{{ path(rz_render_page_url('sonata_user_profile_show')) }}"><i class="icon-user"></i> {{ app.user }}</a>
+                                        <a href="{{ path(url) }}"><i class="icon-user"></i> {{ app.user }}</a>
                                         {{ sonata_block_render({'type': 'sonata.user.block.menu', 'settings' : {'template':'RzUserBundle:Block:block_profile_menu.html.twig'} }, {'current_uri': app.request.requestUri}) }}
                                     </li>
+                                    {% endif %}
                                 {% else %}
                                     <li class="has-submenu-no">
                                         <a href="{{ path(rz_render_page_url('fos_user_security_login')) }}">Login</a>
@@ -191,38 +222,18 @@
     {% block rzcms_body %}
     <div class="container">
         <div class="row-fluid">
-            <div class="span12">
+            <div class="span12 content">
                 <div class="row-fluid">
-                    <div class="span12 content">
-                    {% if page is defined %}
-                        <div class="span12">
-                            <div class="row-fluid">
-                            {{ sonata_page_render_container('content_top', page) }}
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="row-fluid">
-                        <div class="span12">
-                        {% if content is defined %}
+                    <div class="span12">
+                    {% if content is defined %}
+                        {{ content|raw }}
+                    {% else %}
+                        {% set content = block('content') %}
+                        {% if content|length > 0 %}
                             {{ content|raw }}
-                        {% else %}
-                            {% set content = block('content') %}
-                            {% if content|length > 0 %}
-                                {{ content|raw }}
-                            {% elseif page is defined %}
-                                {{ sonata_page_render_container('content', page) }}
-                            {% endif %}
+                        {% elseif page is defined %}
+                            {{ sonata_page_render_container('content', page) }}
                         {% endif %}
-                        </div>
-                    </div>
-
-                    {% if page is defined %}
-                        <div class="row-fluid">
-                            <div class="span12">
-                            {{ sonata_page_render_container('content_bottom', page) }}
-                            </div>
-                        </div>
                     {% endif %}
                     </div>
                 </div>
