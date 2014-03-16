@@ -1,0 +1,34 @@
+{% extends 'SonataAdminBundle:CRUD:action.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+    <div class="box box-color box-small box-bordered rz-action-box">
+        <div class="box-title">
+            <h3>
+                <i class="icon-camera-retro"></i>
+                {{ 'title_create_snapshot'|trans({}, 'SonataPageBundle') }}
+            </h3>
+        </div>
+        <div class="box-content nopadding">
+            <div class="rz-action-box-message">
+                {{ 'message_create_snapshot'|trans({}, 'SonataPageBundle') }}
+            </div>
+            <form action="{{ admin.generateUrl('create') }}" method="POST">
+                <div class="form-actions">
+                    {% if admin.isChild() %}
+                        <div style="display:none">{{ form_rest(form) }}</div>
+                    {% else %}
+                        {{ form_rest(form) }}
+                    {% endif %}
+
+                    <input class="btn btn-primary" type="submit" name="create" value="{{ 'button_create_snapshot'|trans({}, 'SonataPageBundle') }}"/>
+                    {{ 'or_list'|trans({}, 'SonataPageBundle') }}
+
+                    <a class="btn" href="{{ admin.generateUrl('list') }}">{{ 'link_action_list'|trans({}, 'SonataAdminBundle') }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

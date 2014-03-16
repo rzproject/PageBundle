@@ -108,7 +108,7 @@ class PageAdmin extends BasePageAdmin
 
         $formMapper
             ->with($this->trans('form_page.group_main_label'))
-            ->add('site', null, array('required' => true, 'selectpicker_enabled' => true))
+            ->add('site', null, array('required' => true, 'select2' => true))
             ->add('name')
             ->add('enabled', null, array('required' => false))
             ->add('position')
@@ -117,14 +117,14 @@ class PageAdmin extends BasePageAdmin
         if ($this->hasSubject() && !$this->getSubject()->isInternal()) {
             $formMapper
                 ->with($this->trans('form_page.group_main_label'))
-                    ->add('type', 'sonata_page_type_choice', array('required' => false, 'selectpicker_enabled' => true))
+                    ->add('type', 'sonata_page_type_choice', array('required' => false, 'select2' => true))
                 ->end()
             ;
         }
 
         $formMapper
             ->with($this->trans('form_page.group_main_label'))
-                ->add('templateCode', 'sonata_page_template', array('required' => true, 'selectpicker_enabled' => true))
+                ->add('templateCode', 'sonata_page_template', array('required' => true, 'select2' => true))
             ->end()
         ;
 
