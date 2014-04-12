@@ -1304,21 +1304,22 @@ h1.blog { font-size: 26px; line-height:32px; font-weight: 400; text-align: left;
 #blog_carousel .the-desc a:hover { color:#222; }
 
 /*-----------------------------------------------------------------------------------*/
-/*	10: PRICING TABLE
+/*	10: CONTAINER TABLE
 /*-----------------------------------------------------------------------------------*/
-.pricing-table { text-align: center;  margin-bottom: 40px; }
-.pricing-header-row-1 small { color: #999; font-weight: 400; }
-.pricing-table ul { margin: 0; padding: 0; list-style: none; }
+.cont-table { text-align: center;  margin-bottom: 40px; }
+.cont-header-row-1 small { color: #FFF; font-weight: 400; }
+.cont-table ul { margin: 0; padding: 0; list-style: none; }
 .price { font-size: 40px; font-weight: 700; margin: 10px 0px 0px; text-align: center; }
-.pricing-table h3 { color:#F6F7F0;  letter-spacing: 0;}
-.pricing-table h4 { color: #F6F7F0; font-size: 20px; font-weight: 400; margin: 5px 0 -5px; }
-.pricing-header-row-1 {
+.cont-table h3 { color:#FFF;  letter-spacing: 0;}
+.cont-table h4 { color: #FFF; font-size: 20px; font-weight: 400; margin: 5px 0 -5px; }
+.cont-table table h4 { color: #707070}
+.cont-header-row-1 {
 	text-align: center;
-	height: 190px;
-	padding: 10px 0 0;
-	background-color: #495159;
+	height: auto;
+	padding: 15px 0 15px 0;
+	background-color: #253454;
 }
-.pricing-content-row-even, .pricing-content-row-odd {
+.cont-content-row-even, .cont-content-row-odd {
 	font-size: 14px;
 	background-color: #eee;
 	padding: 10px 0;
@@ -1326,15 +1327,15 @@ h1.blog { font-size: 26px; line-height:32px; font-weight: 400; text-align: left;
 	font-weight: 400;
 	border-bottom: 1px dotted #bbb;
 }
-.pricing-content-row-even.no-b, .pricing-content-row-odd.no-b{ border-bottom:0px none; }
-.pricing-footer {
+.cont-content-row-even.no-b, .cont-content-row-odd.no-b{ border-bottom:0px none; }
+.cont-footer {
 	text-align: center;
 	height: 50px;
-	background-color: #495159;
+	background-color: #253454;
 	color: #fff;
 	padding: 10px 0 18px;
 }
-.pricing-table:hover {
+.cont-table:hover {
 	-webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
@@ -1344,7 +1345,7 @@ h1.blog { font-size: 26px; line-height:32px; font-weight: 400; text-align: left;
 	-webkit-box-shadow: 0 0 15px #888;
 	box-shadow: 0 0 15px #999;
 }
-/* Pricing Table Icons */
+/* cont Table Icons */
 .intro-icon {
 	text-align: center;
 	margin: 0 auto;
