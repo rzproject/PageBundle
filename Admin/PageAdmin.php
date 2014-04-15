@@ -18,6 +18,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
 use Sonata\PageBundle\Model\PageInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
+
+use Knp\Menu\ItemInterface as MenuItemInterface;
 
 use Sonata\PageBundle\Admin\PageAdmin as BasePageAdmin;
 
