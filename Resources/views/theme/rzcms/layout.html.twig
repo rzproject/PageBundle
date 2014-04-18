@@ -232,7 +232,11 @@
                         {% if content|length > 0 %}
                             {{ content|raw }}
                         {% elseif page is defined %}
-                            {{ sonata_page_render_container('content', page) }}
+                            {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+                                {{ sonata_page_render_container('content',page,{ 'use_cache': false})}}
+                            {% else %}
+                                {{ sonata_page_render_container('content', page,{ 'use_cache': true}) }}
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                     </div>
@@ -258,7 +262,11 @@
                             <a href="#"><i class="icon icon-google-plus"></i></a>
                         </p>
                         <p>
-                            {{ sonata_page_render_container('footer', 'global') }}
+                            {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+                                {{ sonata_page_render_container('footer',page,{ 'use_cache': false})}}
+                            {% else %}
+                                {{ sonata_page_render_container('footer', page,{ 'use_cache': true}) }}
+                            {% endif %}
                         </p>
                     </div>
                     <div class="go-top">

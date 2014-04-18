@@ -2094,6 +2094,18 @@ ul.recent-comment-sidebar li p {
     margin-left: 0px !important;
 }
 
+.blog-sidebar {
+    margin-top: 15px;
+}
+.blog-sidebar  h3{
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: 400;
+    text-align: left;
+    letter-spacing: 2px;
+}
+
+
 
 /*Gallery*/
 .masonry-gallery {
