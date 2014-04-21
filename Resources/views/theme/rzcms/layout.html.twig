@@ -64,6 +64,7 @@
     <script src="{{  asset('bundles/rzpage/theme/rzcms/js/prettyphoto.js') }}"></script>
     <script src="{{ asset('bundles/rmzamorajquery/jquery-plugins/fitvids/jquery.fitvids.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{  asset('bundles/rzpage/theme/rzcms/js/scripts.js') }}"></script>
+    <script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
     <!-- fade in settings -->
     <script>
         //<![CDATA[
@@ -253,7 +254,7 @@
                 <div class="row">
                     <div class="span12 center">
                         <img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png')}}" alt="" />
-                        <div class="copyright">
+                        <div class="copyright" style="text-align: center !important;">
                             {#{% if page is defined and not page.isHybrid %}#}
                              {#<p>#}
                                 {#{{ sonata_block_render({ 'type': 'rz.seo.block.facebook.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'default_title':rz_seo_title(), 'layout':'footer' } }) }}#}
@@ -263,12 +264,12 @@
                              {#</p>#}
                             {#{% else %}#}
                             {#{% sonata_template_box 'Override the Block' 'RzPageBundle' %}#}
-                            <p>
-                                <a href="#"><i class="icon icon-facebook marg-right5"></i></a>
-                                <a href="#"><i class="icon icon-twitter marg-right5"></i></a>
-                                <a href="#"><i class="icon icon-pinterest marg-right5"></i></a>
-                                <a href="#"><i class="icon icon-github marg-right5"></i></a>
-                                <a href="#"><i class="icon icon-google-plus"></i></a>
+                            <p class="a2a_kit">
+                                <a class="a2a_button_facebook"><i class="icon icon-facebook marg-right5"></i></a>
+                                <a class="a2a_button_twitter"><i class="icon icon-twitter marg-right5"></i></a>
+                                <a class="a2a_button_pinterest"><i class="icon icon-pinterest marg-right5"></i></a>
+                                <a class="a2a_button_google_plus"><i class="icon icon-google-plus"></i></a>
+                                <a class="a2a_button_email"><i class="icon icon-envelope marg-right5"></i></a>
                             </p>
                             {#{% endif %}#}
 
