@@ -247,37 +247,48 @@
     {% endblock rzcms_body %}
 
     {% block rzcms_footer %}
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="span12 center">
-                    <img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png')}}" alt="" />
-                    <div class="copyright">
-                        <p>
-                            <a href="#"><i class="icon icon-facebook marg-right5"></i></a>
-                            <a href="#"><i class="icon icon-twitter marg-right5"></i></a>
-                            <a href="#"><i class="icon icon-pinterest marg-right5"></i></a>
-                            <a href="#"><i class="icon icon-github marg-right5"></i></a>
-                            <a href="#"><i class="icon icon-google-plus"></i></a>
-                        </p>
-                        <p>
-                            {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
-                                {{ sonata_page_render_container('footer',page,{ 'use_cache': false})}}
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span12 center">
+                        <img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png')}}" alt="" />
+                        <div class="copyright">
+                            {% if page is defined and not page.isHybrid %}
+                             <p>
+                                {{ sonata_block_render({ 'type': 'rz.seo.block.facebook.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'default_title':rz_seo_title(), 'layout':'footer' } }) }}
+                                {{ sonata_block_render({ 'type': 'rz.seo.block.twitter.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'default_title':rz_seo_title(), 'layout':'footer' } }) }}
+                                {{ sonata_block_render({ 'type': 'rz.seo.block.pinterest.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'default_title':rz_seo_title(), 'layout':'footer', 'is_video':false, 'default_media_url':app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/rzpage/theme/rzcms/img/sandbox-logo.png') } }) }}
+                                {{ sonata_block_render({ 'type': 'rz.seo.block.google.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'layout':'footer' } }) }}
+                             </p>
                             {% else %}
-                                {{ sonata_page_render_container('footer', page,{ 'use_cache': true}) }}
+                            {% sonata_template_box 'Override the Block' 'RzPageBundle' %}
+                            <p>
+                                <a href="#"><i class="icon icon-facebook marg-right5"></i></a>
+                                <a href="#"><i class="icon icon-twitter marg-right5"></i></a>
+                                <a href="#"><i class="icon icon-pinterest marg-right5"></i></a>
+                                <a href="#"><i class="icon icon-github marg-right5"></i></a>
+                                <a href="#"><i class="icon icon-google-plus"></i></a>
+                            </p>
                             {% endif %}
-                        </p>
-                    </div>
-                    <div class="go-top">
-                        <span class="dark-grey"><i class="icon icon-align-justify marg-right5"></i></span>
-                        <a href="#"><i class="icon icon-chevron-sign-up"></i></a>
-                        <span class="dark-grey"><i class="icon icon-align-justify marg-left5"></i></span>
+
+                            <p>
+                                {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+                                    {{ sonata_page_render_container('footer',page,{ 'use_cache': false})}}
+                                {% else %}
+                                    {{ sonata_page_render_container('footer', page,{ 'use_cache': true}) }}
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="go-top">
+                            <span class="dark-grey"><i class="icon icon-align-justify marg-right5"></i></span>
+                            <a href="#"><i class="icon icon-chevron-sign-up"></i></a>
+                            <span class="dark-grey"><i class="icon icon-align-justify marg-left5"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- // END FOOTER -->
+        </footer>
+        <!-- // END FOOTER -->
     {% endblock rzcms_footer %}
 {% endblock %}
