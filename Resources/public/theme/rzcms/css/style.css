@@ -1144,6 +1144,9 @@ h6.left { font-size: 12px; margin: 10px 0px; text-align: left!important; display
     background-color: #D34836 !important;
 }
 
+.contact-form-profile .btn-social {
+    width: 300px !important;
+}
 
 
 .notification_error {
