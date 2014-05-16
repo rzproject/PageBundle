@@ -675,8 +675,8 @@
                 if(o.settings_lightboxlibrary == 'prettyphoto'){
                     if ($.fn.prettyPhoto != undefined) {
                         cthis.find("a[rel^='prettyPhoto']").prettyPhoto({
-                            theme: 'pp_default'
-                            ,overlay_gallery : false, social_tools: false,  deeplinking: false,
+                            theme: 'pp_default',
+                            overlay_gallery : false, social_tools: false,  deeplinking: false
                         });
                     } else {
                         if (window.console) { console.info('prettyphoto not here...') } ;
