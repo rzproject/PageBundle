@@ -1,8 +1,7 @@
 {%- block sonata_page_html_tag -%}
 <!DOCTYPE html>
 <html {{ sonata_seo_html_attributes() }}>
-{% endblock %}
-    {% block sonata_page_head %}
+{% endbloc{% block sonata_page_head %}
         <head {{ sonata_seo_head_attributes() }}>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             {{ sonata_seo_title() }}
@@ -34,23 +33,18 @@
                         'bundles/rmzamorajquery/jquery-plugins/foo-table/css/footable.sortable.min.css'
                         'bundles/rmzamorajquery/jquery-plugins/multi-select/css/multiselect.css'
                         'bundles/rmzamorajquery/jquery-plugins/qtip2/css/qtip.css'
-                        'bundles/rmzamorajquery/jquery-plugins/icheck/skins/minimal/_all.css'
-                        'bundles/rmzamorajquery/jquery-plugins/icheck/skins/square/_all.css'
-                        'bundles/rmzamorajquery/jquery-plugins/icheck/skins/flat/_all.css'
-                        'bundles/rmzamorajquery/jquery-plugins/icheck/skins/line/_all.css'
-                        'bundles/rmzamorajquery/jquery-plugins/icheck/skins/polaris/polaris.css'
-                        'bundles/rmzamorajquery/jquery-plugins/icheck/skins/futurico/futurico.css'
                         'bundles/rmzamorajquery/jquery-plugins/select2/select2.css'
                         filter='?yui_css'
                     %}
                     <link rel="stylesheet" type="text/css" media="all" href="{{ asset_url }}" />
                     {% endstylesheets %}
                 {% endif %}
+                <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rzadmin/css/font.css') }}" />
+                <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rmzamorajquery/jquery-plugins/icheck/skins/all.css') }}" />
 
                 {% block rz_page_theme_stylesheets %}{% endblock %}
                 {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
                     {% stylesheets
-                        'bundles/rzadmin/css/font.css'
                         'bundles/rzadmin/css/style.css'
                         'bundles/rzadmin/css/rz-style.css'
                         'bundles/rzadmin/css/themes.css'
@@ -131,7 +125,8 @@
                 {% block rz_page_theme_javascripts %}{% endblock %}
             {% endblock %}
         </head>
-    {% endblock %}
+    {% endblock %}k %}
+
 
     {% block sonata_page_body_tag %}
     <body class="rz-cms{% if sonata_page.isEditor or (app.user is not null and app.security and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %} rz-cms-edit{% endif %}">
