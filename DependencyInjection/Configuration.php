@@ -94,7 +94,7 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('templates')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('list')->defaultValue('SonataAdminBundle:CRUD:list.html.twig')->cannotBeEmpty()->end()
+                                        ->scalarNode('list')->defaultValue('RzPageBundle:PageAdmin:list.html.twig')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

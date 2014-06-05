@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
+{% extends 'RzAdminBundle:CRUD:base_list.html.twig' %}
 
 {% import _self as tree %}
 {% macro pages(pages, admin, rootPages) %}
@@ -17,12 +17,12 @@ file that was distributed with this source code.
         {% for page in pages if not page.internal and (not page.parent or not rootPages)%}
             <li>
                 <div class="page-tree__item">
-                    {% if page.parent %}<i class="fa fa-caret-right"></i>{% endif %}
+                    {% if page.parent %}<i class="icon-chevron-right"></i>{% endif %}
                     <i class="icon-{% if page.isHybrid %}cog{% else %}file-alt{% endif %}"></i>
                     <a class="page-tree__item__edit" href="{{ admin.generateObjectUrl('edit', page) }}">{{ page.name }}</a>
-                    <i class="text-muted">{{ page.url }}</i>
-                    <a class="label label-info pull-right" href="{{ admin.generateObjectUrl('compose', page) }}">compose <i class="fa fa-magic"></i></a>
-                    {% if page.edited %}<span class="label label-warning pull-right">edited</span>{% endif %}
+                    <i class="text-muted hidden-phone hidden-tablet">{{ page.url }}</i>
+                    <a class="label label-info pull-right" href="{{ admin.generateObjectUrl('compose', page) }}">compose <i class="icon-magic"></i></a>
+                    {% if page.edited %}<span class="label label-warning pull-right hidden-phone hidden-tablet">edited</span>{% endif %}
                 </div>
                 {% if page.children|length %}
                     {{ _self.pages(page.children, admin, false) }}
@@ -37,14 +37,41 @@ file that was distributed with this source code.
     <link rel="stylesheet" href="{{ asset('bundles/rzpage/rzcms/css/tree.css') }}" type="text/css" media="screen" />
 {% endblock %}
 
-{% block tab_menu %}
-    {% include 'SonataPageBundle:PageAdmin:list_tab_menu.html.twig' with {
-        'mode':        'tree',
-        'action':      action,
-        'admin':       admin,
-        'currentSite': currentSite,
-    } only %}
+{% block actions %}
+    <div class="row-fluid admin-action-buttons">
+        <div class="span12">
+            <div class="sonata-actions btn-group hidden-phone hidden-tablet visible-desktop pull-right">
+                {% include 'RzPageBundle:PageAdmin:list_tab_menu.html.twig' with {
+                'mode':   'tree',
+                'action': action,
+                'admin':  admin
+                } only %}
+                {% include 'SonataAdminBundle:Button:create_button.html.twig' %}
+            </div>
+            <div class="btn-group visible-phone visible-tablet hidden-desktop">
+                <button class="btn btn-primary admin-actions admin-actions-group">Select an action to perform</button>
+                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle admin-actions"><i class=" icon-chevron-down"></i></button>
+                <ul class="dropdown-menu">
+                    {% include 'RzPageBundle:PageAdmin:list_tab_menu_mobile.html.twig' with {
+                    'mode':   'tree',
+                    'action': action,
+                    'admin':  admin
+                    } only %}
+                    {% include 'SonataAdminBundle:Button:create_button_mobile.html.twig' %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+{#{% block side_menu %}#}
+    {#{% include 'SonataPageBundle:PageAdmin:list_tab_menu.html.twig' with {#}
+        {#'mode':        'tree',#}
+        {#'action':      action,#}
+        {#'admin':       admin,#}
+        {#'currentSite': currentSite,#}
+    {#} only %}#}
+{#{% endblock %}#}
 
 {% block list_table %}
     <div class="box box-color box-bordered">
