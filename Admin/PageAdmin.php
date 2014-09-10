@@ -75,9 +75,9 @@ class PageAdmin extends BasePageAdmin
     {
         // define group zoning
         $formMapper
-            ->with($this->trans('form_page.group_main_label'), array('class' => 'col-md-6'))
-            ->with($this->trans('form_page.group_seo_label'), array('class' => 'col-md-6'))
-            ->with($this->trans('form_page.group_advanced_label'), array('class' => 'col-md-6'))
+            ->with($this->trans('form_page.group_main_label'), array('class' => 'col-md-6'))->end()
+            ->with($this->trans('form_page.group_seo_label'), array('class' => 'col-md-6'))->end()
+            ->with($this->trans('form_page.group_advanced_label'), array('class' => 'col-md-6'))->end()
         ;
 
 
@@ -93,7 +93,8 @@ class PageAdmin extends BasePageAdmin
             $formMapper
                 ->with($this->trans('form_page.group_main_label'))
                 ->add('site', null, array('required' => true, 'read_only' => true))
-                ->end();
+                ->end()
+            ;
         }
 
         $formMapper
@@ -101,7 +102,8 @@ class PageAdmin extends BasePageAdmin
             ->add('name')
             ->add('enabled', null, array('required' => false))
             ->add('position')
-            ->end();
+            ->end()
+        ;
 
         if ($this->hasSubject() && !$this->getSubject()->isInternal()) {
             $formMapper
@@ -128,6 +130,7 @@ class PageAdmin extends BasePageAdmin
                     'required'      => false,
                     'filter_choice' => array('hierarchy' => 'root'),
                 ), array(
+                    'admin_code' => $this->getCode(),
                     'link_parameters' => array(
                         'siteId' => $this->getSubject() ? $this->getSubject()->getSite()->getId() : null
                     )
@@ -146,9 +149,9 @@ class PageAdmin extends BasePageAdmin
                     'model_manager' => $this->getModelManager(),
                     'class'         => $this->getClass(),
                     'filter_choice' => array('request_method' => 'all'),
-                    'required'      => false,
-                    'select2'=>true,
+                    'required'      => false
                 ), array(
+                    'admin_code' => $this->getCode(),
                     'link_parameters' => array(
                         'siteId' => $this->getSubject() ? $this->getSubject()->getSite()->getId() : null
                     )
@@ -178,14 +181,15 @@ class PageAdmin extends BasePageAdmin
             $formMapper
                 ->with($this->trans('form_page.group_advanced_label'), array('collapsed' => true))
                 ->add('decorate', null,  array('required' => false))
-                ->end();
+                ->end()
+            ;
         }
 
         $formMapper
             ->with($this->trans('form_page.group_advanced_label'), array('collapsed' => true))
-            ->add('javascript', 'rz_codemirror',  array('required' => false))
-            ->add('stylesheet', 'rz_codemirror', array('required' => false))
-            ->add('rawHeaders', 'rz_codemirror', array('required' => false))
+            ->add('javascript', null,  array('required' => false))
+            ->add('stylesheet', null, array('required' => false))
+            ->add('rawHeaders', null, array('required' => false))
             ->end()
         ;
 
