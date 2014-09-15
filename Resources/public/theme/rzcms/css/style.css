@@ -625,7 +625,7 @@ color: #fff;
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
-	z-index: 99999;
+	z-index: 9999;
 }
 .modal-header{ padding: 9px 15px; background: #495159;}
 .modal-header .close { margin-top: 2px;}
