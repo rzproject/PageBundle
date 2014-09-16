@@ -41,9 +41,16 @@ class BlockAdmin extends BaseBlockAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('type', null, array('footable'=>array('attr'=>array('data_toggle'=>true))))
+            ->add('type', null, array('footable'=>array('attr'=>array('data_toggle'=>true))))
             ->add('name', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
             ->add('enabled', null, array('footable'=>array('attr'=>array('data_hide'=>'phone'))))
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'Show' => array('template' => 'SonataAdminBundle:CRUD:list__action_show.html.twig'),
+                    'Edit' => array('template' => 'SonataAdminBundle:CRUD:list__action_edit.html.twig'),
+                    'Delete' => array('template' => 'SonataAdminBundle:CRUD:list__action_delete.html.twig')),
+                'footable'=>array('attr'=>array('data_hide'=>'phone,tablet')),
+            ))
         ;
     }
 
