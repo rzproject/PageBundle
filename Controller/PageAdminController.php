@@ -99,8 +99,6 @@ class PageAdminController extends Controller
      */
     public function editAction($id = null)
     {
-
-        die('rommel');
         // the key used to lookup the template
         $templateKey = 'edit';
 
