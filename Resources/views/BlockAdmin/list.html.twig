@@ -5,45 +5,7 @@
     {% if admin.isChild %}
         {% set page =  admin.parent.subject %}
         {% if page %}
-            <div class="box box-color green box-bordered">
-                <div class="box-title">
-                    <h3>
-                        <i class="icon-eye-open"></i>
-                        {# TODO: set on configuration #}
-                    </h3>
-                </div>
-                <div class="box-content nopadding">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <table class="table table-bordered rz-admin-show-table">
-                                <tr class="sonata-ba-view-title rmz-show-header">
-                                    <th colspan="2">{{ 'filter.label_page'|trans({}, 'SonataPageBundle') }}</th>
-                                </tr>
-                                <tr class="sonata-ba-view-container">
-                                    <td style="width:40%">{{ 'form.label_parent'|trans({}, 'SonataPageBundle') }}</td>
-                                    <td style="width:60%">{{ page.parent }}</td>
-                                </tr>
-                                <tr class="sonata-ba-view-container">
-                                    <td style="width:40%">{{ 'form.label_name'|trans({}, 'SonataPageBundle') }}</td>
-                                    <td style="width:60%">{{ page.name }}</td>
-                                </tr>
-                                <tr class="sonata-ba-view-container">
-                                    <td style="width:40%">{{ 'show.label_route_name'|trans({}, 'SonataPageBundle') }}</td>
-                                    <td style="width:60%">{{ page.routeName }}</td>
-                                </tr>
-                                <tr class="sonata-ba-view-container">
-                                    <td style="width:40%">{{ 'form.label_slug'|trans({}, 'SonataPageBundle') }}</td>
-                                    <td style="width:60%">{{ page.slug }}</td>
-                                </tr>
-                                <tr class="sonata-ba-view-container">
-                                    <td style="width:40%">{{ 'form.label_url'|trans({}, 'SonataPageBundle') }}</td>
-                                    <td style="width:60%">{{ page.url }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% include 'RzPageBundle:PageAdmin:parent_view.html.twig' %}
         {% endif %}
     {% endif %}
 {% endblock %}

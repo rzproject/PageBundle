@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\PageBundle\Admin\BlockAdmin as BaseBlockAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 class BlockAdmin extends BaseBlockAdmin
 {
@@ -43,6 +44,20 @@ class BlockAdmin extends BaseBlockAdmin
             ->addIdentifier('type', null, array('footable'=>array('attr'=>array('data_toggle'=>true))))
             ->add('name', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
             ->add('enabled', null, array('footable'=>array('attr'=>array('data_hide'=>'phone'))))
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('type')
+            ->add('name')
+            ->add('enabled')
+            ->add('updatedAt')
+            ->add('position')
         ;
     }
 }

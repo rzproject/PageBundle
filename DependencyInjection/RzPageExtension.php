@@ -41,11 +41,11 @@ class RzPageExtension extends Extension
         $loader->load('twig.xml');
 
         $this->configureAdminClass($config, $container);
-//        $this->configureClass($config, $container);
-//        $this->configureClassManager($config, $container);
-//
-//        $this->configureTranslationDomain($config, $container);
-//        $this->configureController($config, $container);
+        $this->configureClass($config, $container);
+        $this->configureClassManager($config, $container);
+
+        $this->configureTranslationDomain($config, $container);
+        $this->configureController($config, $container);
         $this->configureRzTemplates($config, $container);
     }
 
