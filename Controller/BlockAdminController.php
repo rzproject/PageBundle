@@ -195,7 +195,6 @@ class BlockAdminController extends Controller
         if ($this->getRestMethod() == 'POST') {
 
             $form->handleRequest($this->get('request'));
-
             $isFormValid = $form->isValid();
 
             // persist if the form was valid and if in preview mode the preview was approved
@@ -236,6 +235,34 @@ class BlockAdminController extends Controller
             'form'   => $view,
             'object' => $object,
         ));
+    }
+
+    public function switchParentAction()
+    {
+        if (!$this->admin->isGranted('EDIT')) {
+            throw new AccessDeniedException();
+        }
+
+        $blockId  = $this->get('request')->get('block_id');
+        $parentId = $this->get('request')->get('parent_id');
+        if ($blockId === null or $parentId === null) {
+            throw new HttpException(400, 'wrong parameters');
+        }
+
+        $block = $this->admin->getObject($blockId);
+        if (!$block) {
+            throw new PageNotFoundException(sprintf('Unable to find block with id %d', $blockId));
+        }
+
+        $parent = $this->admin->getObject($parentId);
+        if (!$block) {
+            throw new PageNotFoundException(sprintf('Unable to find parent block with id %d', $parentId));
+        }
+
+        $parent->addChildren($block);
+        $this->admin->update($parent);
+
+        return $this->renderJson(array('result' => 'ok'));
     }
 
 }
