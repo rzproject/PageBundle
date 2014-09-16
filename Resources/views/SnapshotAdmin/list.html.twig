@@ -5,7 +5,7 @@
     {% if admin.isChild %}
         {% set page =  admin.parent.subject %}
         {% if page %}
-            {% include 'RzPageBundle:SnapshotAdmin:parent_view.html.twig' %}
+            {% include 'RzPageBundle:PageAdmin:parent_view.html.twig' %}
         {% endif %}
     {% endif %}
 {% endblock %}
