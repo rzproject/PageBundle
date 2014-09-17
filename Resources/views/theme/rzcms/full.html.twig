@@ -44,7 +44,7 @@
         </div>
     </div>
     {% if page is defined %}
-            {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+        {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
                 {{ sonata_page_render_container('content_bottom',page,{ 'use_cache': false})}}
             {% else %}
                 {{ sonata_page_render_container('content_bottom', page,{ 'use_cache': true}) }}
