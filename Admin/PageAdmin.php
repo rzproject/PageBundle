@@ -106,23 +106,23 @@ class PageAdmin extends BasePageAdmin
 
         $formMapper
             ->with($this->trans('form_page.group_main_label'))
-            ->add('name')
-            ->add('enabled', null, array('required' => false))
-            ->add('position')
+                ->add('name')
+                ->add('enabled', null, array('required' => false))
+                ->add('position')
             ->end()
         ;
 
         if ($this->hasSubject() && !$this->getSubject()->isInternal()) {
             $formMapper
                 ->with($this->trans('form_page.group_main_label'))
-                ->add('type', 'sonata_page_type_choice', array('required' => false))
+                    ->add('type', 'sonata_page_type_choice', array('required' => false))
                 ->end()
             ;
         }
 
         $formMapper
             ->with($this->trans('form_page.group_main_label'))
-            ->add('templateCode', 'sonata_page_template', array('required' => true))
+                ->add('templateCode', 'sonata_page_template', array('required' => true))
             ->end()
         ;
 
@@ -136,6 +136,7 @@ class PageAdmin extends BasePageAdmin
                     'class'         => $this->getClass(),
                     'required'      => false,
                     'filter_choice' => array('hierarchy' => 'root'),
+                    'selectpicker_enabled' => true
                 ), array(
                     'admin_code' => $this->getCode(),
                     'link_parameters' => array(
@@ -156,7 +157,8 @@ class PageAdmin extends BasePageAdmin
                     'model_manager' => $this->getModelManager(),
                     'class'         => $this->getClass(),
                     'filter_choice' => array('request_method' => 'all'),
-                    'required'      => false
+                    'required'      => false,
+                    'selectpicker_enabled' => true
                 ), array(
                     'admin_code' => $this->getCode(),
                     'link_parameters' => array(
