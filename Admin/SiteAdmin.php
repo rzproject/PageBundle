@@ -30,13 +30,20 @@ class SiteAdmin extends BaseSiteAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name', null, array('footable'=>array('attr'=>array('data_toggle'=>true))))
+            ->add('name', null, array('footable'=>array('attr'=>array('data_toggle'=>true))))
             ->add('isDefault', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
             ->add('enabled', null, array('editable' => true, 'footable'=>array('attr'=>array('data_hide'=>'phone'))))
             ->add('host', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
             ->add('relativePath', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
             ->add('enabledFrom', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
             ->add('enabledTo', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'Show' => array('template' => 'SonataAdminBundle:CRUD:list__action_show.html.twig'),
+                    'Edit' => array('template' => 'SonataAdminBundle:CRUD:list__action_edit.html.twig'),
+                    'Delete' => array('template' => 'SonataAdminBundle:CRUD:list__action_delete.html.twig')),
+                'footable'=>array('attr'=>array('data_hide'=>'phone,tablet')),
+            ))
             ->add('create_snapshots', 'string', array('template' => 'SonataPageBundle:SiteAdmin:list_create_snapshots.html.twig',
                                                       'footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
         ;

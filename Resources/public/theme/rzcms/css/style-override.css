@@ -162,4 +162,9 @@
     border-color: #313941 !important
 }
 
+.rz-cms .bx-wrapper .bx-viewport {
+    border-top:  0px solid transparent !important;
+    border-bottom:  0px solid transparent !important;
+}
+
 

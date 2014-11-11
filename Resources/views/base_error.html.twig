@@ -1,0 +1,34 @@
+{% set title = block('title') ? block('title') : 'Rz Project - Internal Error' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        {% block sonata_page_stylesheets %}
+            {% stylesheets
+            'bundles/rmzamorabootstrap/css/bootstrap.min.css'
+            'bundles/rmzamorabootstrap/css/bootstrap-responsive.min.css'
+            'bundles/rzpage/sonata/css/default.css'
+            filter='?yui_css'
+            %}
+            <link rel="stylesheet" type="text/css" media="all" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+
+        <title>{{ title }}</title>
+    </head>
+
+    <body class="sonata-bc">
+        <div class="container">
+            <div class="content">
+                <div class="page-header">
+                    <h1>{{ title }}</h1>
+                </div>
+
+                <div class="row">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+   </body>
+</html>

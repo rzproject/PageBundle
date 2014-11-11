@@ -44,12 +44,10 @@
         </div>
     </div>
     {% if page is defined %}
-        <div class="strip">
         {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
-            {{ sonata_page_render_container('content_bottom',page,{ 'use_cache': false})}}
-        {% else %}
-            {{ sonata_page_render_container('content_bottom', page,{ 'use_cache': true}) }}
-        {% endif %}
-        </div>
+                {{ sonata_page_render_container('content_bottom',page,{ 'use_cache': false})}}
+            {% else %}
+                {{ sonata_page_render_container('content_bottom', page,{ 'use_cache': true}) }}
+            {% endif %}
     {% endif %}
 {% endblock rzcms_body %}

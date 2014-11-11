@@ -65,6 +65,13 @@ class PageAdmin extends BasePageAdmin
             ->add('decorate', null, array('editable' => true, 'footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
             ->add('enabled', null, array('editable' => true, 'footable'=>array('attr'=>array('data_hide'=>'phone'))))
             ->add('edited', null, array('editable' => true, 'footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'Show' => array('template' => 'SonataAdminBundle:CRUD:list__action_show.html.twig'),
+                    'Edit' => array('template' => 'SonataAdminBundle:CRUD:list__action_edit.html.twig'),
+                    'Delete' => array('template' => 'SonataAdminBundle:CRUD:list__action_delete.html.twig')),
+                'footable'=>array('attr'=>array('data_hide'=>'phone,tablet')),
+            ))
         ;
     }
 
@@ -73,100 +80,125 @@ class PageAdmin extends BasePageAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        // define group zoning
+        $formMapper
+            ->with($this->trans('form_page.group_main_label'), array('class' => 'col-md-6'))->end()
+            ->with($this->trans('form_page.group_seo_label'), array('class' => 'col-md-6'))->end()
+            ->with($this->trans('form_page.group_advanced_label'), array('class' => 'col-md-6'))->end()
+        ;
+
+
         if (!$this->getSubject() || (!$this->getSubject()->isInternal() && !$this->getSubject()->isError())) {
             $formMapper
                 ->with($this->trans('form_page.group_main_label'))
-                    ->add('url', 'text', array('attr' => array('readonly' => 'readonly')))
+                ->add('url', 'text', array('attr' => array('readonly' => 'readonly')))
                 ->end()
             ;
         }
 
-        $formMapper
-            ->with($this->trans('form_page.group_main_label'))
-                ->add('parent', 'sonata_page_selector', array(
-                              'page'          => $this->getSubject() ?: null,
-                              'site'          => $this->getSubject() ? $this->getSubject()->getSite() : null,
-                              'model_manager' => $this->getModelManager(),
-                              'class'         => $this->getClass(),
-                              'required'      => false,
-                              'select2'=>true,
-                          ))
-            ->end();
-
-        if (!$this->getSubject() || !$this->getSubject()->isDynamic()) {
+        if ($this->hasSubject() && !$this->getSubject()->getId()) {
             $formMapper
                 ->with($this->trans('form_page.group_main_label'))
-                ->add('target', 'sonata_page_selector', array(
-                                  'page'          => $this->getSubject() ?: null,
-                                  'site'          => $this->getSubject() ? $this->getSubject()->getSite() : null,
-                                  'model_manager' => $this->getModelManager(),
-                                  'class'         => $this->getClass(),
-                                  'filter_choice' => array('request_method' => 'all'),
-                                  'required'      => false,
-                                  'select2'=>true,
-                              ))
+                ->add('site', null, array('required' => true, 'read_only' => true))
                 ->end()
             ;
         }
 
         $formMapper
             ->with($this->trans('form_page.group_main_label'))
-            ->add('site', null, array('required' => true, 'select2' => true))
-            ->add('name')
-            ->add('enabled', null, array('required' => false))
-            ->add('position')
-            ->end();
+                ->add('name')
+                ->add('enabled', null, array('required' => false))
+                ->add('position')
+            ->end()
+        ;
 
         if ($this->hasSubject() && !$this->getSubject()->isInternal()) {
             $formMapper
                 ->with($this->trans('form_page.group_main_label'))
-                    ->add('type', 'sonata_page_type_choice', array('required' => false, 'select2' => true))
+                    ->add('type', 'sonata_page_type_choice', array('required' => false))
                 ->end()
             ;
         }
 
         $formMapper
             ->with($this->trans('form_page.group_main_label'))
-                ->add('templateCode', 'sonata_page_template', array('required' => true, 'select2' => true))
+                ->add('templateCode', 'sonata_page_template', array('required' => true))
             ->end()
         ;
+
+        if (!$this->getSubject() || ($this->getSubject() && $this->getSubject()->getParent()) || ($this->getSubject() && !$this->getSubject()->getId())) {
+            $formMapper
+                ->with($this->trans('form_page.group_main_label'))
+                ->add('parent', 'sonata_page_selector', array(
+                    'page'          => $this->getSubject() ?: null,
+                    'site'          => $this->getSubject() ? $this->getSubject()->getSite() : null,
+                    'model_manager' => $this->getModelManager(),
+                    'class'         => $this->getClass(),
+                    'required'      => false,
+                    'filter_choice' => array('hierarchy' => 'root'),
+                    'selectpicker_enabled' => true
+                ), array(
+                    'admin_code' => $this->getCode(),
+                    'link_parameters' => array(
+                        'siteId' => $this->getSubject() ? $this->getSubject()->getSite()->getId() : null
+                    )
+                ))
+                ->end()
+            ;
+        }
 
         if (!$this->getSubject() || !$this->getSubject()->isDynamic()) {
             $formMapper
                 ->with($this->trans('form_page.group_main_label'))
-                    ->add('pageAlias', null, array('required' => false))
+                ->add('pageAlias', null, array('required' => false))
+                ->add('target', 'sonata_page_selector', array(
+                    'page'          => $this->getSubject() ?: null,
+                    'site'          => $this->getSubject() ? $this->getSubject()->getSite() : null,
+                    'model_manager' => $this->getModelManager(),
+                    'class'         => $this->getClass(),
+                    'filter_choice' => array('request_method' => 'all'),
+                    'required'      => false,
+                    'selectpicker_enabled' => true
+                ), array(
+                    'admin_code' => $this->getCode(),
+                    'link_parameters' => array(
+                        'siteId' => $this->getSubject() ? $this->getSubject()->getSite()->getId() : null
+                    )
+                ))
+                ->end()
             ;
         }
 
         if (!$this->getSubject() || !$this->getSubject()->isHybrid()) {
             $formMapper
                 ->with($this->trans('form_page.group_seo_label'))
-                    ->add('slug', 'text',  array('required' => false))
-                    ->add('customUrl', 'text', array('required' => false))
+                ->add('slug', 'text',  array('required' => false))
+                ->add('customUrl', 'text', array('required' => false))
                 ->end()
             ;
         }
 
         $formMapper
             ->with($this->trans('form_page.group_seo_label'), array('collapsed' => true))
-                ->add('title', null, array('required' => false))
-                ->add('metaKeyword', 'textarea', array('required' => false, 'attr'=>array('rows'=>5)))
-                ->add('metaDescription', 'textarea', array('required' => false, 'attr'=>array('rows'=>5)))
+            ->add('title', null, array('required' => false))
+            ->add('metaKeyword', 'textarea', array('required' => false))
+            ->add('metaDescription', 'textarea', array('required' => false))
             ->end()
         ;
 
         if ($this->hasSubject() && !$this->getSubject()->isCms()) {
             $formMapper
                 ->with($this->trans('form_page.group_advanced_label'), array('collapsed' => true))
-                    ->add('decorate', null,  array('required' => false))
-                ->end();
+                ->add('decorate', null,  array('required' => false))
+                ->end()
+            ;
         }
 
         $formMapper
             ->with($this->trans('form_page.group_advanced_label'), array('collapsed' => true))
-                ->add('javascript', 'rz_codemirror',  array('required' => false))
-                ->add('stylesheet', 'rz_codemirror', array('required' => false))
-                ->add('rawHeaders', 'rz_codemirror', array('required' => false))
+            ->add('javascript', null,  array('required' => false))
+            ->add('stylesheet', null, array('required' => false))
+            ->add('rawHeaders', null, array('required' => false))
             ->end()
         ;
 
@@ -210,48 +242,5 @@ class PageAdmin extends BasePageAdmin
     /**
      * {@inheritdoc}
      */
-    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
-    {
-        if (!$childAdmin && !in_array($action, array('edit'))) {
-            return;
-        }
-
-        $admin = $this->isChild() ? $this->getParent() : $this;
-
-
-        $id = $admin->getRequest()->get('id');
-
-        $menu->addChild(
-            $this->trans('sidemenu.link_edit_page'),
-            array('uri' => $admin->generateUrl('edit', array('id' => $id)))
-        );
-
-        $menu->addChild(
-            $this->trans('sidemenu.link_list_blocks'),
-            array('uri' => $admin->generateUrl('sonata.page.admin.block.list', array('id' => $id)))
-        );
-
-        $menu->addChild(
-            $this->trans('sidemenu.link_compose_page'),
-            array('uri' => $admin->generateUrl('compose', array('id' => $id)))
-        );
-
-        $menu->addChild(
-            $this->trans('sidemenu.link_list_snapshots'),
-            array('uri' => $admin->generateUrl('sonata.page.admin.snapshot.list', array('id' => $id)))
-        );
-
-        if (!$this->getSubject()->isHybrid() && !$this->getSubject()->isInternal()) {
-
-            try {
-                $menu->addChild(
-                    $this->trans('view_page'),
-                    array('uri' => $this->getRouteGenerator()->generate('page_slug', array('path' => $this->getSubject()->getUrl())))
-                );
-            } catch (\Exception $e) {
-                // avoid crashing the admin if the route is not setup correctly
-//                throw $e;
-            }
-        }
-    }
+    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null){}
 }

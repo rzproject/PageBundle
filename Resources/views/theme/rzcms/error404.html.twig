@@ -1,0 +1,47 @@
+{% extends 'RzPageBundle:theme/rzcms:layout.html.twig' %}
+{% block rzcms_body %}
+
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span12 content">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h1 class="warning"><i class="fa fa-warning"></i></h1>
+                        <h1>Error 404</h1>
+                        <h3>Page not Found</h3>
+                        <p>Sorry, the page you're looking for doesn't exist.<br>
+                        <a href="/">Click here to go back</a> if you believe you're not here by mistake.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block rzcms_footer %}
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="span12 center">
+                    <img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png')}}" alt="" />
+                    <div class="copyright" style="text-align: center !important;">
+                        <p class="a2a_kit">
+                            <a class="a2a_button_facebook"><i class="icon icon-facebook marg-right5"></i></a>
+                            <a class="a2a_button_twitter"><i class="icon icon-twitter marg-right5"></i></a>
+                            <a class="a2a_button_pinterest"><i class="icon icon-pinterest marg-right5"></i></a>
+                            <a class="a2a_button_google_plus"><i class="icon icon-google-plus"></i></a>
+                            <a class="a2a_button_email"><i class="icon icon-envelope marg-right5"></i></a>
+                        </p>
+                    </div>
+                    <div class="go-top">
+                        <span class="dark-grey"><i class="icon icon-align-justify marg-right5"></i></span>
+                        <a href="#"><i class="icon icon-chevron-sign-up"></i></a>
+                        <span class="dark-grey"><i class="icon icon-align-justify marg-left5"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- // END FOOTER -->
+{% endblock rzcms_footer %}

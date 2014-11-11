@@ -1,4 +1,4 @@
-{% extends 'SonataPageBundle::base_layout.html.twig' %}
+{% extends 'RzPageBundle::base_layout.html.twig' %}
 
 {% block rz_page_theme_stylesheets %}
     <!-- Google Fonts -->
@@ -9,29 +9,40 @@
     <link href="http://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet" type="text/css">
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/style.css')}}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/settings.css')}}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/font-awesome.min.css')}}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/fontello.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{  asset('bundles/rzpage/theme/rzcms/css/icon-effect.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{  asset('bundles/rzpage/theme/rzcms/css/prettyphoto.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{  asset('bundles/rzpage/theme/rzcms/css/dzsportfolio.css')}}"/>
 
-    {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
-    {# block service css#}
-    {# bxslider #}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.css')}}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rzmedia/css/block/rzmedia-bxslider.css')}}" />
-    {# featured gallery #}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rzmedia/css/block/rzmedia-featured-gallery.css')}}" />
-    {# featured post #}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('/bundles/rznews/css/featured_post_block.css')}}" />
+    {% stylesheets
+    'bundles/rzpage/theme/rzcms/css/fontello.css'
+    'bundles/rzpage/theme/rzcms/css/style.css'
+    'bundles/rzpage/theme/rzcms/css/settings.css'
+    'bundles/rzpage/theme/rzcms/css/icon-effect.css'
+    'bundles/rzpage/theme/rzcms/css/prettyphoto.css'
+    'bundles/rzpage/theme/rzcms/css/dzsportfolio.css'
+    filter='?yui_css'
+    %}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.css') }}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rzpage/theme/rzcms/css/font-awesome.min.css') }}"/>
+
+    {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+        {% stylesheets
+            'bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.css'
+            'bundles/sonatamedia/blocks/feature_media/theme.css'
+            'bundles/rzmedia/css/block/rzmedia-bxslider.css'
+            'bundles/rzmedia/css/block/rzmedia-featured-gallery.css'
+            'bundles/rznews/css/featured_post_block.css'
+            filter='?yui_css'
+        %}
+        <link rel="stylesheet" type="text/css" media="all" href="{{ asset_url }}" />
+        {% endstylesheets %}
     {%  endif %}
-
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/style-override.css')}}" />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/style-override.css')}}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{  asset('bundles/rzpage/theme/rzcms/css/theme-override.css')}}" />
+    {% stylesheets
+        'bundles/rzpage/theme/rzcms/css/style-override.css'
+        'bundles/rzpage/theme/rzcms/css/theme-override.css'
+        filter='?yui_css'
+    %}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 {% block rz_page_theme_javascripts %}
@@ -42,29 +53,25 @@
     <link rel="stylesheet" href="{{  asset('bundles/rzpage/theme/rzcms/css/font-awesome-ie7.min.css')}}">
     <link rel="stylesheet" href="{{  asset('bundles/rzpage/theme/rzcms/css/fontello-ie7.css')}}">
     <![endif]-->
-
-    {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
-    {# block service js#}
-    {# bxslider #}
-    <script type="text/javascript" src="{{  asset('/bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.js')}}"></script>
-    <script type="text/javascript" src="{{  asset('/bundles/rzmedia/js/block/rzmedia-bxslider.js')}}"></script>
-    {# featured gallery #}
-    <script type="text/javascript" src="{{  asset('/bundles/rmzamorajquery/jquery-plugins/imgLiquid/js/imgLiquid.js')}}"></script>
-    <script type="text/javascript" src="{{  asset('/bundles/rzmedia/js/block/rzmedia-featured-gallery.js')}}"></script>
-    {# featured post #}
-    <script type="text/javascript" src="{{  asset('/bundles/rmzamorajquery/jquery-plugins/eqheight/jquery.eqheight.js')}}"></script>
-    {% endif %}
-    <script type="text/javascript" src="{{  asset('bundles/rzpage/theme/rzcms/js/jquery.themepunch.revolution.min.js')}}"></script>
-    <script type="text/javascript" src="{{  asset('bundles/rzpage/theme/rzcms/js/jquery.themepunch.plugins.min.js')}}"></script>
-    <script src="{{  asset('bundles/rzpage/theme/rzcms/js/dzsportfolio.js') }}" type="text/javascript"></script>
-    {#<script src="{{  asset('bundles/rzpage/theme/rzcms/js/jquery.isotope.min.js') }}" type="text/javascript"></script>#}
-    <script src="{{  asset('bundles/rmzamorajquery/jquery-plugins/masonry/masonry.min.js') }}" type="text/javascript"></script>
-    <script src="{{  asset('bundles/rmzamorajquery/jquery-plugins/imagesloaded/imagesloaded.min.js') }}" type="text/javascript"></script>
-    <script src="{{  asset('bundles/rzpage/theme/rzcms/js/scroller.js') }}" type="text/javascript"></script>
-    <script src="{{  asset('bundles/rzpage/theme/rzcms/js/prettyphoto.js') }}"></script>
-    <script src="{{ asset('bundles/rmzamorajquery/jquery-plugins/fitvids/jquery.fitvids.js') }}" type="text/javascript"></script>
-    <script type="text/javascript" src="{{  asset('bundles/rzpage/theme/rzcms/js/scripts.js') }}"></script>
-    <script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+    {% javascripts
+    '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/bxslider/jquery.bxslider.js'
+    '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/imgLiquid/js/imgLiquid.js'
+    '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/eqheight/jquery.eqheight.js'
+    '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/masonry/masonry.min.js'
+    '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/imagesloaded/imagesloaded.min.js'
+    '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/fitvids/jquery.fitvids.js'
+    '@RzMediaBundle/Resources/public/js/block/rzmedia-bxslider.js'
+    '@RzMediaBundle/Resources/public/js/block/rzmedia-featured-gallery.js'
+    '@RzPageBundle/Resources/public/theme/rzcms/js/jquery.themepunch.revolution.min.js'
+    '@RzPageBundle/Resources/public/theme/rzcms/js/jquery.themepunch.plugins.min.js'
+    '@RzPageBundle/Resources/public/theme/rzcms/js/dzsportfolio.js'
+    '@RzPageBundle/Resources/public/theme/rzcms/js/scroller.js'
+    '@RzPageBundle/Resources/public/theme/rzcms/js/prettyphoto.js'
+    '@RzPageBundle/Resources/public/theme/rzcms/js/scripts.js'
+    filter='?closure'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <!-- fade in settings -->
     <script>
         //<![CDATA[
@@ -128,9 +135,9 @@
                                         <a href="{{ path(url) }}">Gallery</a>
                                     </li>
                                 {% endif %}
-                                {% if (app.user is not null and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
+                                {% if (app.user is not null and  app.security is defined and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
                                 <li class="has-submenu">
-                                    {% set url = rz_render_page_url('sonata_user_profile_show') %}
+                                    {% set url = rz_render_page_url('fos_user_profile_show') %}
                                     {% if  url %}
                                         <li class="has-submenu">
                                             <a href="{{ path(url) }}"><i class="icon-user"></i> {{ app.user }}</a>
@@ -193,7 +200,7 @@
                                 </li>
                                 {% endif %}
                                 {% if (app.user is not null and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
-                                    {% set url = rz_render_page_url('sonata_user_profile_show') %}
+                                    {% set url = rz_render_page_url('fos_user_profile_show') %}
                                     {% if  url %}
                                     <li class="has-submenu">
                                         <a href="{{ path(url) }}"><i class="icon-user"></i> {{ app.user }}</a>
@@ -236,7 +243,7 @@
                             {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
                                 {{ sonata_page_render_container('content',page,{ 'use_cache': false})}}
                             {% else %}
-                                {{ sonata_page_render_container('content', page,{ 'use_cache': true}) }}
+                                {{ sonata_page_render_container('content', page) }}
                             {% endif %}
                         {% endif %}
                     {% endif %}
