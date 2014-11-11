@@ -136,7 +136,7 @@ class PageAdmin extends BasePageAdmin
                     'class'         => $this->getClass(),
                     'required'      => false,
                     'filter_choice' => array('hierarchy' => 'root'),
-                    'select2' => true
+                    'selectpicker_enabled' => true
                 ), array(
                     'admin_code' => $this->getCode(),
                     'link_parameters' => array(
@@ -158,7 +158,7 @@ class PageAdmin extends BasePageAdmin
                     'class'         => $this->getClass(),
                     'filter_choice' => array('request_method' => 'all'),
                     'required'      => false,
-                    'select2' => true
+                    'selectpicker_enabled' => true
                 ), array(
                     'admin_code' => $this->getCode(),
                     'link_parameters' => array(
