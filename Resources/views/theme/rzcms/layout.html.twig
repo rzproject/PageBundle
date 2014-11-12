@@ -279,15 +279,9 @@
                                 <a class="a2a_button_email"><i class="icon icon-envelope marg-right5"></i></a>
                             </p>
                             {#{% endif %}#}
-                            {% if page is defined %}
                             <p>
-                                {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
-                                    {{ sonata_page_render_container('footer',page,{ 'use_cache': false})}}
-                                {% else %}
-                                    {{ sonata_page_render_container('footer', page,{ 'use_cache': true}) }}
-                                {% endif %}
+                                {{ sonata_page_render_container('footer', 'global' }}
                             </p>
-                            {% endif %}
                         </div>
                         <div class="go-top">
                             <span class="dark-grey"><i class="icon icon-align-justify marg-right5"></i></span>

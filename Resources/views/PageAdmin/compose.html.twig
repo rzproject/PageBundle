@@ -50,11 +50,13 @@
                     <i class="icon-pencil"></i>
                     {{ 'page.compose_page'|trans({}, 'SonataPageBundle') }}
                 </h3>
+                {% if not page.isDynamic %}
                 <ul class="tabs">
                     <li class="active">
                         <a target="_blank" class="preview-page" href="{{ admin.getViewUrl }}"><i class="icon-eye-open"></i></a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
             <div class="box-content">
         {% if containers|length == 0 %}

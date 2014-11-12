@@ -411,7 +411,7 @@
                             createdEvent.blockId     = resp.objectId;
                             createdEvent.blockName   = blockName;
                             createdEvent.blockType   = event.blockType;
-                            createdEvent.pageId      = this.getPageId();
+                            createdEvent.pageId      = self.getPageId();
                             $(self).trigger(createdEvent);
                         }
                     }
