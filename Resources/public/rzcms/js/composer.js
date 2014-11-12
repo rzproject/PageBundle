@@ -398,6 +398,9 @@
                 if (blockName === '') {
                     blockName = event.blockType;
                 }
+                
+                for ( instance in CKEDITOR.instances )
+                    CKEDITOR.instances[instance].updateElement();
 
                 $.ajax({
                     url:  formAction,
