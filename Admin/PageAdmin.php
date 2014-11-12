@@ -243,4 +243,8 @@ class PageAdmin extends BasePageAdmin
      * {@inheritdoc}
      */
     protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null){}
+
+    public function getViewUrl() {
+        return $this->getRouteGenerator()->generate('page_slug', array('path' => $this->getSubject()->getUrl()));
+    }
 }
