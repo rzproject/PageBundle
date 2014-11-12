@@ -360,9 +360,12 @@
 .page-composer__container__child__remove .badge {
     background-color: #f56954;
     cursor: pointer;
+    color: #fff !important;
+    text-transform: uppercase;
 }
 .page-composer__container__child__remove__confirm {
     display: none;
+    text-transform: uppercase;
 }
 .page-composer__container__child__remove__confirm span {
     border-radius: 2px;
@@ -374,9 +377,11 @@
 }
 .page-composer__container__child__remove__confirm span.yes {
     background-color: #00a65a;
+    text-transform: uppercase;
 }
 .page-composer__container__child__remove__confirm span.cancel {
     background-color: #f56954;
+    text-transform: uppercase;
 }
 .page-composer__container__child__toggle {
     display: none;
@@ -448,6 +453,10 @@
     padding: 10px 15px;
     font-size: 20px !important;
     line-height: 1em !important;
+}
+
+.page-composer__block-type-selector {
+    text-transform: uppercase;
 }
 
 div.btn-group.bootstrap-select.page-composer__block-type-selector__select {
