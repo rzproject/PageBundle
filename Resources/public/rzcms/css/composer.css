@@ -449,3 +449,7 @@
     font-size: 20px !important;
     line-height: 1em !important;
 }
+
+div.btn-group.bootstrap-select.page-composer__block-type-selector__select {
+    top: 5px;
+}
