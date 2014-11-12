@@ -42,11 +42,19 @@
     <div class="page-composer">
         <div class="box box-color box-bordered">
             <div class="box-title">
-                <h3>
+                <h3 class="hidden-phone hidden-tablet visible-desktop">
                     <i class="icon-pencil"></i>
                     {{ 'page.compose_page'|trans({}, 'SonataPageBundle') }} "{{ page.name }}" <small>[template: <b>{{ template.name }}</b>]</small>
-                    <small class="btn btn-success"><a target="_blank" class="preview-page" href="{{ admin.getViewUrl }}"><i class="icon-eye-open"></i>{{ 'view_page'|trans({}, 'SonataPageBundle') }}</a></small>
                 </h3>
+                <h3 class="visible-phone visible-tablet hidden-desktop">
+                    <i class="icon-pencil"></i>
+                    {{ 'page.compose_page'|trans({}, 'SonataPageBundle') }}
+                </h3>
+                <ul class="tabs">
+                    <li class="active">
+                        <a target="_blank" class="preview-page" href="{{ admin.getViewUrl }}"><i class="icon-eye-open"></i></a>
+                    </li>
+                </ul>
             </div>
             <div class="box-content">
         {% if containers|length == 0 %}

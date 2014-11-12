@@ -463,10 +463,3 @@ div.btn-group.bootstrap-select.page-composer__block-type-selector__select {
     top: 5px;
 }
 
-.preview-page{
-    color: #fff !important;
-}
-
-.preview-page:hover{
-    text-decoration: none;
-}
