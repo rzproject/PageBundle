@@ -10,11 +10,8 @@
                 <option value="{{ blockServiceId }}">{{ blockService.name }}</option>
             {% endfor %}
         </select>
-        <a class="btn btn-action btn-small page-composer__block-type-selector__confirm"
-           href="{{ path('admin_sonata_page_page_block_create', { 'id': page.id }) }}"
-        ><i class="icon-plus"></i></a>
+        <a class="btn btn-action btn-small page-composer__block-type-selector__confirm" href="{{ path('admin_sonata_page_page_block_create', { 'id': page.id }) }}"><i class="icon-plus"></i></a>
         <span class="page-composer__block-type-selector__loader">{{ 'loading'|trans({}, 'SonataPageBundle') }}</span>
-
         <small class="page-composer__container__child-count hidden-phone hidden-tablet visible-desktop pull-right">
             {{ 'blocks'|trans({}, 'SonataPageBundle') }} <span class="badge">{{ container.children|length }}</span>
         </small>

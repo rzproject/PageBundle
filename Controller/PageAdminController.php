@@ -262,12 +262,56 @@ class PageAdminController extends Controller
         }
 
         $blockServices = $this->get('sonata.block.manager')->getServicesByContext('sonata_page_bundle', false);
+        $userDefinedBlocks = $this->getUserDefinedBlocks($block);
 
         return $this->render('RzPageBundle:PageAdmin:compose_container_show.html.twig', array(
-            'blockServices' => $blockServices,
-            'container'     => $block,
-            'page'          => $block->getPage(),
+            'blockServices'    => $userDefinedBlocks ?: $blockServices,
+            'container'        => $block,
+            'page'             => $block->getPage()
         ));
+    }
+
+    protected function getUserDefinedBlocks($block) {
+
+        $templateManager    = $this->get('sonata.page.template_manager');
+
+        if(!$templateCode = $block->getPage()->getTemplateCode()) {
+            return null;
+        }
+
+        if (!$template = $templateManager->get($templateCode)) {
+            return null;
+        }
+
+        $containers = $template->getContainers();
+        $settings = $block->getSettings();
+        if (!isset($settings['code'])) {
+            return null;
+        }
+
+        if (!isset($containers[$settings['code']])) {
+            return null;
+        }
+
+        $templateSettings = $containers[$settings['code']];
+
+        if (!isset($templateSettings['blocks'])) {
+            return null;
+        }
+
+        if(count($templateSettings['blocks']) > 0) {
+            $blockManager = $this->get('sonata.block.manager');
+            $blockservises = array();
+            foreach ($templateSettings['blocks'] as $block) {
+                $blockservises[$block] = $blockManager->getService($block);
+            }
+            return $blockservises;
+        } else {
+            return null;
+        }
+
+        return null;
+
     }
 
 }
