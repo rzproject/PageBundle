@@ -398,9 +398,13 @@
                 if (blockName === '') {
                     blockName = event.blockType;
                 }
+
+                if (typeof CKEDITOR !== 'undefined') {
+                    for ( instance in CKEDITOR.instances )
+                        CKEDITOR.instances[instance].updateElement();
+                }
                 
-                for ( instance in CKEDITOR.instances )
-                    CKEDITOR.instances[instance].updateElement();
+
 
                 $.ajax({
                     url:  formAction,
@@ -486,8 +490,10 @@
             $form.on('submit', function (e) {
                 e.preventDefault();
 
-                for ( instance in CKEDITOR.instances )
-                    CKEDITOR.instances[instance].updateElement();
+                if (typeof CKEDITOR !== 'undefined') {
+                    for (instance in CKEDITOR.instances)
+                        CKEDITOR.instances[instance].updateElement();
+                }
 
                 $loader.show();
 
