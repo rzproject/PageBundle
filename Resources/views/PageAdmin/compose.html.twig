@@ -65,14 +65,10 @@
             <div class="box-content">
         {% if containers|length == 0 %}
             <div class="alert alert-warning">
-
                 <strong>Warning!</strong> Before using the composer option, you need to configure the template layout.
                 <br />The configuration must be done in the <code>sonata_page.templates</code> section.<br />
-
             <br />
             See a complete exemple here:
-
-
 <pre>
 sonata_page:
     # [...]
@@ -134,9 +130,7 @@ sonata_page:
                                                 </div>
                                             </a>
                                         {% else %}
-                                            <div class="page-composer__page-preview__container--no-block"
-                                                 style="top:{{ container.area.placement.y }}%;right:{{ container.area.placement.right }}%;bottom:{{ container.area.placement.bottom }}%;left:{{ container.area.placement.x }}%"
-                                            >
+                                            <div class="page-composer__page-preview__container--no-block" style="top:{{ container.area.placement.y }}%;right:{{ container.area.placement.right }}%;bottom:{{ container.area.placement.bottom }}%;left:{{ container.area.placement.x }}%">
                                                 <div class="page-composer__page-preview__container__content">
                                                     <strong>{{ container.area.name }}</strong>
                                                 </div>
