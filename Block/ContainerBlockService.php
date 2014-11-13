@@ -36,10 +36,10 @@ class ContainerBlockService extends BaseContainerBlockService
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('code', 'text', array('required' => false)),
+                array('code', 'text', array('required' => false, 'attr'=>array('class'=>'span8'))),
                 array('layout', 'ckeditor', array()),
-                array('class', 'text', array('required' => false)),
-                array('template', 'sonata_type_container_template_choice', array())
+                array('class', 'text', array('required' => false, 'attr'=>array('class'=>'span8'))),
+                array('template', 'sonata_type_container_template_choice', array('attr'=>array('class'=>'span8')))
             )
         ));
 
