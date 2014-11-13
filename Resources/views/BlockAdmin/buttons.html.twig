@@ -2,7 +2,9 @@
 {% if page %}
 <a class="btn btn-primary sonata-action-element" href="{{ path('admin_sonata_page_page_list') }}"><i class="icon-reorder"></i> {{ 'breadcrumb.link_page_list'|trans({}, 'SonataPageBundle') }}</a>
 <a class="btn btn-primary sonata-action-element" href="{{ path('admin_sonata_page_page_edit', {'id':page.id}) }}"><i class="icon-pencil"></i> {{ 'sidemenu.link_edit_page'|trans({}, 'SonataPageBundle') }}</a>
+{% if not page.isInternal %}
 <a class="btn btn-primary sonata-action-element" href="{{ path('admin_sonata_page_page_compose', {'id':page.id}) }}"><i class="icon-magic"></i> {{ 'sidemenu.link_compose_page'|trans({}, 'SonataPageBundle') }}</a>
+{% endif %}
 <a class="btn btn-primary sonata-action-element" href="{{ path('admin_sonata_page_page_snapshot_list', {'id':page.id}) }}"><i class="icon-magic"></i> {{ 'sidemenu.link_list_snapshots'|trans({}, 'SonataPageBundle') }}</a>
 {#<a class="btn btn-primary sonata-action-element" href="{{ path(page) }}"><i class="icon-eye-open"></i> {{ 'view_page'|trans({}, 'SonataPageBundle') }}</a>#}
 {% endif %}
