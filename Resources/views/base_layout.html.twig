@@ -29,6 +29,8 @@
             <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rmzamorajquery/jquery-plugins/gritter/css/gritter.css') }}" />
             <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rzadmin/css/font.css') }}" />
             <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rmzamorajquery/jquery-plugins/icheck/skins/all.css') }}" />
+            {{ sonata_seo_link_canonical() }}
+            {{ sonata_seo_lang_alternates() }}
             {% block rz_page_theme_stylesheets %}{% endblock %}
         {% endblock %}
 
