@@ -45,7 +45,7 @@
     </div>
     {% if page is defined %}
         <div class="strip">
-        {% if sonata_page.isEditor or (app.user is not null and app.user and app.user.token and is_granted('ROLE_PREVIOUS_ADMIN')) %}
+        {% if sonata_page.isEditor or (app.user is not null and app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %}
             {{ sonata_page_render_container('content_bottom',page,{ 'use_cache': false})}}
         {% else %}
             {{ sonata_page_render_container('content_bottom', page,{ 'use_cache': true}) }}
