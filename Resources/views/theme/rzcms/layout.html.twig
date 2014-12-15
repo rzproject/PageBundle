@@ -121,10 +121,17 @@
                                             <a href="{{ path(url) }}">Home</a>
                                         </li>
                                     {% endif %}
-                                    {% set url = rz_render_page_url('blog') %}
+                                    {% set url = rz_render_page_url('rz_news_collection') %}
                                     {% if  url %}
                                         <li class="has-submenu-no">
-                                            <a href="{{ path(url) }}">Blog</a>
+                                            <a href="{{ path(url, {'collection': 'blog'}) }}">News</a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% set url = rz_render_page_url('rz_news_collection') %}
+                                    {% if  url %}
+                                        <li class="has-submenu-no">
+                                            <a href="{{ path(url, {'collection': 'event'}) }}">Events</a>
                                         </li>
                                     {% endif %}
                                     {% set url = rz_render_page_url('gallery') %}
@@ -185,10 +192,17 @@
                                             <a href="{{ path(url) }}">Home</a>
                                         </li>
                                     {% endif %}
-                                    {% set url = rz_render_page_url('blog') %}
+                                    {% set url = rz_render_page_url('rz_news_collection') %}
                                     {% if  url %}
                                         <li class="has-submenu-no">
-                                            <a href="{{ path(url) }}">Blog</a>
+                                            <a href="{{ path(url, {'collection': 'blog'}) }}">News</a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% set url = rz_render_page_url('rz_news_collection') %}
+                                    {% if  url %}
+                                        <li class="has-submenu-no">
+                                            <a href="{{ path(url, {'collection': 'event'}) }}">Events</a>
                                         </li>
                                     {% endif %}
                                     {% set url = rz_render_page_url('gallery') %}

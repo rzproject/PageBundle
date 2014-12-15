@@ -168,3 +168,7 @@
 }
 
 
+h3.sonata-news-block-tags,  h3.sonata-news-block-collections, h3.sonata-news-block-featured-post, h3.sonata-news-block-recent-post{
+    margin-top: 0px
+}
+
