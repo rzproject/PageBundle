@@ -9,6 +9,7 @@ use Sonata\BlockBundle\Exception\BlockNotFoundException;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sonata\PageBundle\Admin\SharedBlockAdmin;
 
 
 /**
@@ -118,15 +119,15 @@ class BlockAdminController extends Controller
             throw new AccessDeniedException();
         }
 
-        if (!$this->admin->getParent()) {
+        $sharedBlockAdminClass = $this->container->getParameter('sonata.page.admin.shared_block.class');
+        if (!$this->admin->getParent() && get_class($this->admin) !== $sharedBlockAdminClass) {
+
             throw new PageNotFoundException('You cannot create a block without a page');
         }
-
         $parameters = $this->admin->getPersistentParameters();
-
         if (!$parameters['type']) {
             return $this->render('SonataPageBundle:BlockAdmin:select_type.html.twig', array(
-                'services'     => $this->get('sonata.block.manager')->getServices(),
+                'services'      => $this->get('sonata.block.manager')->getServicesByContext('sonata_page_bundle'),
                 'base_template' => $this->getBaseTemplate(),
                 'admin'         => $this->admin,
                 'action'        => 'create'
