@@ -247,4 +247,13 @@ class PageAdmin extends BasePageAdmin
     public function getViewUrl() {
         return $this->getRouteGenerator()->generate('page_slug', array('path' => $this->getSubject()->getUrl()));
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($object)
+    {
+        $this->pageManager->fixUrl($object);
+        $object->setEdited(true);
+    }
 }

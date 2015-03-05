@@ -9,7 +9,6 @@
         <parameter key="rz_page.admin.page.class">Rz\PageBundle\Admin\PageAdmin</parameter>
         <parameter key="rz_page.admin.block.class">Rz\PageBundle\Admin\BlockAdmin</parameter>
         <parameter key="rz_page.admin.site.class">Rz\PageBundle\Admin\SiteAdmin</parameter>
-
     </parameters>
 
 </container>
