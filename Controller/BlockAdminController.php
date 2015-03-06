@@ -125,6 +125,7 @@ class BlockAdminController extends Controller
             throw new PageNotFoundException('You cannot create a block without a page');
         }
         $parameters = $this->admin->getPersistentParameters();
+
         if (!$parameters['type']) {
             return $this->render('SonataPageBundle:BlockAdmin:select_type.html.twig', array(
                 'services'      => $this->get('sonata.block.manager')->getServicesByContext('sonata_page_bundle'),
