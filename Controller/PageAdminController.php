@@ -6,6 +6,7 @@ use Sonata\PageBundle\Controller\PageAdminController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -40,17 +41,16 @@ class PageAdminController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-    public function createAction()
+    public function createAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('CREATE')) {
             throw new AccessDeniedException();
         }
 
-        if ($this->getRequest()->getMethod() == 'GET' && !$this->getRequest()->get('siteId')) {
+        if ($request->getMethod() == 'GET' && !$request->get('siteId')) {
             $sites = $this->get('sonata.page.manager.site')->findBy(array());
 
             if (count($sites) == 1) {
@@ -73,36 +73,24 @@ class PageAdminController extends Controller
             ));
         }
 
-        return parent::createAction();
+        return parent::createAction($request);
     }
+
     /**
      * return the Response object associated to the edit action
      *
      *
      * @param mixed $id
      *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
+     * @param Request $request
      * @return Response
      */
-       /**
-     * return the Response object associated to the edit action
-     *
-     *
-     * @param mixed $id
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return Response
-     */
-    public function editAction($id = null)
+    public function editAction($id = null, Request $request = null)
     {
         // the key used to lookup the template
         $templateKey = 'edit';
 
-        $id = $this->get('request')->get($this->admin->getIdParameter());
+        $id = $request->get($this->admin->getIdParameter());
 
         $object = $this->admin->getObject($id);
 
@@ -122,7 +110,7 @@ class PageAdminController extends Controller
 
         if ($this->getRestMethod() == 'POST') {
 
-            $form->handleRequest($this->get('request'));
+            $form->handleRequest($request);
 
             $isFormValid = $form->isValid();
 
@@ -166,18 +154,16 @@ class PageAdminController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws NotFoundHttpException
+     * @param Request $request
+     * @return Response
      */
-    public function composeAction()
+    public function composeAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('EDIT') || false === $this->get('sonata.page.admin.block')->isGranted('LIST')) {
             throw new AccessDeniedException();
         }
 
-        $id   = $this->get('request')->get($this->admin->getIdParameter());
+        $id   = $request->get($this->admin->getIdParameter());
         $page = $this->admin->getObject($id);
         if (!$page) {
             throw new NotFoundHttpException(sprintf('unable to find the page with id : %s', $id));
@@ -244,18 +230,16 @@ class PageAdminController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws NotFoundHttpException
+     * @param Request $request
+     * @return Response
      */
-    public function composeContainerShowAction()
+    public function composeContainerShowAction(Request $request = null)
     {
         if (false === $this->get('sonata.page.admin.block')->isGranted('LIST')) {
             throw new AccessDeniedException();
         }
 
-        $id    = $this->get('request')->get($this->admin->getIdParameter());
+        $id    = $request->get($this->admin->getIdParameter());
         $block = $this->get('sonata.page.admin.block')->getObject($id);
         if (!$block) {
             throw new NotFoundHttpException(sprintf('unable to find the block with id : %s', $id));

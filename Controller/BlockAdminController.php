@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sonata\BlockBundle\Exception\BlockNotFoundException;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\PageBundle\Admin\SharedBlockAdmin;
 
@@ -21,18 +22,17 @@ class BlockAdminController extends Controller
 {
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @param Request $request
+     * @return Response
      */
-    public function savePositionAction()
+    public function savePositionAction(Request $request = null)
     {
         if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
             throw new AccessDeniedException();
         }
 
         try {
-            $params = $this->get('request')->get('disposition');
+            $params = $request->get('disposition');
 
             if (!is_array($params)) {
                 throw new HttpException(400, 'wrong parameters');
@@ -62,7 +62,7 @@ class BlockAdminController extends Controller
         return $this->renderJson(array('result' => $result), $status);
     }
 
-    public function saveTextBlockAction()
+    public function saveTextBlockAction(Request $request = null)
     {
 
         if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
@@ -109,11 +109,11 @@ class BlockAdminController extends Controller
 
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @param Request $request
+     * @return Response
      * @throws PageNotFoundException
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction()
+    public function createAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('CREATE')) {
             throw new AccessDeniedException();
@@ -135,10 +135,10 @@ class BlockAdminController extends Controller
             ));
         }
 
-        return parent::createAction();
+        return parent::createAction($request);
     }
 
-    public function cmsBlockRenderAction($pageId = null,$blockId = null)
+    public function cmsBlockRenderAction($pageId = null,$blockId = null, Request $request = null)
     {
         if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
             throw new AccessDeniedException();
@@ -160,23 +160,21 @@ class BlockAdminController extends Controller
         return $response;
     }
 
-     /**
+    /**
      * return the Response object associated to the edit action
      *
      *
      * @param mixed $id
      *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
+     * @param Request $request
      * @return Response
      */
-    public function editAction($id = null)
+    public function editAction($id = null, Request $request = null)
     {
         // the key used to lookup the template
         $templateKey = 'edit';
 
-        $id = $this->get('request')->get($this->admin->getIdParameter());
+        $id = $request->get($this->admin->getIdParameter());
 
         $object = $this->admin->getObject($id);
 
@@ -196,7 +194,7 @@ class BlockAdminController extends Controller
 
         if ($this->getRestMethod() == 'POST') {
 
-            $form->handleRequest($this->get('request'));
+            $form->handleRequest($request);
 
             $isFormValid = $form->isValid();
 
@@ -240,14 +238,14 @@ class BlockAdminController extends Controller
         ));
     }
 
-    public function switchParentAction()
+    public function switchParentAction(Request $request = null)
     {
         if (!$this->admin->isGranted('EDIT')) {
             throw new AccessDeniedException();
         }
 
-        $blockId  = $this->get('request')->get('block_id');
-        $parentId = $this->get('request')->get('parent_id');
+        $blockId  = $request->get('block_id');
+        $parentId = $request->get('parent_id');
         if ($blockId === null or $parentId === null) {
             throw new HttpException(400, 'wrong parameters');
         }
