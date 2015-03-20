@@ -47,6 +47,7 @@ class RzPageExtension extends Extension
         $this->configureTranslationDomain($config, $container);
         $this->configureController($config, $container);
         $this->configureRzTemplates($config, $container);
+        $this->registerDoctrineMapping($config);
     }
 
     /**
@@ -61,6 +62,9 @@ class RzPageExtension extends Extension
         $container->setParameter('sonata.page.block.class', $config['class']['block']);
         $container->setParameter('sonata.page.snapshot.class', $config['class']['snapshot']);
         $container->setParameter('sonata.page.page.class', $config['class']['page']);
+        $container->setParameter('rz.page.service.default.class', $config['class']['page_service_default']);
+        $container->setParameter('rz.page.transformer.class', $config['class']['page_transformer']);
+
 
         $container->setParameter('sonata.page.admin.site.entity', $config['class']['site']);
         $container->setParameter('sonata.page.admin.block.entity', $config['class']['block']);
@@ -139,4 +143,46 @@ class RzPageExtension extends Extension
         $container->setParameter('rz_page.configuration.snapshot.templates', $config['admin']['snapshot']['templates']);
         $container->setParameter('rz_page.configuration.page.templates', $config['admin']['page']['templates']);
     }
+
+    /**
+     * Registers doctrine mapping on concrete page entities
+     *
+     * @param array $config
+     */
+    public function registerDoctrineMapping(array $config)
+    {
+        if (!class_exists($config['class']['page'])) {
+            return;
+        }
+
+        $collector = DoctrineCollector::getInstance();
+
+        if (interface_exists('Sonata\MediaBundle\Model\MediaInterface')) {
+            $collector->addAssociation($config['class']['page'], 'mapManyToOne', array(
+                'fieldName' => 'ogImage',
+                'targetEntity' => $config['class']['media'],
+                'cascade' =>
+                    array(
+                        0 => 'remove',
+                        1 => 'persist',
+                        2 => 'refresh',
+                        3 => 'merge',
+                        4 => 'detach',
+                    ),
+                'mappedBy' => NULL,
+                'inversedBy' => NULL,
+                'joinColumns' =>
+                    array(
+                        array(
+                            'name' => 'og_image_id',
+                            'referencedColumnName' => 'id',
+                        ),
+                    ),
+                'orphanRemoval' => false,
+            ));
+        }
+
+
+    }
+
 }

@@ -62,6 +62,16 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
         $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
                                         $container->getParameter('rz_page.configuration.page.templates'));
         $definition->addMethodCall('setTemplates', array($definedTemplates));
+        $definition->addMethodCall('setMetaTags', array($container->getParameter('rz_seo.metatags')));
+
+        $definition = $container->getDefinition('sonata.page.service.default');
+        $definition->setClass($container->getParameter('rz.page.service.default.class'));
+        $definition->addMethodCall('setRouter', array(new Reference('router')));
+
+        $definition = $container->getDefinition('sonata.page.transformer');
+        $definition->setClass($container->getParameter('rz.page.transformer.class'));
+
+
 
     }
 }
