@@ -163,11 +163,8 @@ class RzPageExtension extends Extension
                 'targetEntity' => $config['class']['media'],
                 'cascade' =>
                     array(
-                        0 => 'remove',
-                        1 => 'persist',
-                        2 => 'refresh',
-                        3 => 'merge',
-                        4 => 'detach',
+                        0 => 'persist',
+                        1 => 'detach',
                     ),
                 'mappedBy' => NULL,
                 'inversedBy' => NULL,

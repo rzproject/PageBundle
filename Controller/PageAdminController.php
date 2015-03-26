@@ -129,7 +129,16 @@ class PageAdminController extends Controller
             // persist if the form was valid and if in preview mode the preview was approved
             if ($isFormValid && (!$this->isInPreviewMode() || $this->isPreviewApproved())) {
                 $this->admin->update($object);
-                $this->addFlash('sonata_flash_success', 'flash_edit_success');
+
+
+                $this->addFlash(
+                    'sonata_flash_success',
+                    $this->admin->trans(
+                        'flash_edit_success',
+                        array('%name%' => $this->escapeHtml($this->admin->toString($object))),
+                        'SonataAdminBundle'
+                    )
+                );
 
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
@@ -145,7 +154,16 @@ class PageAdminController extends Controller
             // show an error message if the form failed validation
             if (!$isFormValid) {
                 if (!$this->isXmlHttpRequest()) {
-                    $this->addFlash('sonata_flash_error', 'flash_edit_error');
+                    if (!$this->isXmlHttpRequest()) {
+                        $this->addFlash(
+                            'sonata_flash_error',
+                            $this->admin->trans(
+                                'flash_edit_error',
+                                array('%name%' => $this->escapeHtml($this->admin->toString($object))),
+                                'SonataAdminBundle'
+                            )
+                        );
+                    }
                 }
             } elseif ($this->isPreviewRequested()) {
                 // enable the preview template if the form was valid and preview was requested
