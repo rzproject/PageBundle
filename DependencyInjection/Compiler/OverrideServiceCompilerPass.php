@@ -19,18 +19,6 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-//        $definition = $container->getDefinition('sonata.page.admin.page');
-//        $definition->setClass($container->getParameter('rz_page.admin.page.class'));
-//
-//        $definition = $container->getDefinition('sonata.page.admin.block');
-//        $definition->setClass($container->getParameter('rz_page.admin.block.class'));
-//
-//        $definition = $container->getDefinition('sonata.page.admin.snapshot');
-//        $definition->setClass($container->getParameter('rz_page.admin.snapshot.class'));
-//
-//        $definition = $container->getDefinition('sonata.page.admin.site');
-//        $definition->setClass($container->getParameter('rz_page.admin.site.class'));
-
         $definition = $container->getDefinition('sonata.page.block.container');
         $definition->setClass($container->getParameter('rz_page.block.container.class'));
 
@@ -70,8 +58,6 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('sonata.page.transformer');
         $definition->setClass($container->getParameter('rz.page.transformer.class'));
-
-
 
     }
 }

@@ -66,7 +66,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('block')->defaultValue('Sonata\\PageBundle\\Entity\\BlockManager')->end()
-                        ->scalarNode('page')->defaultValue('Sonata\\PageBundle\\Entity\\PageManager')->end()
+                        ->scalarNode('page')->defaultValue('Rz\\PageBundle\\Entity\\PageManager')->end()
                         ->scalarNode('site')->defaultValue('Sonata\\PageBundle\\Entity\\SiteManager')->end()
                         ->scalarNode('snapshot')->defaultValue('Sonata\\PageBundle\\Entity\\SnapshotManager')->end()
                     ->end()
