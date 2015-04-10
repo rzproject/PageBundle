@@ -68,7 +68,10 @@ class DefaultPageService extends BasePageService
 
         $this->seoPage->addMeta('property', 'og:type', $page->getOgType() ? $page->getOgType(): 'article');
 
-        $this->seoPage->addMeta('property', 'og:url',  $this->router->generate($page, array(), true));
+        if($page->isCms()) {
+            $this->seoPage->addMeta('property', 'og:url',  $this->router->generate($page, array(), true));
+        }
+
 
         if($page->getOgDescription()) {
             $this->seoPage->addMeta('property', 'og:description', $page->getOgDescription());
