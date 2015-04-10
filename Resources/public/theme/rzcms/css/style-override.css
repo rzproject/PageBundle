@@ -172,3 +172,26 @@ h3.sonata-news-block-tags,  h3.sonata-news-block-collections, h3.sonata-news-blo
     margin-top: 0px
 }
 
+.category-list .category-item {
+    margin-bottom: 10px;
+}
+
+.category-list .category-item .category {
+    background-color: #fff;
+    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.category-list .category-item .category .item-description {
+    margin: 10px;
+}
+
+.category-list .category-item .category > a {
+    text-align: center;
+    display: block;
+}
+
+
+
+
