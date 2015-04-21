@@ -192,6 +192,14 @@ h3.sonata-news-block-tags,  h3.sonata-news-block-collections, h3.sonata-news-blo
     display: block;
 }
 
+.category-container {
+    padding-top: 20px;
+}
+
+.post-container {
+    padding-top: 20px;
+}
+
 
 .breadcrumbs {
     *zoom: 1;

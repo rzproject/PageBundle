@@ -266,6 +266,13 @@
         <!-- // header -->
     {% endblock rzcms_header %}
 
+    {% block sonata_page_breadcrumb %}
+        <div class="container">
+            <div class="row-fluid breadcrumbs clearfix">
+                {{ sonata_page_breadcrumb(page, {'force_view_home_page':true, 'container_attr': {'class': 'breadcrumb'}, 'separator': '<i class="icon-angle-right"></i>', 'current_class': 'active'}) }}
+            </div>
+        </div>
+    {% endblock %}
 
     {% block rzcms_body %}
         <div class="container">
