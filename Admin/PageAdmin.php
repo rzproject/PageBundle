@@ -32,6 +32,8 @@ use Sonata\PageBundle\Admin\PageAdmin as BasePageAdmin;
 class PageAdmin extends BasePageAdmin
 {
 
+    protected $metaTags;
+
     /**
      * {@inheritdoc}
      */
@@ -180,11 +182,31 @@ class PageAdmin extends BasePageAdmin
 
         $formMapper
             ->with($this->trans('form_page.group_seo_label'), array('collapsed' => true))
-            ->add('title', null, array('required' => false))
-            ->add('metaKeyword', 'textarea', array('required' => false))
-            ->add('metaDescription', 'textarea', array('required' => false))
+                ->add('title', null, array('required' => false))
+                ->add('metaKeyword', 'textarea', array('required' => false))
+                ->add('metaDescription', 'textarea', array('required' => false))
+                ->add('ogTitle', null, array('required' => false))
+                ->add('ogType', 'choice', array('required' => false, 'choices'=>$this->getMetatags(), 'attr'=>array('class'=>'span4')))
+                ->add('ogDescription', 'textarea', array('required' => false))
             ->end()
         ;
+
+        if (interface_exists('Sonata\MediaBundle\Model\MediaInterface')) {
+
+            $formMapper
+                ->with($this->trans('form_page.group_seo_label'), array('collapsed' => true))
+                ->add('ogImage', 'sonata_type_model_list',
+                    array('required' => false),
+                    array(
+                        'link_parameters' => array(
+                            'provider' => 'sonata.media.provider.image',
+                            'context'  => 'default',
+                            'hide_context' => true
+                        )
+                    ))
+                ->end()
+            ;
+        }
 
         if ($this->hasSubject() && !$this->getSubject()->isCms()) {
             $formMapper
@@ -255,5 +277,21 @@ class PageAdmin extends BasePageAdmin
     {
         $this->pageManager->fixUrl($object);
         $object->setEdited(true);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetaTags()
+    {
+        return $this->metaTags;
+    }
+
+    /**
+     * @param mixed $metaTags
+     */
+    public function setMetaTags($metaTags)
+    {
+        $this->metaTags = $metaTags;
     }
 }

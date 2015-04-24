@@ -311,6 +311,9 @@ i.service-icon { margin: 5px auto 25px auto!important; text-align: center!import
 	letter-spacing: 1px;
 	text-transform: uppercase;
 }
+.menu ul li.active a {
+    color: #666;
+}
 .menu ul li > a { height: 58px; padding: 19px 12px;	}
 .menu ul ul {
 	display: none;
