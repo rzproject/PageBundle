@@ -22,7 +22,6 @@
 
                         <div class="row-fluid">
                             <div class="span12">
-                                <h1>{{ 'title_archive'|trans({}, 'RzNewsBundle') }}</h1>
                                 <div class="row-fluid sonata-blog-post-list">
                                     <div class="span12">
                                         {% if content is defined %}
@@ -47,7 +46,7 @@
                         {% if page is defined %}
                             <div class="row-fluid">
                                 <div class="span12">
-                                    {% if sonata_page.isEditor or (app.user is not null and app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %}
+                                    {% if sonata_page.isEditor or (app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %}
                                         {{ sonata_page_render_container('content_bottom',page,{ 'use_cache': false})}}
                                     {% else %}
                                         {{ sonata_page_render_container('content_bottom', page,{ 'use_cache': true}) }}

@@ -795,6 +795,27 @@
           <source>composer.shared_block.add.type</source>
           <target>add block of type</target>
       </trans-unit>
+
+      <trans-unit id="198" resname="form.label_og_title">
+          <source>form.label_og_title</source>
+          <target>Og Title</target>
+      </trans-unit>
+
+      <trans-unit id="199" resname="form.label_og_type">
+          <source>form.label_og_type</source>
+          <target>Og Type</target>
+      </trans-unit>
+
+      <trans-unit id="200" resname="form.label_og_description">
+          <source>form.label_og_description</source>
+          <target>Og Description</target>
+      </trans-unit>
+
+      <trans-unit id="201" resname="form.label_og_image">
+          <source>form.label_og_image</source>
+          <target>Og Image</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>

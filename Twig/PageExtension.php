@@ -64,6 +64,7 @@ class PageExtension extends \Twig_Extension
     {
         return array(
             'rz_render_page_url' => new \Twig_SimpleFunction('rz_render_page_url', array($this, 'renderUrlByName')),
+            'rz_render_page_alias_url' => new \Twig_SimpleFunction('rz_render_page_alias_url', array($this, 'renderUrlByAlias')),
         );
     }
 
@@ -77,10 +78,20 @@ class PageExtension extends \Twig_Extension
 
     public function renderUrlByName($value)
     {
-
         try {
             $cmsManager = $this->cmsManagerSelector->retrieve();
             $page = $cmsManager->getPageByName($this->siteSelector->retrieve(), $value);
+            return $page;
+        } catch(PageNotFoundException $e) {
+            return;
+        }
+    }
+
+    public function renderUrlByAlias($value)
+    {
+        try {
+            $cmsManager = $this->cmsManagerSelector->retrieve();
+            $page = $cmsManager->getPageByPageAlias($this->siteSelector->retrieve(), $value);
             return $page;
         } catch(PageNotFoundException $e) {
             return;

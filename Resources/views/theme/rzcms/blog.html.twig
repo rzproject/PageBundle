@@ -1,5 +1,7 @@
 {% extends 'RzPageBundle:theme/rzcms:layout.html.twig' %}
 
+{% block sonata_page_breadcrumb %}{% endblock sonata_page_breadcrumb %}
+
 {% block rzcms_body %}
 <div class="container">
     <div class="row-fluid">
@@ -20,7 +22,6 @@
 
                     <div class="row-fluid">
                         <div class="span12">
-                            <h1>{{ 'title_archive'|trans({}, 'RzNewsBundle') }}</h1>
                             <div class="row-fluid sonata-blog-post-list">
                                 <div class="span8">
                                     {% if content is defined %}
