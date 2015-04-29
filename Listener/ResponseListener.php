@@ -31,7 +31,7 @@ class ResponseListener extends BaseResponseListener
      */
     public function onCoreResponse(FilterResponseEvent $event)
     {
-$cms = $this->cmsSelector->retrieve();
+        $cms = $this->cmsSelector->retrieve();
 
         $response = $event->getResponse();
         $request  = $event->getRequest();
