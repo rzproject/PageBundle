@@ -29,12 +29,8 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $node = $treeBuilder->root('rz_page');
-
         $this->addBundleSettings($node);
-
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $this->addBlockSettings($node);
         return $treeBuilder;
     }
 
@@ -137,6 +133,39 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+        /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addBlockSettings(ArrayNodeDefinition $node) {
+        $node
+            ->children()
+                ->arrayNode('blocks')
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('container')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue('Rz\\PageBundle\\Block\\ContainerBlockService')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('children_pages')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue('Rz\\PageBundle\\Block\\ChildrenPagesBlockService')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('shared_block')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue('Rz\\PageBundle\\Block\\SharedBlockBlockService')->end()
+                            ->end()
+                        ->end()
+
                     ->end()
                 ->end()
             ->end();

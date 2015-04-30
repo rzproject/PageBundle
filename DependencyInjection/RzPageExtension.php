@@ -35,9 +35,6 @@ class RzPageExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        //$loader->load('admin_orm.xml');
-        $loader->load('block.xml');
-        $loader->load('listener.xml');
         $loader->load('twig.xml');
 
         $this->configureAdminClass($config, $container);
@@ -47,6 +44,7 @@ class RzPageExtension extends Extension
         $this->configureTranslationDomain($config, $container);
         $this->configureController($config, $container);
         $this->configureRzTemplates($config, $container);
+        $this->configureBlocks($config['blocks'], $container);
         $this->registerDoctrineMapping($config);
     }
 
@@ -142,6 +140,13 @@ class RzPageExtension extends Extension
         $container->setParameter('rz_page.configuration.block.templates', $config['admin']['block']['templates']);
         $container->setParameter('rz_page.configuration.snapshot.templates', $config['admin']['snapshot']['templates']);
         $container->setParameter('rz_page.configuration.page.templates', $config['admin']['page']['templates']);
+    }
+
+    public function configureBlocks($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_page.block.container.class', $config['container']['class']);
+        $container->setParameter('rz_page.block.children_pages.class', $config['children_pages']['class']);
+        $container->setParameter('rz_page.block.shared_block.class', $config['shared_block']['class']);
     }
 
     /**
