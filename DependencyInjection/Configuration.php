@@ -138,7 +138,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-        /**
+    /**
      * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     private function addBlockSettings(ArrayNodeDefinition $node) {
