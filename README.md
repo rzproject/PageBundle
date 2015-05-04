@@ -5,4 +5,4 @@ Symfony2 Bundle - An extension of [SonataPageBundle](https://github.com/sonata-p
 
 Uses a forked version of SonataPageBundle
 
-**STABLE VERSION**
+**DEPRECATED**
