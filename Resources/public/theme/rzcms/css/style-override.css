@@ -261,6 +261,15 @@ h3.sonata-news-block-tags,  h3.sonata-news-block-collections, h3.sonata-news-blo
     color:  #253454;
 }
 
+.carousel-control {
+    height: auto!important;
+    width: auto !important;
+    padding: 5px 5px 0px 5px !important;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
 
 
 
