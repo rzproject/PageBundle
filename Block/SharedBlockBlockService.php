@@ -145,4 +145,42 @@ class SharedBlockBlockService extends BaseBlockService
 
         $block->setSetting('blockId', $sharedBlock);
     }
+
+    /**
+     * @return SharedBlockAdmin
+     */
+    protected function getSharedBlockAdmin()
+    {
+        if (!$this->sharedBlockAdmin) {
+            $this->sharedBlockAdmin = $this->container->get('sonata.page.admin.shared_block');
+        }
+
+        return $this->sharedBlockAdmin;
+    }
+
+    /**
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     *
+     * @return \Symfony\Component\Form\FormBuilder
+     */
+    protected function getBlockBuilder(FormMapper $formMapper)
+    {
+        // simulate an association ...
+        $fieldDescription = $this->getSharedBlockAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->sharedBlockAdmin->getClass(), 'block');
+        $fieldDescription->setAssociationAdmin($this->getSharedBlockAdmin());
+        $fieldDescription->setAdmin($formMapper->getAdmin());
+        $fieldDescription->setOption('edit', 'list');
+        $fieldDescription->setAssociationMapping(array(
+            'fieldName' => 'block',
+            'type'      => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE
+        ));
+
+        return $formMapper->create('blockId', 'sonata_type_model_list', array(
+            'sonata_field_description' => $fieldDescription,
+            'class'                    => $this->getSharedBlockAdmin()->getClass(),
+            'model_manager'            => $this->getSharedBlockAdmin()->getModelManager(),
+            'label'                    => 'block',
+            'required'                 => false
+        ));
+    }
 }
