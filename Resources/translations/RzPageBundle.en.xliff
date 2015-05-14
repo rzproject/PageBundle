@@ -816,6 +816,16 @@
           <target>Og Image</target>
       </trans-unit>
 
+      <trans-unit id="202" resname="news_view_title">
+          <source>news_view_title</source>
+          <target>News</target>
+      </trans-unit>
+
+      <trans-unit id="203" resname="search_title">
+          <source>search_title</source>
+          <target>Search Result</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
