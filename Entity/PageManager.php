@@ -4,14 +4,7 @@
 
 namespace Rz\PageBundle\Entity;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Sonata\CoreBundle\Model\BaseEntityManager;
-use Sonata\PageBundle\Model\PageManagerInterface;
-use Sonata\PageBundle\Model\PageInterface;
-use Sonata\PageBundle\Model\SiteInterface;
-use Sonata\PageBundle\Model\Page;
-use Sonata\DatagridBundle\Pager\Doctrine\Pager;
-use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
+
 use Sonata\PageBundle\Entity\PageManager as BasePageManager;
 
 
