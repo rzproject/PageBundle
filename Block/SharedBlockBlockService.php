@@ -128,7 +128,8 @@ class SharedBlockBlockService extends BaseBlockService
     public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'template' => 'RzPageBundle:Block:block_shared_block.html.twig'
+            'template' => 'RzPageBundle:Block:block_shared_block.html.twig',
+            'blockId' => null
         ));
     }
 
