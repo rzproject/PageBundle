@@ -8,6 +8,6 @@ Uses a forked version of SonataPageBundle
 Version
 =======
 
-**STABLE VERSION**
+**DEVELOPMENT VERSION**
 
 Back to: [rzpeoject](http://rzproject.github.io)
