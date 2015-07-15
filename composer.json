@@ -16,7 +16,8 @@
     "require": {
         "rmzamora/page-bundle": "2.4.1.*",
         "rz/admin-bundle": "1.1.1.*",
-        "rz/doctrine-orm-admin-bundle": "1.1.0.*"
+        "rz/doctrine-orm-admin-bundle": "1.1.0.*",
+        "rz/google-api-client-bundle" : "1.0.*"
     },
     "autoload": {
         "psr-4": { "Rz\\PageBundle\\": "" }
