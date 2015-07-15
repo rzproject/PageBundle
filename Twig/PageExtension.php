@@ -6,8 +6,9 @@ use Sonata\PageBundle\CmsManager\CmsManagerSelectorInterface;
 use Sonata\PageBundle\Site\SiteSelectorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Sonata\PageBundle\Exception\PageNotFoundException;
-
 use Sonata\BlockBundle\Templating\Helper\BlockHelper;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class PageExtension extends \Twig_Extension
 {
@@ -41,23 +42,33 @@ class PageExtension extends \Twig_Extension
      */
     private $blockHelper;
 
+    private $seoPage;
+
+    private $requestStack;
+
     /**
      * Constructor
      *
+     * @param RequestStack $requestStack
+     * @param RouterInterface $router                         The Router
      * @param CmsManagerSelectorInterface $cmsManagerSelector A CMS manager selector
-     * @param SiteSelectorInterface       $siteSelector       A site selector
-     * @param RouterInterface             $router             The Router
-     * @param BlockHelper                 $blockHelper        The Block Helper
+     * @param SiteSelectorInterface $siteSelector             A site selector
+     * @param BlockHelper $blockHelper                        The Block Helper
+     * @param SeoPageInterface $seoPage
      */
-    public function __construct(CmsManagerSelectorInterface $cmsManagerSelector,
-                                SiteSelectorInterface $siteSelector,
+    public function __construct(RequestStack $requestStack,
                                 RouterInterface $router,
-                                BlockHelper $blockHelper)
+                                CmsManagerSelectorInterface $cmsManagerSelector,
+                                SiteSelectorInterface $siteSelector,
+                                BlockHelper $blockHelper,
+                                SeoPageInterface $seoPage)
     {
+        $this->requestStack       = $requestStack;
+        $this->router             = $router;
         $this->cmsManagerSelector = $cmsManagerSelector;
         $this->siteSelector       = $siteSelector;
-        $this->router             = $router;
         $this->blockHelper        = $blockHelper;
+        $this->seoPage            = $seoPage;
     }
 
     public function getFunctions()
@@ -65,6 +76,7 @@ class PageExtension extends \Twig_Extension
         return array(
             'rz_render_page_url' => new \Twig_SimpleFunction('rz_render_page_url', array($this, 'renderUrlByName')),
             'rz_render_page_alias_url' => new \Twig_SimpleFunction('rz_render_page_alias_url', array($this, 'renderUrlByAlias')),
+            'rz_get_page_url' => new \Twig_SimpleFunction('rz_get_page_url', array($this, 'getUrlByPage')),
         );
     }
 
@@ -74,6 +86,22 @@ class PageExtension extends \Twig_Extension
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
+    }
+
+
+    public function getUrlByPage($value)
+    {
+        if(!$this->seoPage->getLinkCanonical()) {
+            return;
+        }
+
+        try {
+            $host = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
+            $baseUrl = $this->requestStack->getCurrentRequest()->getBaseUrl();
+            return str_replace(sprintf('%s%s', $host, $baseUrl), '', $this->seoPage->getLinkCanonical());
+        } catch(PageNotFoundException $e) {
+            return;
+        }
     }
 
     public function renderUrlByName($value)
