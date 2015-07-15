@@ -66,8 +66,8 @@
 
 {% block sonata_page_body_tag %}
 <body class="rz-cms{% if sonata_page.isEditor or (app.user is not null and app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %} rz-cms-edit{% endif %}">
+{{ rz_google_tag_manager_code() }}
 {% endblock %}
-
 {% block sonata_page_top_bar %}
     {% if sonata_page.isEditor or (app.user is not null and app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %}
         <div class="rzcms-admin-cmsmenu">
