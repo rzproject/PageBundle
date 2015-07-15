@@ -7,11 +7,13 @@
     <services>
         <service id="rz_page.twig.extension" class="Rz\PageBundle\Twig\PageExtension" public="false">
             <tag name="twig.extension" />
-
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="router" />
             <argument type="service" id="sonata.page.cms_manager_selector" />
             <argument type="service" id="sonata.page.site.selector" />
-            <argument type="service" id="router" />
             <argument type="service" id="sonata.block.templating.helper" />
+            <argument type="service" id="sonata.seo.page" />
+
         </service>
     </services>
 </container>
