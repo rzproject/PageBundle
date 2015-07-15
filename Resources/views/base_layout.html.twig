@@ -56,6 +56,9 @@
             {% endjavascripts %}
             {% endif %}
             {% block rz_page_theme_javascripts %}{% endblock %}
+            {% block sonata_page_javascripts_ga %}
+                {{ rz_google_analytics_tracking_code() }}
+            {% endblock sonata_page_javascripts_ga %}
         {% endblock %}
     </head>
 {% endblock %}
@@ -139,6 +142,19 @@
         {{ sonata_block_include_javascripts('screen') }}
     {% endif %}
 {% endblock %}
+{% block sonata_page_body_piwik %}{{ piwik_code() }}{% endblock sonata_page_body_piwik %}
+{% block sonata_page_body_ga_event %}
+    {% if page is defined and page is not null %}
+        {% set pageName = rz_get_page_url(page) %}
+        {% if pageName %}
+            {{ rz_google_analytics_page_view_custom({'page': pageName}) }}
+        {% else %}
+            {{ rz_google_analytics_page_view() }}
+        {% endif %}
+    {% else %}
+        {{ rz_google_analytics_page_view() }}
+    {% endif %}
+{% endblock sonata_page_body_ga_event %}
 {% block sonata_page_body_tag_close %}
 </body>
 {% endblock %}
