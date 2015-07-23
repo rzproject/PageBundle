@@ -14,9 +14,9 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "rmzamora/page-bundle": "2.4.2.*",
-        "rz/admin-bundle": "1.1.2.*",
-        "rz/doctrine-orm-admin-bundle": "1.1.1.*",
+        "rmzamora/page-bundle": "2.4.*",
+        "rz/admin-bundle": "1.1.*",
+        "rz/doctrine-orm-admin-bundle": "1.1.*",
         "rz/google-api-client-bundle" : "1.0.*"
     },
     "autoload": {
@@ -24,7 +24,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-1.2": "1.2.2.x-dev"
+            "dev-1.2": "1.2.x-dev"
         }
     }
 }
