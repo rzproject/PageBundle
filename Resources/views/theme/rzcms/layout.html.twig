@@ -23,23 +23,20 @@
     {% endstylesheets %}
     <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.css') }}"/>
     <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/rzpage/theme/rzcms/css/font-awesome.min.css') }}"/>
-
-    {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
+    {% if sonata_page.isEditor or (app.user is defined and app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %}
         {% stylesheets
-            'bundles/rmzamorajquery/jquery-plugins/bxslider/jquery.bxslider.css'
-            'bundles/sonatamedia/blocks/feature_media/theme.css'
-            'bundles/rzmedia/css/block/rzmedia-bxslider.css'
-            'bundles/rzmedia/css/block/rzmedia-featured-gallery.css'
-            'bundles/rznews/css/featured_post_block.css'
-            filter='?yui_css'
+        'bundles/sonatamedia/blocks/feature_media/theme.css'
+        'bundles/rzmedia/css/block/rzmedia-featured-gallery.css'
+        'bundles/rznews/css/featured_post_block.css'
+        filter='?yui_css'
         %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ asset_url }}" />
         {% endstylesheets %}
     {%  endif %}
     {% stylesheets
-        'bundles/rzpage/theme/rzcms/css/style-override.css'
-        'bundles/rzpage/theme/rzcms/css/theme-override.css'
-        filter='?yui_css'
+    'bundles/rzpage/theme/rzcms/css/style-override.css'
+    'bundles/rzpage/theme/rzcms/css/theme-override.css'
+    filter='?yui_css'
     %}
     <link rel="stylesheet" type="text/css" media="all" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -60,7 +57,8 @@
     '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/masonry/masonry.min.js'
     '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/imagesloaded/imagesloaded.min.js'
     '@RmzamoraJqueryBundle/Resources/public/jquery-plugins/fitvids/jquery.fitvids.js'
-    '@RzMediaBundle/Resources/public/js/block/rzmedia-bxslider.js'
+    '@RmzamoraJqueryBundle/Resources/public/lib/sprintf.js'
+    '@RzNewsBundle/Resources/public/js/post_loadmore.js'
     '@RzMediaBundle/Resources/public/js/block/rzmedia-featured-gallery.js'
     '@RzPageBundle/Resources/public/theme/rzcms/js/jquery.themepunch.revolution.min.js'
     '@RzPageBundle/Resources/public/theme/rzcms/js/jquery.themepunch.plugins.min.js'
@@ -103,155 +101,110 @@
 
 {% block sonata_page_container %}
     {% block rzcms_header %}
-    <header class="header">
-        <!--logo-->
-        <div class="container">
-            <div class="row">
-                <div class="span12">
-                    <div class="navbar">
-                        <!--logo-->
-                        <div class="logo">
-                            <a href="#"><img src="{{  asset('bundles/rzpage/theme/rzcms/img/sandbox-logo.png') }}" alt="" /></a>
-                        </div>
-                        <!--menu-->
-                        <a class="menu-link" href="#menu"><i class="icon-reorder white"></i></a>
-                        <nav id="menu2" class="menu">
-                            <ul>
-                                {% set url = rz_render_page_url('homepage') %}
-                                {% if  url %}
-                                    <li class="has-submenu-no">
-                                        <a href="{{ path(url) }}">Home</a>
-                                    </li>
-                                {% endif %}
-                                {% set url = rz_render_page_url('blog') %}
-                                {% if  url %}
-                                    <li class="has-submenu-no">
-                                        <a href="{{ path(url) }}">Blog</a>
-                                    </li>
-                                {% endif %}
-                                {% set url = rz_render_page_url('gallery') %}
-                                {% if  url %}
-                                    <li class="has-submenu-no">
-                                        <a href="{{ path(url) }}">Gallery</a>
-                                    </li>
-                                {% endif %}
-                                {% if (app.user is not null and  app.security is defined and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
-                                <li class="has-submenu">
-                                    {% set url = rz_render_page_url('fos_user_profile_show') %}
-                                    {% if  url %}
-                                        <li class="has-submenu">
-                                            <a href="{{ path(url) }}"><i class="icon-user"></i> {{ app.user }}</a>
-                                            {{ sonata_block_render({'type': 'sonata.user.block.menu', 'settings' : {'template':'RzUserBundle:Block:block_profile_menu.html.twig'} }, {'current_uri': app.request.requestUri}) }}
-                                        </li>
-                                    {% endif %}
-                                </li>
+        <header class="header">
+            <!--logo-->
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <div class="navbar">
+                            <!--logo-->
+                            <div class="logo">
+                                <a href="#"><img src="{{  asset('bundles/rzpage/theme/rzcms/img/sandbox-logo.png') }}" alt="" /></a>
+                            </div>
+                            <!--menu-->
+                            <a class="menu-link" href="#menu"><i class="icon-reorder white"></i></a>
+                            <nav id="menu2" class="menu">
+                                {% if (app.user is defined and app.user and is_granted('IS_AUTHENTICATED_FULLY')) %}
+                                    {{ sonata_block_render({ 'type' : 'sonata.block.service.menu',
+                                        'settings' : { 'title' : 'Header Menu',
+                                            'cache_policy' : 0,
+                                            'template' : 'SonataBlockBundle:Block:block_core_menu.html.twig',
+                                            'menu_name' : 'ApplicationSonataPageBundle:Builder:userMainMenu',
+                                            'safe_labels' : true} }) }}
                                 {% else %}
-                                    {% set url = rz_render_page_url('fos_user_security_login') %}
-                                    {% if  url %}
-                                    <li class="has-submenu-no">
-                                        <a href="{{ path(url) }}">Login</a>
-                                    </li>
-                                    {% endif %}
-                                    {% set url = rz_render_page_url('fos_user_registration_register') %}
-                                    {% if  url %}
-                                    <li class="has-submenu-no">
-                                        <a href="{{ path(url) }}">Register</a>
-                                    </li>
-                                    {% endif %}
+                                    {{ sonata_block_render({ 'type' : 'sonata.block.service.menu',
+                                        'settings' : { 'title' : 'Header Menu',
+                                            'cache_policy' : 0,
+                                            'template' : 'SonataBlockBundle:Block:block_core_menu.html.twig',
+                                            'menu_name' : 'ApplicationSonataPageBundle:Builder:anonymousMainMenu',
+                                            'safe_labels' : true} }
+                                    ) }}
                                 {% endif %}
-                            </ul>
-                        </nav>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-    <!--//header-->
+        </header>
+        <!--//header-->
 
-    <!-- sticky header-->
-    <header class="header sticky hidden-phone hidden-tablet">
-        <div class="container">
-            <div class="row">
-                <div class="span12">
-                    <div class="navbar">
-                        <!--logo-->
-                        <div class="logo-sticky">
-                            <a href="#"><img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png') }}" alt="" /></a>
-                        </div>
-                        <!--menu-->
-                        <nav id="menu" class="menu menu-sticky">
-                            <ul>
-                                {% set url = rz_render_page_url('homepage') %}
-                                {% if  url %}
-                                <li class="has-submenu-no">
-                                    <a href="{{ path(url) }}">Home</a>
-                                </li>
-                                {% endif %}
-                                {% set url = rz_render_page_url('blog') %}
-                                {% if  url %}
-                                <li class="has-submenu-no">
-                                    <a href="{{ path(url) }}">Blog</a>
-                                </li>
-                                {% endif %}
-                                {% set url = rz_render_page_url('gallery') %}
-                                {% if  url %}
-                                <li class="has-submenu-no">
-                                    <a href="{{ path(url) }}">Gallery</a>
-                                </li>
-                                {% endif %}
-                                {% if (app.user is not null and app.security and app.security.token and app.security.isGranted('IS_AUTHENTICATED_FULLY')) %}
-                                    {% set url = rz_render_page_url('fos_user_profile_show') %}
-                                    {% if  url %}
-                                    <li class="has-submenu">
-                                        <a href="{{ path(url) }}"><i class="icon-user"></i> {{ app.user }}</a>
-                                        {{ sonata_block_render({'type': 'sonata.user.block.menu', 'settings' : {'template':'RzUserBundle:Block:block_profile_menu.html.twig'} }, {'current_uri': app.request.requestUri}) }}
-                                    </li>
-                                    {% endif %}
+        <!-- sticky header-->
+        <header class="header sticky hidden-phone hidden-tablet">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <div class="navbar">
+                            <!--logo-->
+                            <div class="logo-sticky">
+                                <a href="#"><img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png') }}" alt="" /></a>
+                            </div>
+                            <!--menu-->
+                            <nav id="menu" class="menu menu-sticky">
+                                {% if (app.user is defined and app.user and is_granted('IS_AUTHENTICATED_FULLY')) %}
+                                    {{ sonata_block_render({ 'type' : 'sonata.block.service.menu',
+                                        'settings' : { 'title' : 'Header Menu',
+                                            'cache_policy' : 0,
+                                            'template' : 'SonataBlockBundle:Block:block_core_menu.html.twig',
+                                            'menu_name' : 'ApplicationSonataPageBundle:Builder:userMainMenu',
+                                            'safe_labels' : true} }) }}
                                 {% else %}
-                                    <li class="has-submenu-no">
-                                        <a href="{{ path(rz_render_page_url('fos_user_security_login')) }}">Login</a>
-                                    </li>
-                                    <li class="has-submenu-no">
-                                        <a href="{{ path(rz_render_page_url('fos_user_registration_register')) }}">Register</a>
-                                    </li>
-
+                                    {{ sonata_block_render({ 'type' : 'sonata.block.service.menu',
+                                        'settings' : { 'title' : 'Header Menu',
+                                            'cache_policy' : 0,
+                                            'template' : 'SonataBlockBundle:Block:block_core_menu.html.twig',
+                                            'menu_name' : 'ApplicationSonataPageBundle:Builder:anonymousMainMenu',
+                                            'safe_labels' : true} }) }}
                                 {% endif %}
-                            </ul>
-                        </nav>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-    <!-- // header -->
+        </header>
+        <!-- // header -->
     {% endblock rzcms_header %}
 
+    {% block sonata_page_breadcrumb %}
+        <div class="container">
+            {{ sonata_block_render_event('breadcrumb', { 'context': 'page', 'current_uri': app.request.requestUri, 'container_attr': {'class': 'breadcrumb'}, 'separator': '<i class="icon-angle-right"></i>', 'current_class': 'active' }) }}
+        </div>
+    {% endblock %}
 
     {% block rzcms_body %}
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span12 content">
-                <div class="row-fluid">
-                    <div class="span12">
-                    {% if content is defined %}
-                        {{ content|raw }}
-                    {% else %}
-                        {% set content = block('content') %}
-                        {% if content|length > 0 %}
-                            {{ content|raw }}
-                        {% elseif page is defined %}
-                            {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
-                                {{ sonata_page_render_container('content',page,{ 'use_cache': false})}}
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span12 content">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            {% if content is defined %}
+                                {{ content|raw }}
                             {% else %}
-                                {{ sonata_page_render_container('content', page) }}
+                                {% set content = block('content') %}
+                                {% if content|length > 0 %}
+                                    {{ content|raw }}
+                                {% elseif page is defined %}
+                                    {% if sonata_page.isEditor or (app.user is defined and app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %}
+                                        {{ sonata_page_render_container('content',page,{ 'use_cache': false})}}
+                                    {% else %}
+                                        {{ sonata_page_render_container('content', page,{ 'use_cache': true}) }}
+                                    {% endif %}
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                    {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endblock rzcms_body %}
 
     {% block rzcms_footer %}
@@ -262,15 +215,6 @@
                     <div class="span12 center">
                         <img src="{{  asset('bundles/rzpage/theme/rzcms/img/diamond.png')}}" alt="" />
                         <div class="copyright" style="text-align: center !important;">
-                            {#{% if page is defined and not page.isHybrid %}#}
-                             {#<p>#}
-                                {#{{ sonata_block_render({ 'type': 'rz.seo.block.facebook.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'default_title':rz_seo_title(), 'layout':'footer' } }) }}#}
-                                {#{{ sonata_block_render({ 'type': 'rz.seo.block.twitter.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'default_title':rz_seo_title(), 'layout':'footer' } }) }}#}
-                                {#{{ sonata_block_render({ 'type': 'rz.seo.block.pinterest.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'default_title':rz_seo_title(), 'layout':'footer', 'is_video':false, 'default_media_url':app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/rzpage/theme/rzcms/img/sandbox-logo.png') } }) }}#}
-                                {#{{ sonata_block_render({ 'type': 'rz.seo.block.google.share_button', 'settings': {'default_url':url(rz_render_page_url(page.name), {}, true), 'layout':'footer' } }) }}#}
-                             {#</p>#}
-                            {#{% else %}#}
-                            {#{% sonata_template_box 'Override the Block' 'RzPageBundle' %}#}
                             <p class="a2a_kit">
                                 <a class="a2a_button_facebook"><i class="icon icon-facebook marg-right5"></i></a>
                                 <a class="a2a_button_twitter"><i class="icon icon-twitter marg-right5"></i></a>
@@ -280,13 +224,13 @@
                             </p>
                             {#{% endif %}#}
                             {% if page is defined %}
-                            <p>
-                                {% if sonata_page.isEditor or (app.user is not null and app.security and app.security.token and app.security.isGranted('ROLE_PREVIOUS_ADMIN')) %}
-                                    {{ sonata_page_render_container('footer',page,{ 'use_cache': false})}}
-                                {% else %}
-                                    {{ sonata_page_render_container('footer', page,{ 'use_cache': true}) }}
-                                {% endif %}
-                            </p>
+                                <p>
+                                    {% if sonata_page.isEditor or (app.user is defined and app.user and is_granted('ROLE_PREVIOUS_ADMIN')) %}
+                                        {{ sonata_page_render_container('footer', 'global', { 'use_cache': false})}}
+                                    {% else %}
+                                        {{ sonata_page_render_container('footer', 'global', { 'use_cache': true}) }}
+                                    {% endif %}
+                                </p>
                             {% endif %}
                         </div>
                         <div class="go-top">

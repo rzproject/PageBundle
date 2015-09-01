@@ -35,9 +35,6 @@ class RzPageExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        //$loader->load('admin_orm.xml');
-        $loader->load('block.xml');
-        $loader->load('listener.xml');
         $loader->load('twig.xml');
 
         $this->configureAdminClass($config, $container);
@@ -47,6 +44,8 @@ class RzPageExtension extends Extension
         $this->configureTranslationDomain($config, $container);
         $this->configureController($config, $container);
         $this->configureRzTemplates($config, $container);
+        $this->configureBlocks($config['blocks'], $container);
+        $this->registerDoctrineMapping($config);
     }
 
     /**
@@ -61,6 +60,9 @@ class RzPageExtension extends Extension
         $container->setParameter('sonata.page.block.class', $config['class']['block']);
         $container->setParameter('sonata.page.snapshot.class', $config['class']['snapshot']);
         $container->setParameter('sonata.page.page.class', $config['class']['page']);
+        $container->setParameter('rz.page.service.default.class', $config['class']['page_service_default']);
+        $container->setParameter('rz.page.transformer.class', $config['class']['page_transformer']);
+
 
         $container->setParameter('sonata.page.admin.site.entity', $config['class']['site']);
         $container->setParameter('sonata.page.admin.block.entity', $config['class']['block']);
@@ -139,4 +141,50 @@ class RzPageExtension extends Extension
         $container->setParameter('rz_page.configuration.snapshot.templates', $config['admin']['snapshot']['templates']);
         $container->setParameter('rz_page.configuration.page.templates', $config['admin']['page']['templates']);
     }
+
+    public function configureBlocks($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_page.block.container.class', $config['container']['class']);
+        $container->setParameter('rz_page.block.children_pages.class', $config['children_pages']['class']);
+        $container->setParameter('rz_page.block.shared_block.class', $config['shared_block']['class']);
+    }
+
+    /**
+     * Registers doctrine mapping on concrete page entities
+     *
+     * @param array $config
+     */
+    public function registerDoctrineMapping(array $config)
+    {
+        if (!class_exists($config['class']['page'])) {
+            return;
+        }
+
+        $collector = DoctrineCollector::getInstance();
+
+        if (interface_exists('Sonata\MediaBundle\Model\MediaInterface')) {
+            $collector->addAssociation($config['class']['page'], 'mapManyToOne', array(
+                'fieldName' => 'ogImage',
+                'targetEntity' => $config['class']['media'],
+                'cascade' =>
+                    array(
+                        0 => 'persist',
+                        1 => 'detach',
+                    ),
+                'mappedBy' => NULL,
+                'inversedBy' => NULL,
+                'joinColumns' =>
+                    array(
+                        array(
+                            'name' => 'og_image_id',
+                            'referencedColumnName' => 'id',
+                        ),
+                    ),
+                'orphanRemoval' => false,
+            ));
+        }
+
+
+    }
+
 }

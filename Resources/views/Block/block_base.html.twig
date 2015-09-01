@@ -1,25 +1,7 @@
-{% if sonata_page.isInlineEditionOn %}
-    <div id="cms-block-{{ block.id }}"
-         class="{% if sonata_page.isEditor and block.page is defined %}
-                    {% if block.type == 'sonata.page.block.container'%}{% if block.hasParent() %}span12{% else %}row-fluid{% endif %}{% else %}span12{% endif %} rzcms cms-block{% if block.hasParent() %} cms-block-element{% endif %}{% if block.type == 'sonata.block.service.text'%} cms-block-editable{% endif %}{% endif %}{% block block_class %}{% endblock %}"
-            {% if sonata_page.isEditor and block.page is defined %}
-                data-id="{{ block.id }}"
-                data-name="{{ block.name }}"
-                data-role="{% block block_role %}block{% endblock %}"
-                data-page-id="{{ block.page.id }}"
-                data-block-type="{{ block.type }}"
-                data-block-has-parent="{{ block.hasParent() }}"
-                data-block-parent-id="{% if block.hasParent() %}{{ block.getParent.getId }}{% else %}{% endif %}"
-            {% endif %}
-            >
-{% elseif sonata_page.isEditor() %}
-    <!-- start rendering, block.id: {{ block.id }} - page.id: {% if block.page is defined %}{{ block.page.id }}{% else %}no related page{% endif %} - name: {{ block.name }} -->
+{% if sonata_page.isEditor() %}
+    <!-- start rendering, block.id: {{ block.id }} - page.id: {% if block.page is defined and block.page %}{{ block.page.id }}{% else %}no related page{% endif %} - name: {{ block.name }} -->
 {% endif %}
-
 {% block block %}EMPTY CONTENT{% endblock %}
-
-{% if sonata_page.isInlineEditionOn %}
-    </div>
-{% elseif sonata_page.isEditor() %}
-    <!-- end rendering, block.id: {{ block.id }} - page.id: {% if block.page is defined %}{{ block.page.id }}{% else %}no related page{% endif %}  - name: {{ block.name }} -->
+{% if sonata_page.isEditor() %}
+    <!-- end rendering, block.id: {{ block.id }} - page.id: {% if block.page is defined and block.page %}{{ block.page.id }}{% else %}no related page{% endif %}  - name: {{ block.name }} -->
 {% endif %}

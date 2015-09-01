@@ -6,6 +6,5 @@
     <parameters>
         <parameter key="rz_page.block.container.class">Rz\PageBundle\Block\ContainerBlockService</parameter>
         <parameter key="rz_page.block.children_pages.class">Rz\PageBundle\Block\ChildrenPagesBlockService</parameter>
-        <!--<parameter key="sonata.page.block.ajax.class">Sonata\PageBundle\Controller\AjaxController</parameter>-->
     </parameters>
 </container>

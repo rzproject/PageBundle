@@ -1,0 +1,8 @@
+{% extends 'RzPageBundle:theme/rzcms:blog.html.twig' %}
+
+{% block sonata_page_breadcrumb %}
+    <div class="container">
+        {{ sonata_block_render_event('breadcrumb', { 'context': 'page', 'current_uri': app.request.requestUri, 'container_attr': {'class': 'breadcrumb'}, 'separator': '<i class="icon-angle-right"></i>', 'current_class': 'active' }) }}
+    </div>
+{% endblock %}
+

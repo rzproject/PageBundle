@@ -8,7 +8,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sonata\BlockBundle\Exception\BlockNotFoundException;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sonata\PageBundle\Admin\SharedBlockAdmin;
 
 
 /**
@@ -20,18 +22,17 @@ class BlockAdminController extends Controller
 {
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @param Request $request
+     * @return Response
      */
-    public function savePositionAction()
+    public function savePositionAction(Request $request = null)
     {
         if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
             throw new AccessDeniedException();
         }
 
         try {
-            $params = $this->get('request')->get('disposition');
+            $params = $request->get('disposition');
 
             if (!is_array($params)) {
                 throw new HttpException(400, 'wrong parameters');
@@ -61,7 +62,7 @@ class BlockAdminController extends Controller
         return $this->renderJson(array('result' => $result), $status);
     }
 
-    public function saveTextBlockAction()
+    public function saveTextBlockAction(Request $request = null)
     {
 
         if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
@@ -108,35 +109,36 @@ class BlockAdminController extends Controller
 
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @param Request $request
+     * @return Response
      * @throws PageNotFoundException
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction()
+    public function createAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('CREATE')) {
             throw new AccessDeniedException();
         }
 
-        if (!$this->admin->getParent()) {
+        $sharedBlockAdminClass = $this->container->getParameter('sonata.page.admin.shared_block.class');
+        if (!$this->admin->getParent() && get_class($this->admin) !== $sharedBlockAdminClass) {
+
             throw new PageNotFoundException('You cannot create a block without a page');
         }
-
         $parameters = $this->admin->getPersistentParameters();
 
         if (!$parameters['type']) {
             return $this->render('SonataPageBundle:BlockAdmin:select_type.html.twig', array(
-                'services'     => $this->get('sonata.block.manager')->getServices(),
+                'services'      => $this->get('sonata.block.manager')->getServicesByContext('sonata_page_bundle'),
                 'base_template' => $this->getBaseTemplate(),
                 'admin'         => $this->admin,
                 'action'        => 'create'
             ));
         }
 
-        return parent::createAction();
+        return parent::createAction($request);
     }
 
-    public function cmsBlockRenderAction($pageId = null,$blockId = null)
+    public function cmsBlockRenderAction($pageId = null,$blockId = null, Request $request = null)
     {
         if (!$this->get('security.context')->isGranted('ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT')) {
             throw new AccessDeniedException();
@@ -158,94 +160,92 @@ class BlockAdminController extends Controller
         return $response;
     }
 
-     /**
+    /**
      * return the Response object associated to the edit action
      *
      *
      * @param mixed $id
      *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
+     * @param Request $request
      * @return Response
      */
-    public function editAction($id = null)
-    {
-        // the key used to lookup the template
-        $templateKey = 'edit';
+//    public function editAction($id = null, Request $request = null)
+//    {
+//        // the key used to lookup the template
+//        $templateKey = 'edit';
+//
+//        $id = $request->get($this->admin->getIdParameter());
+//
+//        $object = $this->admin->getObject($id);
+//
+//        if (!$object) {
+//            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+//        }
+//
+//        if (false === $this->admin->isGranted('EDIT', $object)) {
+//            throw new AccessDeniedException();
+//        }
+//
+//        $this->admin->setSubject($object);
+//
+//        /** @var $form \Symfony\Component\Form\Form */
+//        $form = $this->admin->getForm();
+//        $form->setData($object);
+//
+//        if ($this->getRestMethod() == 'POST') {
+//
+//            $form->handleRequest($request);
+//
+//            $isFormValid = $form->isValid();
+//
+//            // persist if the form was valid and if in preview mode the preview was approved
+//            if ($isFormValid && (!$this->isInPreviewMode() || $this->isPreviewApproved())) {
+//                $this->admin->update($object);
+//
+//                if ($this->isXmlHttpRequest()) {
+//                    return $this->renderJson(array(
+//                        'result'    => 'ok',
+//                        'objectId'  => $this->admin->getNormalizedIdentifier($object)
+//                    ));
+//                } else {
+//                    $this->addFlash('sonata_flash_success', 'flash_edit_success');
+//                }
+//
+//                // redirect to edit mode
+//                return $this->redirectTo($object);
+//            }
+//
+//            // show an error message if the form failed validation
+//            if (!$isFormValid) {
+//                if (!$this->isXmlHttpRequest()) {
+//                    $this->addFlash('sonata_flash_error', 'flash_edit_error');
+//                }
+//            } elseif ($this->isPreviewRequested()) {
+//                // enable the preview template if the form was valid and preview was requested
+//                $templateKey = 'preview';
+//            }
+//        }
+//
+//        $view = $form->createView();
+//
+//        // set the theme for the current Admin Form
+//        $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
+//
+//        return $this->render($this->admin->getTemplate($templateKey), array(
+//            'action' => 'edit',
+//            'form'   => $view,
+//            'object' => $object,
+//        ));
+//    }
 
-        $id = $this->get('request')->get($this->admin->getIdParameter());
-
-        $object = $this->admin->getObject($id);
-
-        if (!$object) {
-            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
-        }
-
-        if (false === $this->admin->isGranted('EDIT', $object)) {
-            throw new AccessDeniedException();
-        }
-
-        $this->admin->setSubject($object);
-
-        /** @var $form \Symfony\Component\Form\Form */
-        $form = $this->admin->getForm();
-        $form->setData($object);
-
-        if ($this->getRestMethod() == 'POST') {
-
-            $form->handleRequest($this->get('request'));
-
-            $isFormValid = $form->isValid();
-
-            // persist if the form was valid and if in preview mode the preview was approved
-            if ($isFormValid && (!$this->isInPreviewMode() || $this->isPreviewApproved())) {
-                $this->admin->update($object);
-
-                if ($this->isXmlHttpRequest()) {
-                    return $this->renderJson(array(
-                        'result'    => 'ok',
-                        'objectId'  => $this->admin->getNormalizedIdentifier($object)
-                    ));
-                } else {
-                    $this->addFlash('sonata_flash_success', 'flash_edit_success');
-                }
-
-                // redirect to edit mode
-                return $this->redirectTo($object);
-            }
-
-            // show an error message if the form failed validation
-            if (!$isFormValid) {
-                if (!$this->isXmlHttpRequest()) {
-                    $this->addFlash('sonata_flash_error', 'flash_edit_error');
-                }
-            } elseif ($this->isPreviewRequested()) {
-                // enable the preview template if the form was valid and preview was requested
-                $templateKey = 'preview';
-            }
-        }
-
-        $view = $form->createView();
-
-        // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
-
-        return $this->render($this->admin->getTemplate($templateKey), array(
-            'action' => 'edit',
-            'form'   => $view,
-            'object' => $object,
-        ));
-    }
-
-    public function switchParentAction()
+    public function switchParentAction(Request $request = null)
     {
         if (!$this->admin->isGranted('EDIT')) {
             throw new AccessDeniedException();
         }
 
-        $blockId  = $this->get('request')->get('block_id');
-        $parentId = $this->get('request')->get('parent_id');
+        $blockId  = $request->get('block_id');
+        $parentId = $request->get('parent_id');
         if ($blockId === null or $parentId === null) {
             throw new HttpException(400, 'wrong parameters');
         }

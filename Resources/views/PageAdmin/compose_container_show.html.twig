@@ -5,29 +5,22 @@
 
     <div class="page-composer__block-type-selector">
         <label>{{ 'composer.block.add.type'|trans({}, 'SonataPageBundle') }}</label>
-        <select class="page-composer__block-type-selector__select" style="width: auto">
+        <select class="select2-me page-composer__block-type-selector__select" style="width: auto">
             {% for blockServiceId, blockService in blockServices %}
                 <option value="{{ blockServiceId }}">{{ blockService.name }}</option>
             {% endfor %}
         </select>
-        <a class="btn btn-action btn-small page-composer__block-type-selector__confirm"
-           href="{{ path('admin_sonata_page_page_block_create', { 'id': page.id }) }}"
-        ><i class="icon-plus"></i></a>
+        <a class="btn btn-action btn-small page-composer__block-type-selector__confirm" href="{{ path('admin_sonata_page_page_block_create', { 'id': page.id }) }}"><i class="icon-plus"></i></a>
         <span class="page-composer__block-type-selector__loader">{{ 'loading'|trans({}, 'SonataPageBundle') }}</span>
-
-        <small class="page-composer__container__child-count pull-right">
+        <small class="page-composer__container__child-count hidden-phone hidden-tablet visible-desktop pull-right">
             {{ 'blocks'|trans({}, 'SonataPageBundle') }} <span class="badge">{{ container.children|length }}</span>
         </small>
     </div>
 
     <ul class="page-composer__container__children">
         {% for child in container.children %}
-            <li class="page-composer__container__child"
-                data-block-id="{{ child.id }}" data-parent-block-id="{{ container.id }}" data-page-id="{{ page.id }}"
-            >
-                <a class="page-composer__container__child__edit"
-                   href="{{ path('admin_sonata_page_page_block_edit', { 'id': page.id, 'childId':child.id }) }}"
-                >
+            <li class="page-composer__container__child" data-block-id="{{ child.id }}" data-parent-block-id="{{ container.id }}" data-page-id="{{ page.id }}">
+                <a class="page-composer__container__child__edit" href="{{ path('admin_sonata_page_page_block_edit', { 'id': page.id, 'childId':child.id }) }}">
                     <h4>{{ child.name|default(attribute(blockServices, child.type).name) }}</h4>
                     <small>{{ attribute(blockServices, child.type).name }}</small>
                     <span class="page-composer__container__child__toggle">
@@ -37,14 +30,13 @@
                 </a>
 
                 <div class="page-composer__container__child__remove">
-                    <a class="badge" href="{{ path('admin_sonata_page_block_delete', { 'id': child.id }) }}">{{ 'composer.remove'|trans({}, 'SonataPageBundle') }} <i class="fa fa-times"></i> </a>
+                    <a class="badge" href="{{ path('admin_sonata_page_block_delete', { 'id': child.id }) }}"><i class="icon-trash"></i> {{ 'composer.remove'|trans({}, 'SonataPageBundle') }}</a>
                     <span class="page-composer__container__child__remove__confirm">
-                        {{ 'composer.remove.confirm'|trans({}, 'SonataPageBundle') }} <span class="yes">{{ 'yes'|trans({}, 'SonataPageBundle') }}</span> <span class="cancel">{{ 'cancel'|trans({}, 'SonataPageBundle') }}</span>
+                        {{ 'composer.remove.confirm'|trans({}, 'SonataPageBundle') }} <span class="yes"><i class="icon-ok-sign"></i> {{ 'yes'|trans({}, 'SonataPageBundle') }}</span> <span class="cancel"><i class="icon-remove-sign"></i> {{ 'cancel'|trans({}, 'SonataPageBundle') }}</span>
                     </span>
                 </div>
 
-                <div class="page-composer__container__child__content">
-                </div>
+                <div class="page-composer__container__child__content"></div>
 
                 <div class="page-composer__container__child__loader">
                     <span>{{ 'loading'|trans({}, 'SonataPageBundle') }}</span>

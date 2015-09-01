@@ -66,4 +66,22 @@ class BlockAdmin extends BaseBlockAdmin
             ->add('position')
         ;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPersistentParameters()
+    {
+        $parameters = parent::getPersistentParameters();
+
+        if ($composer = $this->getRequest()->get('composer')) {
+            $parameters['composer'] = $composer;
+        }
+
+        if ($type = $this->getRequest()->get('type', null)) {
+            $parameters['type'] = $type;
+        }
+
+        return $parameters;
+    }
 }

@@ -1,5 +1,7 @@
 {% if admin.hasRoute('edit') and admin.id(object) and admin.isGranted('EDIT', object)%}
 <li><a class="sonata-action-element" href="{{ path('admin_sonata_page_page_block_list', {'id':object.id}) }}"><i class="icon-reorder"></i> {{ 'sidemenu.link_list_blocks'|trans({}, 'SonataPageBundle') }}</a></li>
-<li><a class="sonata-action-element" href="{{ path('admin_sonata_page_page_compose_container_show', {'id':object.id}) }}"><i class="icon-magic"></i> {{ 'sidemenu.link_compose_page'|trans({}, 'SonataPageBundle') }}</a></li>
+{% if not object.isInternal %}
+<li><a class="sonata-action-element" href="{{ path('admin_sonata_page_page_compose', {'id':object.id}) }}"><i class="icon-magic"></i> {{ 'sidemenu.link_compose_page'|trans({}, 'SonataPageBundle') }}</a></li>
+{% endif %}
 <li><a class="sonata-action-element" href="{{ path('admin_sonata_page_page_snapshot_list', {'id':object.id}) }}"><i class="icon-magic"></i> {{ 'sidemenu.link_list_snapshots'|trans({}, 'SonataPageBundle') }}</a></li>
 {% endif %}

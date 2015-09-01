@@ -399,6 +399,13 @@
                     blockName = event.blockType;
                 }
 
+                if (typeof CKEDITOR !== 'undefined') {
+                    for ( instance in CKEDITOR.instances )
+                        CKEDITOR.instances[instance].updateElement();
+                }
+                
+
+
                 $.ajax({
                     url:  formAction,
                     data: $form.serialize(),
@@ -411,7 +418,7 @@
                             createdEvent.blockId     = resp.objectId;
                             createdEvent.blockName   = blockName;
                             createdEvent.blockType   = event.blockType;
-                            createdEvent.pageId      = this.getPageId();
+                            createdEvent.pageId      = self.getPageId();
                             $(self).trigger(createdEvent);
                         }
                     }
@@ -483,8 +490,10 @@
             $form.on('submit', function (e) {
                 e.preventDefault();
 
-                for ( instance in CKEDITOR.instances )
-                    CKEDITOR.instances[instance].updateElement();
+                if (typeof CKEDITOR !== 'undefined') {
+                    for (instance in CKEDITOR.instances)
+                        CKEDITOR.instances[instance].updateElement();
+                }
 
                 $loader.show();
 

@@ -29,3 +29,7 @@ input.search-query {
     height: 24px;
 }
 
+.alert .close {
+    top: 3px !important;
+}
+

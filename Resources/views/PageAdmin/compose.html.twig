@@ -6,6 +6,9 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/rzpage/rzcms/js/composer.js') }}" type="text/javascript"></script>
+    {# ckeditor #}
+    <script src="{{ asset('bundles/rzfieldtype/js/rz/forms.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,26 +18,60 @@
 
 {% block body_attributes %}class="sonata-bc skin-black fixed page-composer-page sonata-ba-no-side-menu"{% endblock %}
 
+{% block actions %}
+    <div class="row-fluid admin-action-buttons">
+        <div class="span12">
+            <div class="sonata-actions btn-group hidden-phone hidden-tablet visible-desktop pull-right">
+                <a class="btn btn-primary sonata-action-element" href="{{ path('admin_sonata_page_page_block_list', {'id':object.id}) }}"><i class="icon-reorder"></i> {{ 'sidemenu.link_list_blocks'|trans({}, 'SonataPageBundle') }}</a>
+                <a class="btn btn-primary sonata-action-element" href="{{ path('admin_sonata_page_page_snapshot_list', {'id':object.id}) }}"><i class="icon-magic"></i> {{ 'sidemenu.link_list_snapshots'|trans({}, 'SonataPageBundle') }}</a>
+                {% include 'SonataAdminBundle:Button:create_button.html.twig' %}
+                {% include 'SonataAdminBundle:Button:edit_button.html.twig' %}
+                {% include 'SonataAdminBundle:Button:list_button.html.twig' %}
+            </div>
+            <div class="btn-group visible-phone visible-tablet hidden-desktop  pull-right">
+                <div class="btn-group visible-phone visible-tablet hidden-desktop  pull-right">
+                    <button class="btn btn-primary admin-actions admin-actions-group">Select an action to perform</button>
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle admin-actions"><i class=" icon-chevron-down"></i></button>
+                    <ul class="dropdown-menu">
+                        <li><a class="sonata-action-element" href="{{ path('admin_sonata_page_page_block_list', {'id':object.id}) }}"><i class="icon-reorder"></i> {{ 'sidemenu.link_list_blocks'|trans({}, 'SonataPageBundle') }}</a></li>
+                        <li><a class="sonata-action-element" href="{{ path('admin_sonata_page_page_snapshot_list', {'id':object.id}) }}"><i class="icon-magic"></i> {{ 'sidemenu.link_list_snapshots'|trans({}, 'SonataPageBundle') }}</a></li>
+                        {% include 'SonataAdminBundle:Button:create_button_mobile.html.twig' %}
+                        {% include 'SonataAdminBundle:Button:edit_button_mobile.html.twig' %}
+                        {% include 'SonataAdminBundle:Button:list_button_mobile.html.twig' %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
     <div class="page-composer">
         <div class="box box-color box-bordered">
             <div class="box-title">
-                <h3>
+                <h3 class="hidden-phone hidden-tablet visible-desktop">
                     <i class="icon-pencil"></i>
                     {{ 'page.compose_page'|trans({}, 'SonataPageBundle') }} "{{ page.name }}" <small>[template: <b>{{ template.name }}</b>]</small>
                 </h3>
+                <h3 class="visible-phone visible-tablet hidden-desktop">
+                    <i class="icon-pencil"></i>
+                    {{ 'page.compose_page'|trans({}, 'SonataPageBundle') }}
+                </h3>
+                {% if not page.isDynamic %}
+                <ul class="tabs">
+                    <li class="active">
+                        <a target="_blank" class="preview-page" href="{{ admin.getViewUrl }}"><i class="icon-eye-open"></i></a>
+                    </li>
+                </ul>
+                {% endif %}
             </div>
             <div class="box-content">
         {% if containers|length == 0 %}
             <div class="alert alert-warning">
-
                 <strong>Warning!</strong> Before using the composer option, you need to configure the template layout.
                 <br />The configuration must be done in the <code>sonata_page.templates</code> section.<br />
-
             <br />
             See a complete exemple here:
-
-
 <pre>
 sonata_page:
     # [...]
@@ -71,7 +108,7 @@ sonata_page:
                     B: content_bottom
                     F: footer
 </pre>
-            </div>
+</div>
         {% else %}
                     <div class="row-fluid">
                         <div class="col-md-4 span4">
@@ -82,24 +119,21 @@ sonata_page:
                                             <a class="page-composer__page-preview__container block-preview-{{ container.block.id }}"
                                                data-block-id="{{ container.block.id }}"
                                                style="top:{{ container.area.placement.y }}%;right:{{ container.area.placement.right }}%;bottom:{{ container.area.placement.bottom }}%;left:{{ container.area.placement.x }}%"
-                                               href="{{ path('admin_sonata_page_page_compose_container_show', { 'id': container.block.id }) }}"
-                                            >
+                                               href="{{ path('admin_sonata_page_page_compose_container_show', { 'id': container.block.id }) }}">
                                                 <div class="page-composer__page-preview__container__content">
                                                     <strong>{{ container.block.name|default(container.area.name) }}</strong><br>
                                                     <small><span class="child-count">{{ container.block.children|length }}</span> blocks</small>
                                                     <span class="page-composer__page-preview__add-block">
-                                                        <i class="fa fa-circle-o"></i>
-                                                        <i class="fa fa-dot-circle-o"></i>
+                                                        <i class="icon-circle-blank"></i>
+                                                        <i class="icon-circle"></i>
                                                     </span>
                                                     <span class="drop-indicator">
-                                                        <span class="fa fa-download"></span>
+                                                        <span class="icon-download"></span>
                                                     </span>
                                                 </div>
                                             </a>
                                         {% else %}
-                                            <div class="page-composer__page-preview__container--no-block"
-                                                 style="top:{{ container.area.placement.y }}%;right:{{ container.area.placement.right }}%;bottom:{{ container.area.placement.bottom }}%;left:{{ container.area.placement.x }}%"
-                                            >
+                                            <div class="page-composer__page-preview__container--no-block" style="top:{{ container.area.placement.y }}%;right:{{ container.area.placement.right }}%;bottom:{{ container.area.placement.bottom }}%;left:{{ container.area.placement.x }}%">
                                                 <div class="page-composer__page-preview__container__content">
                                                     <strong>{{ container.area.name }}</strong>
                                                 </div>

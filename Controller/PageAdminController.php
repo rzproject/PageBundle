@@ -6,6 +6,7 @@ use Sonata\PageBundle\Controller\PageAdminController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -40,17 +41,16 @@ class PageAdminController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-    public function createAction()
+    public function createAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('CREATE')) {
             throw new AccessDeniedException();
         }
 
-        if ($this->getRequest()->getMethod() == 'GET' && !$this->getRequest()->get('siteId')) {
+        if ($request->getMethod() == 'GET' && !$request->get('siteId')) {
             $sites = $this->get('sonata.page.manager.site')->findBy(array());
 
             if (count($sites) == 1) {
@@ -73,36 +73,24 @@ class PageAdminController extends Controller
             ));
         }
 
-        return parent::createAction();
+        return parent::createAction($request);
     }
+
     /**
      * return the Response object associated to the edit action
      *
      *
      * @param mixed $id
      *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
+     * @param Request $request
      * @return Response
      */
-       /**
-     * return the Response object associated to the edit action
-     *
-     *
-     * @param mixed $id
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return Response
-     */
-    public function editAction($id = null)
+    public function editAction($id = null, Request $request = null)
     {
         // the key used to lookup the template
         $templateKey = 'edit';
 
-        $id = $this->get('request')->get($this->admin->getIdParameter());
+        $id = $request->get($this->admin->getIdParameter());
 
         $object = $this->admin->getObject($id);
 
@@ -122,14 +110,22 @@ class PageAdminController extends Controller
 
         if ($this->getRestMethod() == 'POST') {
 
-            $form->handleRequest($this->get('request'));
+            $form->handleRequest($request);
 
             $isFormValid = $form->isValid();
 
             // persist if the form was valid and if in preview mode the preview was approved
             if ($isFormValid && (!$this->isInPreviewMode() || $this->isPreviewApproved())) {
                 $this->admin->update($object);
-                $this->addFlash('sonata_flash_success', 'flash_edit_success');
+
+                $this->addFlash(
+                    'sonata_flash_success',
+                    $this->admin->trans(
+                        'flash_edit_success',
+                        array('%name%' => $this->escapeHtml($this->admin->toString($object))),
+                        'SonataAdminBundle'
+                    )
+                );
 
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
@@ -145,7 +141,16 @@ class PageAdminController extends Controller
             // show an error message if the form failed validation
             if (!$isFormValid) {
                 if (!$this->isXmlHttpRequest()) {
-                    $this->addFlash('sonata_flash_error', 'flash_edit_error');
+                    if (!$this->isXmlHttpRequest()) {
+                        $this->addFlash(
+                            'sonata_flash_error',
+                            $this->admin->trans(
+                                'flash_edit_error',
+                                array('%name%' => $this->escapeHtml($this->admin->toString($object))),
+                                'SonataAdminBundle'
+                            )
+                        );
+                    }
                 }
             } elseif ($this->isPreviewRequested()) {
                 // enable the preview template if the form was valid and preview was requested
@@ -166,18 +171,16 @@ class PageAdminController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws NotFoundHttpException
+     * @param Request $request
+     * @return Response
      */
-    public function composeAction()
+    public function composeAction(Request $request = null)
     {
-        if (false === $this->admin->isGranted('LIST')) {
+        if (false === $this->admin->isGranted('EDIT') || false === $this->get('sonata.page.admin.block')->isGranted('LIST')) {
             throw new AccessDeniedException();
         }
 
-        $id   = $this->get('request')->get($this->admin->getIdParameter());
+        $id   = $request->get($this->admin->getIdParameter());
         $page = $this->admin->getObject($id);
         if (!$page) {
             throw new NotFoundHttpException(sprintf('unable to find the page with id : %s', $id));
@@ -244,30 +247,72 @@ class PageAdminController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws NotFoundHttpException
+     * @param Request $request
+     * @return Response
      */
-    public function composeContainerShowAction()
+    public function composeContainerShowAction(Request $request = null)
     {
         if (false === $this->get('sonata.page.admin.block')->isGranted('LIST')) {
             throw new AccessDeniedException();
         }
 
-        $id    = $this->get('request')->get($this->admin->getIdParameter());
+        $id    = $request->get($this->admin->getIdParameter());
         $block = $this->get('sonata.page.admin.block')->getObject($id);
         if (!$block) {
             throw new NotFoundHttpException(sprintf('unable to find the block with id : %s', $id));
         }
 
         $blockServices = $this->get('sonata.block.manager')->getServicesByContext('sonata_page_bundle', false);
+        $userDefinedBlocks = $this->getUserDefinedBlocks($block);
 
         return $this->render('RzPageBundle:PageAdmin:compose_container_show.html.twig', array(
-            'blockServices' => $blockServices,
-            'container'     => $block,
-            'page'          => $block->getPage(),
+            'blockServices'    => $userDefinedBlocks ?: $blockServices,
+            'container'        => $block,
+            'page'             => $block->getPage()
         ));
+    }
+
+    protected function getUserDefinedBlocks($block) {
+
+        $templateManager    = $this->get('sonata.page.template_manager');
+
+        if(!$templateCode = $block->getPage()->getTemplateCode()) {
+            return null;
+        }
+
+        if (!$template = $templateManager->get($templateCode)) {
+            return null;
+        }
+
+        $containers = $template->getContainers();
+        $settings = $block->getSettings();
+        if (!isset($settings['code'])) {
+            return null;
+        }
+
+        if (!isset($containers[$settings['code']])) {
+            return null;
+        }
+
+        $templateSettings = $containers[$settings['code']];
+
+        if (!isset($templateSettings['blocks'])) {
+            return null;
+        }
+
+        if(count($templateSettings['blocks']) > 0) {
+            $blockManager = $this->get('sonata.block.manager');
+            $blockservises = array();
+            foreach ($templateSettings['blocks'] as $block) {
+                $blockservises[$block] = $blockManager->getService($block);
+            }
+            return $blockservises;
+        } else {
+            return null;
+        }
+
+        return null;
+
     }
 
 }
