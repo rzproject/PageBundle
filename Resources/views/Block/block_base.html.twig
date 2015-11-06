@@ -1,7 +1,0 @@
-{% if sonata_page.isEditor() %}
-    <!-- start rendering, block.id: {{ block.id }} - page.id: {% if block.page is defined and block.page %}{{ block.page.id }}{% else %}no related page{% endif %} - name: {{ block.name }} -->
-{% endif %}
-{% block block %}EMPTY CONTENT{% endblock %}
-{% if sonata_page.isEditor() %}
-    <!-- end rendering, block.id: {{ block.id }} - page.id: {% if block.page is defined and block.page %}{{ block.page.id }}{% else %}no related page{% endif %}  - name: {{ block.name }} -->
-{% endif %}
