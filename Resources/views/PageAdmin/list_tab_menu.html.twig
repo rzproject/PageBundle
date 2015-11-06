@@ -1,6 +1,11 @@
-<a type="button" class="btn btn-primary {% if mode == 'list' %} active{% endif %} sonata-action-element" href="{{ admin.generateUrl('list', { 'filter': { 'site': { 'value': currentSite.id|default('') }}}) }}">
-    <i class="icon-table"></i> {{ 'pages.list_mode'|trans({}, 'SonataPageBundle') }}
-</a>
-<a type="button" class="btn btn-primary {% if mode == 'tree' %} active{% endif %} sonata-action-element" href="{{ admin.generateUrl('tree') }}">
-    <i class="icon-sitemap"></i> {{ 'pages.tree_mode'|trans({}, 'SonataPageBundle') }}
-</a>
+{{ knp_menu_render(admin.sidemenu(action), {'currentClass' : 'active'}, 'list') }}
+<p>
+    <div class="btn-group">
+        <a type="button" class="btn {% if mode == 'list' %}btn-primary active{% else %}btn-default{% endif %}" href="{{ admin.generateUrl('list', { 'filter': { 'site': { 'value': currentSite.id|default('') }}}) }}">
+            <i class="fa fa-list"></i> <span class="hidden-xs hidden-sm">{{ 'pages.list_mode'|trans({}, 'SonataPageBundle') }}</span>
+        </a>
+        <a type="button" class="btn {% if mode == 'tree' %}btn-primary active{% else %}btn-default{% endif %}" href="{{ admin.generateUrl('tree') }}">
+            <i class="fa fa-sitemap"></i> <span class="hidden-xs hidden-sm">{{ 'pages.tree_mode'|trans({}, 'SonataPageBundle') }}</span>
+        </a>
+    </div>
+</p>

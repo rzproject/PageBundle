@@ -1,32 +1,19 @@
-{% extends 'RzAdminBundle:CRUD:action.html.twig' %}
+{% extends 'SonataAdminBundle:CRUD:action.html.twig' %}
 
 {% block title %}{{ 'title_create_snapshots'|trans({}, 'SonataPageBundle') }}{% endblock %}
-
 {% block content %}
-<div class="box box-color box-small box-bordered rz-action-box">
-    <div class="box-title">
-        <h3>
-            <i class="icon-camera-retro"></i>
-            {{ 'title_create_snapshots'|trans({}, 'SonataPageBundle') }}
-        </h3>
-    </div>
-    <div class="box-content nopadding">
-        <div class="rz-action-box-message">
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="box-title">{{ "title_create_snapshots" |trans({}, 'SonataPageBundle')}}</h3>
+        </div>
+        <div class="box-body">
             {{ "message_create_snapshots"|trans({'%site%': object.name }, 'SonataPageBundle') }}
         </div>
-        <form action="{{ admin.generateUrl('snapshots', {'id': object.id}) }}" method="POST">
-            <div class="form-actions">
-                <button class="btn btn-primary" type="submit" name="create" value="{{ 'button_create_snapshots'|trans({}, 'SonataPageBundle') }}"/>
-                    <i class="icon-plus"></i>
-                    <span class="hidden-phone hidden-tablet visible-desktop"> {{ 'button_create_snapshots'|trans({}, 'SonataPageBundle') }}</span>
-                </button>
-                <a class="btn btn-primary" href="{{ admin.generateUrl('list') }}">
-                    <i class="icon-list"></i>
-                    <span class="hidden-phone hidden-tablet visible-desktop"> {{ 'link_action_list'|trans({}, 'SonataAdminBundle') }}</span>
-
-                </a>
-            </div>
-        </form>
+        <div class="box-footer clearfix">
+            <form action="{{ admin.generateUrl('snapshots', {'id': object.id}) }}" method="POST">
+                <input class="btn btn-primary" type="submit" name="create" value="{{ 'button_create_snapshots'|trans({}, 'SonataPageBundle') }}">
+                <a class="btn btn-success" href="{{ admin.generateUrl('list') }}">{{ 'link_action_list'|trans({}, 'SonataAdminBundle') }}</a>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

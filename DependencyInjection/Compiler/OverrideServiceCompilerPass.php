@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the RzPageBundle package.
- *
- * (c) mell m. zamora <mell@rzproject.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Rz\PageBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -19,69 +10,61 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        #################
-        # Site Admin
-        #################
+        #####################################
+        ## Override Entity Manager
+        #####################################
+        $definition = $container->getDefinition('sonata.page.manager.site');
+        $definition->setClass($container->getParameter('rz.page.entity.manager.site.class'));
+
+        $definition = $container->getDefinition('sonata.page.manager.snapshot');
+        $definition->setClass($container->getParameter('rz.page.entity.manager.snapshot.class'));
+
+        $definition = $container->getDefinition('sonata.page.manager.page');
+        $definition->setClass($container->getParameter('rz.page.entity.manager.page.class'));
+
+        $definition = $container->getDefinition('sonata.page.manager.block');
+        $definition->setClass($container->getParameter('rz.page.entity.manager.block.class'));
+
+
+        #####################################
+        ## Override Site Admin
+        #####################################
         $definition = $container->getDefinition('sonata.page.admin.site');
-        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
-                                        $container->getParameter('rz_page.configuration.site.templates'));
-        $definition->addMethodCall('setTemplates', array($definedTemplates));
+        $definition->setClass($container->getParameter('rz.page.admin.site.class'));
+        $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.site.translation_domain')));
+        $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.site.controller')));
 
-        #################
-        # Block Admin
-        #################
-        $definition = $container->getDefinition('sonata.page.admin.block');
-        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
-                                        $container->getParameter('rz_page.configuration.block.templates'));
-        $definition->addMethodCall('setTemplates', array($definedTemplates));
 
-        #################
-        # Snapshot Admin
-        #################
+        #####################################
+        ## Override Snapshot Admin
+        #####################################
         $definition = $container->getDefinition('sonata.page.admin.snapshot');
-        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
-                                        $container->getParameter('rz_page.configuration.snapshot.templates'));
-        $definition->addMethodCall('setTemplates', array($definedTemplates));
+        $definition->setClass($container->getParameter('rz.page.admin.snapshot.class'));
+        $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.snapshot.translation_domain')));
+        $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.snapshot.controller')));
 
-        #################
-        # Page Admin
-        #################
+        #####################################
+        ## Override Page Admin
+        #####################################
         $definition = $container->getDefinition('sonata.page.admin.page');
-        $definedTemplates = array_merge($container->getParameter('sonata.admin.configuration.templates'),
-                                        $container->getParameter('rz_page.configuration.page.templates'));
-        $definition->addMethodCall('setTemplates', array($definedTemplates));
-        $definition->addMethodCall('setMetaTags', array($container->getParameter('rz_seo.metatags')));
+        $definition->setClass($container->getParameter('rz.page.admin.page.class'));
+        $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.page.translation_domain')));
+        $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.page.controller')));
 
-        #################
-        # Page Service
-        #################
-        $definition = $container->getDefinition('sonata.page.service.default');
-        $definition->setClass($container->getParameter('rz.page.service.default.class'));
-        $definition->addMethodCall('setRouter', array(new Reference('router')));
+        #####################################
+        ## Override Block Admin
+        #####################################
+        $definition = $container->getDefinition('sonata.page.admin.block');
+        $definition->setClass($container->getParameter('rz.page.admin.block.class'));
+        $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.block.translation_domain')));
+        $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.block.controller')));
 
-        #################
-        # Page Transformer
-        #################
-        $definition = $container->getDefinition('sonata.page.transformer');
-        $definition->setClass($container->getParameter('rz.page.transformer.class'));
-
-        #################
-        # Shared Block
-        #################
-        $definition = $container->getDefinition('sonata.page.block.shared_block');
-        $definition->setClass($container->getParameter('rz_page.block.shared_block.class'));
-
-        #################
-        # Container Block
-        #################
-        $definition = $container->getDefinition('sonata.page.block.container');
-        $definition->setClass($container->getParameter('rz_page.block.container.class'));
-
-        #################
-        # Children Pages Block
-        #################
-        $definition = $container->getDefinition('sonata.page.block.children_pages');
-        $definition->setClass($container->getParameter('rz_page.block.children_pages.class'));
-
+        #####################################
+        ## Override Shared Admin
+        #####################################
+        $definition = $container->getDefinition('sonata.page.admin.shared_block');
+        $definition->setClass($container->getParameter('rz.page.admin.shared_block.class'));
+        $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.shared_block.translation_domain')));
+        $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.shared_block.controller')));
     }
 }

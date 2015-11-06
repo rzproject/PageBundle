@@ -1,0 +1,17 @@
+{% extends 'RzAdminBundle:CRUD:list_outer_rows_mosaic.html.twig' %}
+
+
+{% block sonata_mosaic_background %}
+    <img src="{{ asset('bundles/rzadmin/images/mosaic-page-placeholder.png') }}" alt="" />
+{% endblock %}
+
+
+{% block sonata_mosaic_hover_view %}
+	<span class="mosaic-box-label label label-primary pull-right">#{{ admin.id(object) }}</span>
+	<i class="fa page-tree__item__is-hybrid fa-{% if object.isHybrid %}gears{% else %}code{% endif %}"></i>
+	{{ object.name }}
+	<div class="clearfix"></div>
+	<i class="text-muted">{{ object.url }}</i>
+	<div class="clearfix"></div>
+	{% if object.edited %}<span class="label label-danger">{{ 'pages.edited_label'|trans({}, 'SonataPageBundle') }}</span>{% endif %}
+{% endblock %}

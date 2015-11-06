@@ -1,14 +1,11 @@
 {% extends 'RzAdminBundle:CRUD:base_list_field.html.twig' %}
-
 {% block field %}
 {% spaceless %}
     {% if object.isHybrid %}
-        <i class="icon-cogs"></i>
+        <i class="fa fa-gears"></i>
     {% else %}
-        <i class="icon-file"></i>
+        <i class="fa fa-code"></i>
     {% endif %}
 {% endspaceless %}
 {% endblock %}
 
-
-{% block list_table_td_class %}rz-admin-list-pagetype{% endblock %}

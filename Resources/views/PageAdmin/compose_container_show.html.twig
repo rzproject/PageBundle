@@ -1,47 +1,31 @@
-<div class="page-composer__container__view block-view-{{ container.id }}" data-block-id="{{ container.id }}">
+<div class="page-composer__container__view block-view-{{ container.id }}"
+     data-block-id="{{ container.id }}">
     <h2 class="page-composer__container__view__header">{{ container.name }}</h2>
-
     <span class="page-composer__container__view__notice">{{ 'notice'|trans({}, 'SonataPageBundle') }}</span>
-
     <div class="page-composer__block-type-selector">
-        <label>{{ 'composer.block.add.type'|trans({}, 'SonataPageBundle') }}</label>
-        <select class="select2-me page-composer__block-type-selector__select" style="width: auto">
-            {% for blockServiceId, blockService in blockServices %}
-                <option value="{{ blockServiceId }}">{{ blockService.name }}</option>
-            {% endfor %}
-        </select>
-        <a class="btn btn-action btn-small page-composer__block-type-selector__confirm" href="{{ path('admin_sonata_page_page_block_create', { 'id': page.id }) }}"><i class="icon-plus"></i></a>
-        <span class="page-composer__block-type-selector__loader">{{ 'loading'|trans({}, 'SonataPageBundle') }}</span>
-        <small class="page-composer__container__child-count hidden-phone hidden-tablet visible-desktop pull-right">
-            {{ 'blocks'|trans({}, 'SonataPageBundle') }} <span class="badge">{{ container.children|length }}</span>
-        </small>
+	    <small class="page-composer__container__child-count pull-right">
+		    <span class="label label-primary text-uppercase">{{ 'blocks'|trans({}, 'SonataPageBundle') }}</span> <span class="badge">{{ container.children|length }}</span>
+	    </small>
+	    <span class="page-composer__block-type-selector__loader text-uppercase pull-right rz-composer-loader">{{ 'loading'|trans({}, 'SonataPageBundle') }}</span>
+	    <div class="clearfix"></div>
+	    <div class="form-group">
+	        <label class="control-label text-uppercase">{{ 'composer.block.add.type'|trans({}, 'SonataPageBundle') }}</label>
+	        <div class="input-group select2-bootstrap-append">
+	            <select class="page-composer__block-type-selector__select">
+	                {% for blockServiceId, blockService in blockServices %}
+	                    <option value="{{ blockServiceId }}">{{ blockService.name }}</option>
+	                {% endfor %}
+	            </select>
+		        <span class="input-group-btn">
+	            <a class="btn btn-primary btn-action btn-small page-composer__block-type-selector__confirm" href="{{ admin.generateObjectUrl('sonata.page.admin.block.create', page, {'composer': true}) }}"><i class="fa fa-plus"></i></a>
+		        </span>
+	        </div>
+	    </div>
     </div>
 
     <ul class="page-composer__container__children">
         {% for child in container.children %}
-            <li class="page-composer__container__child" data-block-id="{{ child.id }}" data-parent-block-id="{{ container.id }}" data-page-id="{{ page.id }}">
-                <a class="page-composer__container__child__edit" href="{{ path('admin_sonata_page_page_block_edit', { 'id': page.id, 'childId':child.id }) }}">
-                    <h4>{{ child.name|default(attribute(blockServices, child.type).name) }}</h4>
-                    <small>{{ attribute(blockServices, child.type).name }}</small>
-                    <span class="page-composer__container__child__toggle">
-                        <i class="icon-chevron-down"></i>
-                        <i class="icon-chevron-up"></i>
-                    </span>
-                </a>
-
-                <div class="page-composer__container__child__remove">
-                    <a class="badge" href="{{ path('admin_sonata_page_block_delete', { 'id': child.id }) }}"><i class="icon-trash"></i> {{ 'composer.remove'|trans({}, 'SonataPageBundle') }}</a>
-                    <span class="page-composer__container__child__remove__confirm">
-                        {{ 'composer.remove.confirm'|trans({}, 'SonataPageBundle') }} <span class="yes"><i class="icon-ok-sign"></i> {{ 'yes'|trans({}, 'SonataPageBundle') }}</span> <span class="cancel"><i class="icon-remove-sign"></i> {{ 'cancel'|trans({}, 'SonataPageBundle') }}</span>
-                    </span>
-                </div>
-
-                <div class="page-composer__container__child__content"></div>
-
-                <div class="page-composer__container__child__loader">
-                    <span>{{ 'loading'|trans({}, 'SonataPageBundle') }}</span>
-                </div>
-            </li>
+            {% include 'RzPageBundle:BlockAdmin:compose_preview.html.twig' %}
         {% endfor %}
     </ul>
 </div>

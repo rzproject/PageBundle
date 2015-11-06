@@ -1,87 +1,135 @@
 <?php
 
-/*
- * This file is part of the RzPageBundle package.
- *
- * (c) mell m. zamora <mell@rzproject.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace Rz\PageBundle\Admin;
 
-namespace  Rz\PageBundle\Admin;
-
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\PageBundle\Admin\BlockAdmin as BaseBlockAdmin;
+use Sonata\PageBundle\Admin\BlockAdmin as Admin;
+use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\PageBundle\Model\PageInterface;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
 
-class BlockAdmin extends BaseBlockAdmin
+/**
+ * Admin class for the Block model.
+ *
+ * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ */
+class BlockAdmin extends Admin
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->add('savePosition', 'save-position');
-        $collection->add('saveTextBlock', 'save-text-block',
-                         array('_controller' => sprintf('%s:%s', $this->baseControllerName, 'saveTextBlock')));
-        $collection->add('cmsBlockRender', 'cms-render-block/{pageId}/{blockId}',
-                         array('_controller' => sprintf('%s:%s', $this->baseControllerName, 'cmsBlockRender')));
-        $collection->add('view', $this->getRouterIdParameter().'/view');
-        $collection->add('switchParent', 'switch-parent');
-    }
-
     /**
      * {@inheritdoc}
      */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('type', null, array('footable'=>array('attr'=>array('data_toggle'=>true))))
-            ->add('name', null, array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
-            ->add('enabled', null, array('footable'=>array('attr'=>array('data_hide'=>'phone'))))
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'Show' => array('template' => 'SonataAdminBundle:CRUD:list__action_show.html.twig'),
-                    'Edit' => array('template' => 'SonataAdminBundle:CRUD:list__action_edit.html.twig'),
-                    'Delete' => array('template' => 'SonataAdminBundle:CRUD:list__action_delete.html.twig')),
-                'footable'=>array('attr'=>array('data_hide'=>'phone,tablet')),
-            ))
+            ->addIdentifier('type')
+            ->add('name', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('enabled', null, array('editable' => true,'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('updatedAt', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
+            ->add('position', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
-        $showMapper
-            ->add('type')
-            ->add('name')
-            ->add('enabled')
-            ->add('updatedAt')
-            ->add('position')
-        ;
-    }
+        $block = $this->getSubject();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPersistentParameters()
-    {
-        $parameters = parent::getPersistentParameters();
+        $page = false;
 
-        if ($composer = $this->getRequest()->get('composer')) {
-            $parameters['composer'] = $composer;
+        if ($this->getParent()) {
+            $page = $this->getParent()->getSubject();
+
+            if (!$page instanceof PageInterface) {
+                throw new \RuntimeException('The BlockAdmin must be attached to a parent PageAdmin');
+            }
+
+            if ($block->getId() === null) { // new block
+                $block->setType($this->request->get('type'));
+                $block->setPage($page);
+            }
+
+            if ($block->getPage()->getId() != $page->getId()) {
+                throw new \RuntimeException('The page reference on BlockAdmin and parent admin are not the same');
+            }
         }
 
-        if ($type = $this->getRequest()->get('type', null)) {
-            $parameters['type'] = $type;
+        $isComposer = $this->hasRequest() ? $this->getRequest()->get('composer', false) : false;
+        $generalGroupOptions = $optionsGroupOptions = array();
+        if ($isComposer) {
+            $generalGroupOptions['class'] = 'hidden';
+            $optionsGroupOptions['name']  = '';
         }
 
-        return $parameters;
+        $formMapper->with('form.field_group_general', $generalGroupOptions);
+
+        if (!$isComposer) {
+            $formMapper->add('name');
+        } else {
+            $formMapper->add('name', 'hidden');
+        }
+
+        $formMapper->end();
+
+        $isContainerRoot = $block && in_array($block->getType(), array('sonata.page.block.container', 'sonata.block.service.container')) && !$this->hasParentFieldDescription();
+        $isStandardBlock = $block && !in_array($block->getType(), array('sonata.page.block.container', 'sonata.block.service.container')) && !$this->hasParentFieldDescription();
+
+        if ($isContainerRoot || $isStandardBlock) {
+            $formMapper->with('form.field_group_general', $generalGroupOptions);
+
+            $service = $this->blockManager->get($block);
+
+            $containerBlockTypes = $this->containerBlockTypes;
+
+            // need to investigate on this case where $page == null ... this should not be possible
+            if ($isStandardBlock && $page && !empty($containerBlockTypes)) {
+                $formMapper->add('parent', 'entity', array(
+                        'class'         => $this->getClass(),
+                        'query_builder' => function (EntityRepository $repository) use ($page, $containerBlockTypes) {
+                            return $repository->createQueryBuilder('a')
+                                ->andWhere('a.page = :page AND a.type IN (:types)')
+                                ->setParameters(array(
+                                        'page'  => $page,
+                                        'types' => $containerBlockTypes,
+                                    ));
+                        },
+                    ), array(
+                        'admin_code' => $this->getCode(),
+                    ));
+            }
+
+            if ($isComposer) {
+                $formMapper->add('enabled', 'hidden', array('data' => true));
+            } else {
+                $formMapper->add('enabled');
+            }
+
+            if ($isStandardBlock) {
+                $formMapper->add('position', 'integer');
+            }
+
+            $formMapper->end();
+
+            $formMapper->with('form.field_group_options', $optionsGroupOptions);
+
+            if ($block->getId() > 0) {
+                $service->buildEditForm($formMapper, $block);
+            } else {
+                $service->buildCreateForm($formMapper, $block);
+            }
+
+            $formMapper->end();
+        } else {
+            $formMapper
+                ->with('form.field_group_options', $optionsGroupOptions)
+                ->add('type', 'sonata_block_service_choice', array(
+                        'context' => 'sonata_page_bundle',
+                    ))
+                ->add('enabled')
+                ->add('position', 'integer')
+                ->end()
+            ;
+        }
     }
 }

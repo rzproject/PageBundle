@@ -1,58 +1,40 @@
 <?php
 
-/*
- * This file is part of the RzPageBundle package.
- *
- * (c) mell m. zamora <mell@rzproject.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace Rz\PageBundle\Admin;
 
-namespace  Rz\PageBundle\Admin;
-
-use Sonata\PageBundle\Admin\SnapshotAdmin as BaseSnapshotAdmin;
-use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\PageBundle\Admin\SnapshotAdmin as Admin;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\Cache\CacheManagerInterface;
 
-
-class SnapshotAdmin extends BaseSnapshotAdmin
+/**
+ * Admin definition for the Snapshot class.
+ *
+ * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ */
+class SnapshotAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('url', null, array('footable'=>array('attr'=>array('data_toggle'=>true))))
-            ->add('enabled', null , array('footable'=>array('attr'=>array('data_hide'=>'tablet'))))
-            ->add('publicationDateStart', null , array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
-            ->add('publicationDateEnd', null , array('footable'=>array('attr'=>array('data_hide'=>'phone,tablet'))))
-            ->add('_action', 'actions', array(
-                             'actions' => array(
-                                'Show' => array('template' => 'SonataAdminBundle:CRUD:list__action_show.html.twig'),
-                                'Edit' => array('template' => 'SonataAdminBundle:CRUD:list__action_edit.html.twig'),
-                                'Delete' => array('template' => 'SonataAdminBundle:CRUD:list__action_delete.html.twig')),
-                             'footable'=>array('attr'=>array('data_hide'=>'phone,tablet')),
-            ))
+            ->addIdentifier('url')
+            ->add('enabled', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('publicationDateStart', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('publicationDateEnd', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    public function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $showMapper
-            ->add('url')
-            ->add('enabled')
-            ->add('publicationDateStart')
-            ->add('publicationDateEnd')
-            ->add('createdAt')
-            ->add('updatedAt')
-        ;
+        $datagridMapper
+            ->add('routeName');
     }
 
     /**
@@ -62,8 +44,9 @@ class SnapshotAdmin extends BaseSnapshotAdmin
     {
         $formMapper
             ->add('enabled', null, array('required' => false))
-            ->add('publicationDateStart')
-            ->add('publicationDateEnd')
+            ->add('publicationDateStart', 'sonata_type_datetime_picker', array('dp_side_by_side' => true))
+            ->add('publicationDateEnd', 'sonata_type_datetime_picker', array('required' => false, 'dp_side_by_side' => true))
+//            ->add('content')
         ;
     }
 }

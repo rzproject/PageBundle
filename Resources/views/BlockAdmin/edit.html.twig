@@ -1,41 +1,38 @@
-{% extends 'RzAdminBundle:CRUD:base_edit.html.twig' %}
+{#
 
-{%block admin_information %}
-    {% if admin.isChild %}
-        {% set page =  admin.parent.subject %}
-        {% if page %}
-            {% include 'RzPageBundle:PageAdmin:parent_view.html.twig' %}
-        {% endif %}
-    {% endif %}
-{% endblock %}
+This file is part of the Sonata package.
 
-{% block side_menu %}{% endblock %}
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
 
-{% block actions %}
-    <div class="row-fluid admin-action-buttons">
-        <div class="span12">
-            <div class="sonata-actions btn-group hidden-phone hidden-tablet visible-desktop pull-right">
-                {% if admin.isChild %}
-                    {% include 'RzPageBundle:BlockAdmin:buttons.html.twig' %}
-                {% endif %}
-                {% include 'SonataAdminBundle:Button:show_button.html.twig' %}
-                {% include 'SonataAdminBundle:Button:history_button.html.twig' %}
-                {% include 'SonataAdminBundle:Button:create_button.html.twig' %}
-                {% include 'SonataAdminBundle:Button:list_button.html.twig' %}
-            </div>
-            <div class="btn-group visible-phone visible-tablet hidden-desktop">
-                <button class="btn btn-primary admin-actions admin-actions-group">Select an action to perform</button>
-                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle admin-actions"><i class=" icon-chevron-down"></i></button>
-                <ul class="dropdown-menu">
-                    {% if admin.isChild %}
-                        {% include 'RzPageBundle:BlockAdmin:buttons_mobile.html.twig' %}
-                    {% endif %}
-                    {% include 'SonataAdminBundle:Button:show_button_mobile.html.twig' %}
-                    {% include 'SonataAdminBundle:Button:history_button_mobile.html.twig' %}
-                    {% include 'SonataAdminBundle:Button:create_button_mobile.html.twig' %}
-                    {% include 'SonataAdminBundle:Button:list_button_mobile.html.twig' %}
-                </ul>
-            </div>
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends base_template %}
+
+{% block form %}
+    <form action="{{ admin.generateUrl('update', {'id' : object.id}) }}" method="POST">
+        <p>
+             {% block information %}
+                {{ object.type }}
+             {% endblock %}
+        </p>
+
+        <p>
+            {{ form_label(form.enabled) }}
+            {{ form_widget(form.enabled) }}
+            {{ form_errors(form.enabled) }}
+        </p>
+
+        <div>
+            {% block block %}
+                Custom block settings ...
+            {% endblock %}
         </div>
-    </div>
+
+        <input type="submit" value="{{ 'button_save'|trans({}, 'SonataPageBundle') }}">
+
+        {{ form_rest(form) }}
+    </form>
 {% endblock %}
