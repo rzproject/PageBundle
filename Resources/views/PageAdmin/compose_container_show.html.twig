@@ -12,9 +12,9 @@
 	        <label class="control-label text-uppercase">{{ 'composer.block.add.type'|trans({}, 'SonataPageBundle') }}</label>
 	        <div class="input-group select2-bootstrap-append">
 	            <select class="page-composer__block-type-selector__select">
-	                {% for blockServiceId, blockService in blockServices %}
-	                    <option value="{{ blockServiceId }}">{{ blockService.name }}</option>
-	                {% endfor %}
+		            {% for blockServiceId, blockService in blockServices %}
+			            <option value="{{ blockServiceId }}">{{ blockService.blockMetadata.title|trans({}, blockService.blockMetadata.domain|default('SonataPageBundle')) }}</option>
+		            {% endfor %}
 	            </select>
 		        <span class="input-group-btn">
 	            <a class="btn btn-primary btn-action btn-small page-composer__block-type-selector__confirm" href="{{ admin.generateObjectUrl('sonata.page.admin.block.create', page, {'composer': true}) }}"><i class="fa fa-plus"></i></a>

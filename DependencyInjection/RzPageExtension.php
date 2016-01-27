@@ -25,7 +25,7 @@ class RzPageExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->configureManagerClass($config, $container);
         $this->configureAdminClass($config, $container);
-        $loader->load('services.xml');
+        $loader->load('twig.xml');
     }
 
     public function configureManagerClass($config, ContainerBuilder $container)

@@ -1,0 +1,94 @@
+{% extends 'RzPageBundle:Page:Theme/montage/layout.html.twig' %}
+
+{% block sonata_page_body_tag %}
+	{{ parent() }}
+
+	{% include "SonataSeoBundle:Block:_facebook_sdk.html.twig" %}
+	{% include "SonataSeoBundle:Block:_twitter_sdk.html.twig" %}
+	{% include "SonataSeoBundle:Block:_pinterest_sdk.html.twig" %}
+
+{% endblock %}
+
+{% block sonata_page_javascripts %}
+<script src="{{ asset('assetic/sonata_front_js.js') }}" type="text/javascript"></script>
+{% if sonata_page.isEditor or ( app.user and is_granted('ROLE_PREVIOUS_ADMIN') ) %}
+	<script src="{{ asset('assetic/sonata_front_admin_js.js') }}"></script>
+{% endif %}
+{% endblock %}
+
+{% block sonata_page_stylesheets %}
+{{ parent() }}
+{% if sonata_page.isEditor or ( app.user and is_granted('ROLE_PREVIOUS_ADMIN') ) %}
+	<link rel="stylesheet" href="{{ asset('assetic/sonata_front_admin_css.css') }}" media="all">
+{% endif %}
+{% endblock %}
+
+{% block rz_page_header %}
+	<!-- Static navbar -->
+	<div class="navbar navbar-inverse navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{{ path(rz_page_render_page_url('Home')) }}">{{ 'header.page_default_title'|trans([], 'SonataPageBundle') }}</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				{{ sonata_page_render_container('header', 'global') }}
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+{% endblock rz_page_header %}
+
+{% block rz_page_body %}
+<div class="container pt">
+	<div class="row mt">
+		{% if page is defined %}
+			<div class="row">
+				{% if page.name != 'global'%}
+					{{ sonata_page_render_container('content_top', 'global') }}
+				{% endif %}
+				{{ sonata_page_render_container('content_top', page) }}
+			</div>
+		{% endif %}
+
+		<div class="row">
+			{% block page_content %}
+				{% if content is defined %}
+					{{ content|raw }}
+				{% else %}
+					{% set content = block('content') %}
+					{% if content|length > 0 %}
+						{{ content|raw }}
+					{% elseif page is defined %}
+						{{ sonata_page_render_container('content', page) }}
+					{% endif %}
+				{% endif %}
+			{% endblock %}
+		</div>
+		{% if page is defined %}
+			<div class="row">
+				{{ sonata_page_render_container('content_bottom', page) }}
+
+				{% if page.name != 'global'%}
+					{{ sonata_page_render_container('content_bottom', 'global') }}
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+	<!-- /row -->
+</div><!-- /container -->
+{% endblock rz_page_body %}
+
+{% block rz_page_footer %}
+<!-- +++++ Footer Section +++++ -->
+<div id="footer">
+	<div class="container">
+		<div class="row">
+			{{ sonata_page_render_container('footer', 'global') }}
+		</div>
+	</div>
+</div>
+{% endblock rz_page_footer %}
