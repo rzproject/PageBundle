@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Cache\CacheManagerInterface;
+use Sonata\CoreBundle\Model\ManagerInterface;
 
 /**
  * Admin definition for the Snapshot class.
@@ -15,6 +16,7 @@ use Sonata\Cache\CacheManagerInterface;
  */
 class SnapshotAdmin extends Admin
 {
+    protected $redirectManager;
     /**
      * {@inheritdoc}
      */
@@ -34,7 +36,10 @@ class SnapshotAdmin extends Admin
     public function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('routeName');
+            ->add('routeName')
+            ->add('publicationDateStart', 'doctrine_orm_datetime_range', array('field_type' => 'sonata_type_datetime_range_picker'))
+            ->add('publicationDateEnd', 'doctrine_orm_datetime_range', array('field_type' => 'sonata_type_datetime_range_picker'))
+            ;
     }
 
     /**
@@ -46,7 +51,38 @@ class SnapshotAdmin extends Admin
             ->add('enabled', null, array('required' => false))
             ->add('publicationDateStart', 'sonata_type_datetime_picker', array('dp_side_by_side' => true))
             ->add('publicationDateEnd', 'sonata_type_datetime_picker', array('required' => false, 'dp_side_by_side' => true))
-//            ->add('content')
         ;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRedirectManager()
+    {
+        return $this->redirectManager;
+    }
+
+    /**
+     * @param mixed $redirectManager
+     */
+    public function setRedirectManager(ManagerInterface $redirectManager)
+    {
+        $this->redirectManager = $redirectManager;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postUpdate($object)
+    {
+        parent::postUpdate($object);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postPersist($object)
+    {
+        parent::postPersist($object);
     }
 }

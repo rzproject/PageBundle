@@ -34,7 +34,6 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
         $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.site.translation_domain')));
         $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.site.controller')));
 
-
         #####################################
         ## Override Snapshot Admin
         #####################################
@@ -42,6 +41,11 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
         $definition->setClass($container->getParameter('rz.page.admin.snapshot.class'));
         $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.snapshot.translation_domain')));
         $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.snapshot.controller')));
+        ## Add Redirect Manager
+        $bundles = $container->getParameter('kernel.bundles');
+        if (isset($bundles['RzRedirectBundle'])) {
+            $definition->addMethodCall('setRedirectManager', array(new Reference('rz.redirect.manager.redirect')));
+        }
 
         #####################################
         ## Override Page Admin

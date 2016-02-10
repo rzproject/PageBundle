@@ -10,6 +10,14 @@
                 <source>header.page_default_title</source>
                 <target>Mosaic II</target>
             </trans-unit>
+            <trans-unit id="filter.label_publication_date_start">
+                <source>filter.label_publication_date_start</source>
+                <target>Publication Start Date</target>
+            </trans-unit>
+						<trans-unit id="filter.label_publication_date_end">
+                <source>filter.label_publication_date_end</source>
+                <target>Publication End Date</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
