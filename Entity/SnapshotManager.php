@@ -92,4 +92,53 @@ class SnapshotManager extends BaseSnapshotManager
 
         return false;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findPreviousSnapshot(array $criteria)
+    {
+        $date = new \Datetime();
+        $parameters = array(
+            'publicationDateStart' => $date,
+            'publicationDateEnd'   => $date,
+        );
+
+        $query = $this->getRepository()
+            ->createQueryBuilder('s')
+            ->andWhere('s.publicationDateStart <= :publicationDateStart AND ( s.publicationDateEnd IS NULL OR s.publicationDateEnd >= :publicationDateEnd )');
+
+        if (isset($criteria['site'])) {
+            $query->andWhere('s.site = :site');
+            $parameters['site'] = $criteria['site'];
+        }
+
+        if (isset($criteria['pageId'])) {
+            $query->andWhere('s.page = :page');
+            $parameters['page'] = $criteria['pageId'];
+        } elseif (isset($criteria['url'])) {
+            $query->andWhere('s.url = :url');
+            $parameters['url'] = $criteria['url'];
+        } elseif (isset($criteria['routeName'])) {
+            $query->andWhere('s.routeName = :routeName');
+            $parameters['routeName'] = $criteria['routeName'];
+        } elseif (isset($criteria['pageAlias'])) {
+            $query->andWhere('s.pageAlias = :pageAlias');
+            $parameters['pageAlias'] = $criteria['pageAlias'];
+        } elseif (isset($criteria['name'])) {
+            $query->andWhere('s.name = :name');
+            $parameters['name'] = $criteria['name'];
+        } else {
+            throw new \RuntimeException('please provide a `pageId`, `url`, `routeName` or `name` as criteria key');
+        }
+
+        $query->orderBy('s.id', 'DESC');
+
+       $query->setMaxResults(1)->setFirstResult(1);
+        $query->setParameters($parameters);
+
+        return $query->getQuery()
+            ->useResultCache(true, 3600)
+            ->getOneOrNullResult();
+    }
 }

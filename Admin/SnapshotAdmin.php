@@ -16,7 +16,7 @@ use Sonata\CoreBundle\Model\ManagerInterface;
  */
 class SnapshotAdmin extends Admin
 {
-    protected $redirectManager;
+
     /**
      * {@inheritdoc}
      */
@@ -52,37 +52,5 @@ class SnapshotAdmin extends Admin
             ->add('publicationDateStart', 'sonata_type_datetime_picker', array('dp_side_by_side' => true))
             ->add('publicationDateEnd', 'sonata_type_datetime_picker', array('required' => false, 'dp_side_by_side' => true))
         ;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRedirectManager()
-    {
-        return $this->redirectManager;
-    }
-
-    /**
-     * @param mixed $redirectManager
-     */
-    public function setRedirectManager(ManagerInterface $redirectManager)
-    {
-        $this->redirectManager = $redirectManager;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postUpdate($object)
-    {
-        parent::postUpdate($object);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postPersist($object)
-    {
-        parent::postPersist($object);
     }
 }
