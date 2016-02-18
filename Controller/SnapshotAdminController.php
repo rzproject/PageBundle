@@ -92,10 +92,10 @@ class SnapshotAdminController extends Controller
             $redirectManager->save($redirect);
 
             //redirect old redirects
-            $redirectManager->fixOldRedirects(array('referenceId'=>$redirect->getReferenceId(),
-                                                    'type'=>$redirect->getType(),
-                                                    'toPath'=>$redirect->getToPath(),
-                                                    'currentId'=>$redirect->getId()));
+            $redirectManager->fixOldRedirects(['referenceId'=>$redirect->getReferenceId(),
+                                               'type'=>$redirect->getType(),
+                                               'toPath'=>$redirect->getToPath(),
+                                               'currentId'=>$redirect->getId()]);
         }
     }
 }
