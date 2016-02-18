@@ -90,6 +90,12 @@ class SnapshotAdminController extends Controller
             $redirect->setPublicationDateStart($snapshot->getPublicationDateStart());
             $redirect->setPublicationDateEnd($snapshot->getPublicationDateEnd());
             $redirectManager->save($redirect);
+
+            //redirect old redirects
+            $redirectManager->fixOldRedirects(array('referenceId'=>$redirect->getReferenceId(),
+                                                    'type'=>$redirect->getType(),
+                                                    'toPath'=>$redirect->getToPath(),
+                                                    'currentId'=>$redirect->getId()));
         }
     }
 }
