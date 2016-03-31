@@ -62,6 +62,8 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
         ## Override Shared Admin
         #####################################
         $definition = $container->getDefinition('sonata.page.admin.shared_block');
+        //override
+        $container->setParameter('sonata.page.admin.shared_block.class', $container->getParameter('rz.page.admin.shared_block.class'));
         $definition->setClass($container->getParameter('rz.page.admin.shared_block.class'));
         $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.shared_block.translation_domain')));
         $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.shared_block.controller')));
