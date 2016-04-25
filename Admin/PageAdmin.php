@@ -191,6 +191,19 @@ class PageAdmin extends Admin
                 ->add('title', null, array('required' => false))
                 ->add('metaKeyword', 'textarea', array('required' => false))
                 ->add('metaDescription', 'textarea', array('required' => false))
+                ->add('canonicalPage', 'sonata_page_selector', array(
+                        'page'          => $this->getSubject() ?: null,
+                        'site'          => $this->getSubject() ? $this->getSubject()->getSite() : null,
+                        'model_manager' => $this->getModelManager(),
+                        'class'         => $this->getClass(),
+                        'required'      => false,
+                        'filter_choice' => array('request_method' => 'all'),
+                    ), array(
+                        'admin_code'      => $this->getCode(),
+                        'link_parameters' => array(
+                            'siteId' => $this->getSubject() ? $this->getSubject()->getSite()->getId() : null,
+                        ),
+                    ))
             ->end()
         ;
 

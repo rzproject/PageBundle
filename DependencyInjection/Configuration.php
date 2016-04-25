@@ -20,10 +20,9 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $node = $treeBuilder->root('rz_page');
-
         $this->addManagerSection($node);
         $this->addAdminSection($node);
-
+        $this->addClassSection($node);
         return $treeBuilder;
     }
 
@@ -51,6 +50,35 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
+
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addClassSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('class')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('page')
+                            ->defaultValue('AppBundle\\Entity\\Page\\Page')
+                        ->end()
+                        ->scalarNode('snapshot')
+                            ->defaultValue('AppBundle\\Entity\\Page\\Snapshot')
+                        ->end()
+                        ->scalarNode('block')
+                            ->defaultValue('AppBundle\\Entity\\Page\\Block')
+                        ->end()
+                        ->scalarNode('site')
+                            ->defaultValue('AppBundle\\Entity\\Page\\Site')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
 
      private function addAdminSection(ArrayNodeDefinition $node) {
         $node

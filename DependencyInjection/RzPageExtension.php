@@ -2,6 +2,7 @@
 
 namespace Rz\PageBundle\DependencyInjection;
 
+use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -25,6 +26,7 @@ class RzPageExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->configureManagerClass($config, $container);
         $this->configureAdminClass($config, $container);
+        $this->registerDoctrineMapping($config, $container);
         $loader->load('twig.xml');
     }
 
@@ -61,5 +63,37 @@ class RzPageExtension extends Extension
         $container->setParameter('rz.page.admin.shared_block.class',                 $config['admin']['shared_block']['class']);
         $container->setParameter('rz.page.admin.shared_block.controller',            $config['admin']['shared_block']['controller']);
         $container->setParameter('rz.page.admin.shared_block.translation_domain',    $config['admin']['shared_block']['translation']);
+    }
+
+    /**
+     * Registers doctrine mapping on concrete page entities.
+     *
+     * @param array $config
+     */
+    public function registerDoctrineMapping(array $config)
+    {
+        if (!class_exists($config['class']['page'])) {
+            return;
+        }
+
+        $collector = DoctrineCollector::getInstance();
+
+        $collector->addAssociation($config['class']['page'], 'mapManyToOne', array(
+            'fieldName'     => 'canonicalPage',
+            'targetEntity'  => $config['class']['page'],
+            'cascade'       => array(
+                'persist',
+            ),
+            'mappedBy'      => null,
+            'inversedBy'    => null,
+            'joinColumns'   => array(
+                array(
+                    'name'                 => 'canonical_page_id',
+                    'referencedColumnName' => 'id',
+                    'onDelete'             => 'CASCADE',
+                ),
+            ),
+            'orphanRemoval' => false,
+        ));
     }
 }

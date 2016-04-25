@@ -18,6 +18,23 @@
                 <source>filter.label_publication_date_end</source>
                 <target>Publication End Date</target>
             </trans-unit>
+
+						<trans-unit id="filter.label_canonical_page">
+                <source>filter.label_canonical_page</source>
+                <target>Canonical of</target>
+            </trans-unit>
+						<trans-unit id="form.label_canonical_page">
+                <source>form.label_canonical_page</source>
+                <target>Canonical of</target>
+            </trans-unit>
+						<trans-unit id="list.label_canonical_page">
+                <source>list.label_canonical_page</source>
+                <target>Canonical of</target>
+            </trans-unit>
+						<trans-unit id="show.label_canonical_page">
+                <source>show.label_canonical_page</source>
+                <target>Canonical of</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
