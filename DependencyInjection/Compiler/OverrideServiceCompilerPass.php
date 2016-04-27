@@ -67,5 +67,25 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
         $definition->setClass($container->getParameter('rz.page.admin.shared_block.class'));
         $definition->addMethodCall('setTranslationDomain', array($container->getParameter('rz.page.admin.shared_block.translation_domain')));
         $definition->addMethodCall('setBaseControllerName', array($container->getParameter('rz.page.admin.shared_block.controller')));
+        $definition->addMethodCall('setBlocks', array($container->getParameter('sonata_block.blocks')));
+
+
+        #####################################
+        ## Override Block
+        #####################################
+        $definition = $container->getDefinition('sonata.page.block.container');
+        $definition->setClass($container->getParameter('rz.page.block.container.class'));
+
+        $definition = $container->getDefinition('sonata.page.block.children_pages');
+        $definition->setClass($container->getParameter('rz.page.block.children_pages.class'));
+
+        $definition = $container->getDefinition('sonata.page.block.breadcrumb');
+        $definition->setClass($container->getParameter('rz.page.block.breadcrumb.class'));
+
+        $definition = $container->getDefinition('sonata.page.block.shared_block');
+        $definition->setClass($container->getParameter('rz.page.block.shared_block.class'));
+
+        $definition = $container->getDefinition('sonata.page.block.pagelist');
+        $definition->setClass($container->getParameter('rz.page.block.pagelist.class'));
     }
 }

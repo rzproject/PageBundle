@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $this->addManagerSection($node);
         $this->addAdminSection($node);
         $this->addClassSection($node);
+        $this->addBlockSection($node);
         return $treeBuilder;
     }
 
@@ -126,6 +127,27 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataPageBundle')->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addBlockSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('block')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('container')->defaultValue('Sonata\\PageBundle\\Block\\ContainerBlockService')->end()
+                        ->scalarNode('children_pages')->defaultValue('Sonata\PageBundle\Block\ChildrenPagesBlockService')->end()
+                        ->scalarNode('breadcrumb')->defaultValue('Sonata\\PageBundle\\Block\\BreadcrumbBlockService')->end()
+                        ->scalarNode('shared_block')->defaultValue('Sonata\\PageBundle\\Block\\SharedBlockBlockService')->end()
+                        ->scalarNode('pagelist')->defaultValue('Sonata\\PageBundle\\Block\\PageListBlockService')->end()
                     ->end()
                 ->end()
             ->end()

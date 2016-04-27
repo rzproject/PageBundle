@@ -3,6 +3,8 @@
 namespace Rz\PageBundle\Admin;
 
 use Sonata\PageBundle\Admin\SharedBlockAdmin as Admin;
+use Sonata\BlockBundle\Block\BlockServiceInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BaseBlockService;
@@ -15,6 +17,11 @@ use Sonata\PageBundle\Entity\BaseBlock;
  */
 class SharedBlockAdmin extends Admin
 {
+    /**
+     * @var array
+     */
+    protected $blocks;
+
     /**
      * {@inheritdoc}
      */
@@ -58,6 +65,31 @@ class SharedBlockAdmin extends Admin
             $service->buildCreateForm($formMapper, $block);
         }
 
+        if ($block) {
+            $blockType = $block->getType();
+        }
+
+        if ($blockType && $formMapper->has('settings') && isset($this->blocks[$blockType]['templates'])) {
+            $settingsField = $formMapper->get('settings');
+
+            if (!$settingsField->has('template')) {
+                $choices = array();
+
+                if (null !== $defaultTemplate = $this->getDefaultTemplate($service)) {
+                    $choices[$defaultTemplate] = 'default';
+                }
+
+                foreach ($this->blocks[$blockType]['templates'] as $item) {
+                    $choices[$item['template']] = $item['name'];
+                }
+
+                if (count($choices) > 1) {
+
+                    $settingsField->add('template', 'choice', array('choices' => $choices));
+                }
+            }
+        }
+
         $formMapper->end();
     }
 
@@ -73,5 +105,39 @@ class SharedBlockAdmin extends Admin
         $query->andWhere($query->expr()->isNull($query->getRootAlias().'.parent'));
 
         return $query;
+    }
+
+    /**
+     * @param BlockServiceInterface $blockService
+     *
+     * @return string|null
+     */
+    private function getDefaultTemplate(BlockServiceInterface $blockService)
+    {
+        $resolver = new OptionsResolver();
+        $blockService->setDefaultSettings($resolver);
+        $options = $resolver->resolve();
+
+        if (isset($options['template'])) {
+            return $options['template'];
+        }
+
+        return;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
+
+    /**
+     * @param array $blocks
+     */
+    public function setBlocks($blocks)
+    {
+        $this->blocks = $blocks;
     }
 }

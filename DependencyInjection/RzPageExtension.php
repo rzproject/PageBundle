@@ -26,6 +26,7 @@ class RzPageExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->configureManagerClass($config, $container);
         $this->configureAdminClass($config, $container);
+        $this->configureBlockClass($config, $container);
         $this->registerDoctrineMapping($config, $container);
         $loader->load('twig.xml');
     }
@@ -36,6 +37,15 @@ class RzPageExtension extends Extension
         $container->setParameter('rz.page.entity.manager.snapshot.class',       $config['manager_class']['orm']['snapshot']);
         $container->setParameter('rz.page.entity.manager.page.class',           $config['manager_class']['orm']['page']);
         $container->setParameter('rz.page.entity.manager.block.class',          $config['manager_class']['orm']['block']);
+    }
+
+    public function configureBlockClass($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz.page.block.container.class',          $config['block']['container']);
+        $container->setParameter('rz.page.block.children_pages.class',     $config['block']['children_pages']);
+        $container->setParameter('rz.page.block.breadcrumb.class',         $config['block']['breadcrumb']);
+        $container->setParameter('rz.page.block.shared_block.class',       $config['block']['shared_block']);
+        $container->setParameter('rz.page.block.pagelist.class',           $config['block']['pagelist']);
     }
 
     /**
