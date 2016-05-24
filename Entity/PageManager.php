@@ -50,4 +50,34 @@ class PageManager extends BasePageManager
             ->useResultCache(true, 3600)
             ->execute();
     }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function cleanupPages($pageIds)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('page');
+        $qb->delete()
+            ->where($qb->expr()->in('page.id', $pageIds));
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updatePagesTitles($pageIds, $title, $slug)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('page');
+        $qb->update()
+            ->set('page.title', ':title')
+            ->set('page.slug',  ':slug')
+            ->set('page.edited',  ':edited')
+            ->setParameter('title', $title)
+            ->setParameter('slug', $slug)
+            ->setParameter('edited', true)
+            ->where($qb->expr()->in('page.id', $pageIds));
+        return $qb->getQuery()->execute();
+    }
 }
