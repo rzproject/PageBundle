@@ -27,6 +27,7 @@ class RzPageExtension extends Extension
         $this->configureManagerClass($config, $container);
         $this->configureAdminClass($config, $container);
         $this->configureBlockClass($config, $container);
+        $this->configureConsumerClass($config, $container);
         $this->registerDoctrineMapping($config, $container);
         $loader->load('twig.xml');
     }
@@ -46,6 +47,15 @@ class RzPageExtension extends Extension
         $container->setParameter('rz.page.block.breadcrumb.class',         $config['block']['breadcrumb']);
         $container->setParameter('rz.page.block.shared_block.class',       $config['block']['shared_block']);
         $container->setParameter('rz.page.block.pagelist.class',           $config['block']['pagelist']);
+    }
+
+
+    public function configureConsumerClass($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz.page.consumer.create_snapshots.class',    $config['consumer_class']['create_snapshots']);
+        $container->setParameter('rz.page.consumer.create_snapshot.class',     $config['consumer_class']['create_snapshot']);
+        $container->setParameter('rz.page.consumer.cleanup_snapshots.class',   $config['consumer_class']['cleanup_snapshots']);
+        $container->setParameter('rz.page.consumer.cleanup_snapshot.class',    $config['consumer_class']['cleanup_snapshot']);
     }
 
     /**

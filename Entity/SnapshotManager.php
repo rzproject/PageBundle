@@ -9,6 +9,8 @@ use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\PageBundle\Model\PageInterface;
 use Sonata\PageBundle\Model\SnapshotManagerInterface;
 use Sonata\PageBundle\Model\SnapshotPageProxy;
+use Symfony\Component\DependencyInjection\Reference;
+use Sonata\PageBundle\Model\SnapshotInterface;
 
 /**
  * This class manages SnapshotInterface persistency with the Doctrine ORM.
@@ -17,6 +19,25 @@ use Sonata\PageBundle\Model\SnapshotPageProxy;
  */
 class SnapshotManager extends BaseSnapshotManager
 {
+
+    protected $redirectManager;
+
+    /**
+     * @return mixed
+     */
+    public function getRedirectManager()
+    {
+        return $this->redirectManager;
+    }
+
+    /**
+     * @param mixed $redirectManager
+     */
+    public function setRedirectManager($redirectManager)
+    {
+        $this->redirectManager = $redirectManager;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -140,5 +161,30 @@ class SnapshotManager extends BaseSnapshotManager
         return $query->getQuery()
             ->useResultCache(true, 3600)
             ->getOneOrNullResult();
+    }
+
+    public function generateRedirect(PageInterface $page, SnapshotInterface $snapshot) {
+
+
+        $previous = $this->findPreviousSnapshot(['pageId'=>$snapshot->getPage(), 'site'=>$snapshot->getPage()->getSite()]);
+
+        if($previous && ($snapshot->getUrl() !== $previous->getUrl())) {
+            $redirect = $this->getRedirectManager()->create();
+            $redirect->setName($page->getTitle());
+            $redirect->setEnabled(true);
+            $redirect->setType('page');
+            $redirect->setReferenceId($snapshot->getPage()->getId());
+            $redirect->setFromPath($previous->getUrl());
+            $redirect->setToPath($snapshot->getUrl());
+            $redirect->setPublicationDateStart($snapshot->getPublicationDateStart());
+            $redirect->setPublicationDateEnd($snapshot->getPublicationDateEnd());
+            $this->getRedirectManager()->save($redirect);
+
+            //redirect old redirects
+            $this->getRedirectManager()->fixOldRedirects(['referenceId'=>$redirect->getReferenceId(),
+                                                          'type'=>$redirect->getType(),
+                                                          'toPath'=>$redirect->getToPath(),
+                                                          'currentId'=>$redirect->getId()]);
+        }
     }
 }

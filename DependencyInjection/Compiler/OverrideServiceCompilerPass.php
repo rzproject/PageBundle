@@ -18,6 +18,8 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('sonata.page.manager.snapshot');
         $definition->setClass($container->getParameter('rz.page.entity.manager.snapshot.class'));
+        $definition->addMethodCall('setRedirectManager', array(new Reference('rz.redirect.manager.redirect')));
+
 
         $definition = $container->getDefinition('sonata.page.manager.page');
         $definition->setClass($container->getParameter('rz.page.entity.manager.page.class'));
@@ -87,5 +89,21 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('sonata.page.block.pagelist');
         $definition->setClass($container->getParameter('rz.page.block.pagelist.class'));
+
+
+        #####################################
+        ## Consumer Class
+        #####################################
+        $definition = $container->getDefinition('sonata.page.notification.create_snapshots');
+        $definition->setClass($container->getParameter('rz.page.consumer.create_snapshots.class'));
+
+        $definition = $container->getDefinition('sonata.page.notification.create_snapshot');
+        $definition->setClass($container->getParameter('rz.page.consumer.create_snapshot.class'));
+
+        $definition = $container->getDefinition('sonata.page.notification.cleanup_snapshots');
+        $definition->setClass($container->getParameter('rz.page.consumer.cleanup_snapshots.class'));
+
+        $definition = $container->getDefinition('sonata.page.notification.cleanup_snapshot');
+        $definition->setClass($container->getParameter('rz.page.consumer.cleanup_snapshot.class'));
     }
 }

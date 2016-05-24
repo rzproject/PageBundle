@@ -61,7 +61,7 @@ class SnapshotAdminController extends Controller
                 $snapshotManager->enableSnapshots(array($snapshot));
 
                 //override for redirect
-                $this->generateRedirect($page, $snapshot);
+                $snapshotManager->generateRedirect($page, $snapshot);
             }
 
             return $this->redirect($this->admin->generateUrl('edit', array(
@@ -73,29 +73,5 @@ class SnapshotAdminController extends Controller
             'action'  => 'create',
             'form'    => $form->createView(),
         ));
-    }
-
-    protected function generateRedirect(PageInterface $page, SnapshotInterface $snapshot) {
-        $snapshotManager = $this->get('sonata.page.manager.snapshot');
-        $previous = $snapshotManager->findPreviousSnapshot(['pageId'=>$snapshot->getPage(), 'site'=>$snapshot->getPage()->getSite()]);
-        if($previous && ($snapshot->getUrl() !== $previous->getUrl())) {
-            $redirectManager = $this->get('rz.redirect.manager.redirect');
-            $redirect = $redirectManager->create();
-            $redirect->setName($page->getTitle());
-            $redirect->setEnabled(true);
-            $redirect->setType('page');
-            $redirect->setReferenceId($snapshot->getPage()->getId());
-            $redirect->setFromPath($previous->getUrl());
-            $redirect->setToPath($snapshot->getUrl());
-            $redirect->setPublicationDateStart($snapshot->getPublicationDateStart());
-            $redirect->setPublicationDateEnd($snapshot->getPublicationDateEnd());
-            $redirectManager->save($redirect);
-
-            //redirect old redirects
-            $redirectManager->fixOldRedirects(['referenceId'=>$redirect->getReferenceId(),
-                                               'type'=>$redirect->getType(),
-                                               'toPath'=>$redirect->getToPath(),
-                                               'currentId'=>$redirect->getId()]);
-        }
     }
 }

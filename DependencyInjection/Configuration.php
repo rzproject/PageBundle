@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
         $this->addAdminSection($node);
         $this->addClassSection($node);
         $this->addBlockSection($node);
+        $this->addConsumerSection($node);
         return $treeBuilder;
     }
 
@@ -46,6 +47,26 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('block')->defaultValue('Rz\\PageBundle\\Entity\\BlockManager')->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+     /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addConsumerSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('consumer_class')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('create_snapshots')->defaultValue('Sonata\\PageBundle\\Consumer\\CreateSnapshotsConsumer')->end()
+                        ->scalarNode('create_snapshot')->defaultValue('Rz\\PageBundle\\Consumer\\CreateSnapshotConsumer')->end()
+                        ->scalarNode('cleanup_snapshots')->defaultValue('Sonata\\PageBundle\\Consumer\\CleanupSnapshotsConsumer')->end()
+                        ->scalarNode('cleanup_snapshot')->defaultValue('Sonata\\PageBundle\\Consumer\\CleanupSnapshotsConsumer')->end()
                     ->end()
                 ->end()
             ->end()
