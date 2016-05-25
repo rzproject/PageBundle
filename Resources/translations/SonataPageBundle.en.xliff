@@ -35,6 +35,10 @@
                 <source>show.label_canonical_page</source>
                 <target>Canonical of</target>
             </trans-unit>
+						<trans-unit id="sonata_content">
+                <source>sonata_content</source>
+                <target>Content</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
