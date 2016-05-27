@@ -163,9 +163,11 @@ class SnapshotManager extends BaseSnapshotManager
             ->getOneOrNullResult();
     }
 
-    public function generateRedirect(PageInterface $page, SnapshotInterface $snapshot) {
+    public function generateRedirect(PageInterface $page, SnapshotInterface $snapshot, $redirectType = '301') {
 
 
+        $redirectTypes = $this->redirectManager->getRedirectTypes();
+        $redirectType = array_key_exists($redirectType, $redirectTypes) ? $redirectType : $this->redirectManager->getDefaultRedirect();
         $previous = $this->findPreviousSnapshot(['pageId'=>$snapshot->getPage(), 'site'=>$snapshot->getPage()->getSite()]);
 
         if($previous && ($snapshot->getUrl() !== $previous->getUrl())) {
@@ -176,6 +178,7 @@ class SnapshotManager extends BaseSnapshotManager
             $redirect->setReferenceId($snapshot->getPage()->getId());
             $redirect->setFromPath($previous->getUrl());
             $redirect->setToPath($snapshot->getUrl());
+            $redirect->setRedirect($redirectType);
             $redirect->setPublicationDateStart($snapshot->getPublicationDateStart());
             $redirect->setPublicationDateEnd($snapshot->getPublicationDateEnd());
             $this->getRedirectManager()->save($redirect);
@@ -184,7 +187,8 @@ class SnapshotManager extends BaseSnapshotManager
             $this->getRedirectManager()->fixOldRedirects(['referenceId'=>$redirect->getReferenceId(),
                                                           'type'=>$redirect->getType(),
                                                           'toPath'=>$redirect->getToPath(),
-                                                          'currentId'=>$redirect->getId()]);
+                                                          'currentId'=>$redirect->getId(),
+                                                          'redirect'=>$redirect->getRedirect()]);
         }
     }
 }
