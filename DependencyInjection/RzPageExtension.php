@@ -52,10 +52,21 @@ class RzPageExtension extends Extension
 
     public function configureConsumerClass($config, ContainerBuilder $container)
     {
-        $container->setParameter('rz.page.consumer.create_snapshots.class',    $config['consumer_class']['create_snapshots']);
-        $container->setParameter('rz.page.consumer.create_snapshot.class',     $config['consumer_class']['create_snapshot']);
-        $container->setParameter('rz.page.consumer.cleanup_snapshots.class',   $config['consumer_class']['cleanup_snapshots']);
-        $container->setParameter('rz.page.consumer.cleanup_snapshot.class',    $config['consumer_class']['cleanup_snapshot']);
+        if(isset($config['consumer_class']['create_snapshots'])) {
+            $container->setParameter('rz.page.consumer.create_snapshots.class', $config['consumer_class']['create_snapshots']);
+        }
+
+        if(isset($config['consumer_class']['create_snapshot'])) {
+            $container->setParameter('rz.page.consumer.create_snapshot.class', $config['consumer_class']['create_snapshot']);
+        }
+
+        if(isset($config['consumer_class']['cleanup_snapshots'])) {
+            $container->setParameter('rz.page.consumer.cleanup_snapshots.class', $config['consumer_class']['cleanup_snapshots']);
+        }
+
+        if(isset($config['consumer_class']['cleanup_snapshot'])) {
+            $container->setParameter('rz.page.consumer.cleanup_snapshot.class', $config['consumer_class']['cleanup_snapshot']);
+        }
     }
 
     /**

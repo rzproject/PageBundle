@@ -94,16 +94,24 @@ class OverrideServiceCompilerPass implements CompilerPassInterface
         #####################################
         ## Consumer Class
         #####################################
-        $definition = $container->getDefinition('sonata.page.notification.create_snapshots');
-        $definition->setClass($container->getParameter('rz.page.consumer.create_snapshots.class'));
+        if($container->hasParameter('rz.page.consumer.create_snapshots.class')) {
+            $definition = $container->getDefinition('sonata.page.notification.create_snapshots');
+            $definition->setClass($container->getParameter('rz.page.consumer.create_snapshots.class'));
+        }
 
-        $definition = $container->getDefinition('sonata.page.notification.create_snapshot');
-        $definition->setClass($container->getParameter('rz.page.consumer.create_snapshot.class'));
+        if($container->hasParameter('rz.page.consumer.create_snapshot.class')) {
+            $definition = $container->getDefinition('sonata.page.notification.create_snapshot');
+            $definition->setClass($container->getParameter('rz.page.consumer.create_snapshot.class'));
+        }
 
-        $definition = $container->getDefinition('sonata.page.notification.cleanup_snapshots');
-        $definition->setClass($container->getParameter('rz.page.consumer.cleanup_snapshots.class'));
+        if($container->hasParameter('rz.page.consumer.cleanup_snapshots.class')) {
+            $definition = $container->getDefinition('sonata.page.notification.cleanup_snapshots');
+            $definition->setClass($container->getParameter('rz.page.consumer.cleanup_snapshots.class'));
+        }
 
-        $definition = $container->getDefinition('sonata.page.notification.cleanup_snapshot');
-        $definition->setClass($container->getParameter('rz.page.consumer.cleanup_snapshot.class'));
+        if($container->hasParameter('rz.page.consumer.cleanup_snapshot.class')) {
+            $definition = $container->getDefinition('sonata.page.notification.cleanup_snapshot');
+            $definition->setClass($container->getParameter('rz.page.consumer.cleanup_snapshot.class'));
+        }
     }
 }
