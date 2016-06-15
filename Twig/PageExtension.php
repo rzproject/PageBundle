@@ -9,6 +9,7 @@ use Sonata\PageBundle\Exception\PageNotFoundException;
 use Sonata\BlockBundle\Templating\Helper\BlockHelper;
 use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Sonata\CoreBundle\Model\ManagerInterface;
 
 class PageExtension extends \Twig_Extension
 {
@@ -46,6 +47,8 @@ class PageExtension extends \Twig_Extension
 
     private $requestStack;
 
+    private $pageManager;
+
     /**
      * Constructor
      *
@@ -61,7 +64,8 @@ class PageExtension extends \Twig_Extension
                                 CmsManagerSelectorInterface $cmsManagerSelector,
                                 SiteSelectorInterface $siteSelector,
                                 BlockHelper $blockHelper,
-                                SeoPageInterface $seoPage)
+                                SeoPageInterface $seoPage,
+                                ManagerInterface $pageManager)
     {
         $this->requestStack       = $requestStack;
         $this->router             = $router;
@@ -69,6 +73,7 @@ class PageExtension extends \Twig_Extension
         $this->siteSelector       = $siteSelector;
         $this->blockHelper        = $blockHelper;
         $this->seoPage            = $seoPage;
+        $this->pageManager        = $pageManager;
     }
 
     public function getFunctions()
@@ -77,6 +82,7 @@ class PageExtension extends \Twig_Extension
             'rz_page_render_page_url' => new \Twig_SimpleFunction('rz_page_render_page_url', array($this, 'renderUrlByName')),
             'rz_page_render_page_alias_url' => new \Twig_SimpleFunction('rz_page_render_page_alias_url', array($this, 'renderUrlByAlias')),
             'rz_page_get_page_url' => new \Twig_SimpleFunction('rz_page_get_page_url', array($this, 'getUrlByPage')),
+            'rz_page_object' => new \Twig_SimpleFunction('rz_page_object', array($this, 'getPageObject')),
         );
     }
 
@@ -86,6 +92,21 @@ class PageExtension extends \Twig_Extension
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
+    }
+
+    public function getPageObject($value=null)
+    {
+        if(!$value) {
+            return null;
+        }
+
+        $page = $this->pageManager->findOneBy(array('id'=>$value));
+
+        if(!$page) {
+            return null;
+        }
+
+        return $page;
     }
 
 
