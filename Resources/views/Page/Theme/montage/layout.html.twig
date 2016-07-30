@@ -2,6 +2,46 @@
 
 {% block sonata_page_container %}
 	{% block rz_page_header %}{% endblock rz_page_header %}
-	{% block rz_page_body %}{% endblock rz_page_body %}
-	{% block rz_page_footer %}{% endblock rz_page_footer %}
+	{% block rz_page_body %}
+	<!-- Full Width Column -->
+	<div class="content-wrapper">
+		<div class="container">
+		<!-- Content Header (Page header) -->
+		{% block section_content_header %}
+		<section class="content-header">
+			{% block section_content_header_content %}{% endblock section_content_header_content %}
+		</section>
+		<!-- Content Header (Page header) -->
+		{% endblock section_content_header %}
+		<!-- Main content -->
+		{% block section_content %}
+		<section class="content">
+		{% block page_content %}
+			{% if content is defined %}
+				{{ content|raw }}
+			{% else %}
+				{% set content = block('content') %}
+				{% if content|length > 0 %}
+					{{ content|raw }}
+				{% elseif page is defined %}
+					{{ sonata_page_render_container('content', page) }}
+				{% endif %}
+			{% endif %}
+		{% endblock %}
+		</section>
+		{% endblock section_content %}
+		<!-- Main content -->
+		</div>
+	</div>
+	<!-- Full Width Column -->
+	{% endblock rz_page_body %}
+
+	{% block rz_page_footer %}
+	<footer class="main-footer">
+		<div class="container">
+			{{ sonata_page_render_container('footer', 'global') }}
+		</div>
+		<!-- /.container -->
+	</footer>
+	{% endblock rz_page_footer %}
 {% endblock %}
