@@ -1,0 +1,35 @@
+{% extends 'RzPageBundle:Page:Theme\\montage\\base_layout.html.twig' %}
+
+{% block sonata_page_body_tag %}
+<body class="hold-transition lockscreen">
+{% endblock %}
+
+{% block sonata_page_wrapper_container_tag_start %}
+<div class="lockscreen-wrapper">
+{% endblock %}
+
+{% block sonata_page_container %}
+	{% block rz_page_header %}{% endblock rz_page_header %}
+	{% block rz_page_body %}
+		{% block section_content %}
+			{% block page_content %}
+				{% if content is defined %}
+					{{ content|raw }}
+				{% else %}
+					{% set content = block('content') %}
+					{% if content|length > 0 %}
+						{{ content|raw }}
+					{% elseif page is defined %}
+						{{ sonata_page_render_container('content', page) }}
+					{% endif %}
+				{% endif %}
+			{% endblock %}
+		{% endblock section_content %}
+	{% endblock rz_page_body %}
+
+	{% block rz_page_footer %}
+		<div class="lockscreen-footer text-center">
+				{{ sonata_page_render_container('footer', 'global') }}
+		</div>
+	{% endblock rz_page_footer %}
+{% endblock %}
