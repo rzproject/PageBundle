@@ -1,0 +1,73 @@
+{% extends 'RzPageBundle:Page:Theme/montage/layout.html.twig' %}
+
+{% block sonata_page_body_tag %}
+<body class="layout-top-nav">
+{% endblock %}
+
+{% block sonata_page_javascripts %}
+	{{ parent() }}
+	{% if sonata_page.isEditor or ( app.user and is_granted('ROLE_PREVIOUS_ADMIN') ) %}
+		<script src="{{ asset('assetic/sonata_front_admin_js.js') }}"></script>
+	{% endif %}
+{% endblock %}
+
+{% block sonata_page_stylesheets %}
+	{{ parent() }}
+	{% if sonata_page.isEditor or ( app.user and is_granted('ROLE_PREVIOUS_ADMIN') ) %}
+		<link rel="stylesheet" href="{{ asset('assetic/sonata_front_admin_css.css') }}" media="all">
+	{% endif %}
+{% endblock %}
+
+{% block sonata_page_container %}
+	{% block rz_page_header %}
+		<header class="main-header">
+			<!-- Static navbar -->
+			<div class="navbar navbar-inverse navbar-static-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="{{ path(rz_page_render_page_url('Home')) }}">{{ 'header.page_default_title'|trans([], 'SonataPageBundle') }}</a>
+					</div>
+					<div class="navbar-collapse collapse">
+						{{ sonata_page_render_container('header', 'global') }}
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</header>
+	{% endblock rz_page_header %}
+	{% block rz_page_body %}
+		<!-- Full Width Column -->
+		<div class="content-wrapper">
+			<div class="container">
+				<section class="content">
+					{% block page_content %}
+						{% if content is defined %}
+							{{ content|raw }}
+						{% else %}
+							{% set content = block('content') %}
+							{% if content|length > 0 %}
+								{{ content|raw }}
+							{% elseif page is defined %}
+								{{ sonata_page_render_container('content', page) }}
+							{% endif %}
+						{% endif %}
+					{% endblock %}
+				</section>
+			</div>
+		</div>
+		<!-- Full Width Column -->
+	{% endblock rz_page_body %}
+
+	{% block rz_page_footer %}
+		<footer class="main-footer">
+			<div class="container">
+				{{ sonata_page_render_container('footer', 'global') }}
+			</div>
+			<!-- /.container -->
+		</footer>
+	{% endblock rz_page_footer %}
+{% endblock %}

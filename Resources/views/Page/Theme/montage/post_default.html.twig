@@ -42,35 +42,19 @@
 	</div>
 {% endblock rz_page_header %}
 
-{% block rz_page_body %}
-<div class="container pt">
-	<div class="row mt">
-		<div class="row">
-			{% block page_content %}
-				{% if content is defined %}
-					{{ content|raw }}
-				{% else %}
-					{% set content = block('content') %}
-					{% if content|length > 0 %}
-						{{ content|raw }}
-					{% elseif page is defined %}
-						{{ sonata_page_render_container('content', page) }}
-					{% endif %}
-				{% endif %}
-			{% endblock %}
-		</div>
-	</div>
-	<!-- /row -->
-</div><!-- /container -->
-{% endblock rz_page_body %}
-
-{% block rz_page_footer %}
-<!-- +++++ Footer Section +++++ -->
-<div id="footer">
-	<div class="container">
-		<div class="row">
-			{{ sonata_page_render_container('footer', 'global') }}
-		</div>
-	</div>
-</div>
-{% endblock rz_page_footer %}
+{% block section_content %}
+<section class="content">
+{% block page_content %}
+	{% if content is defined %}
+		{{ content|raw }}
+	{% else %}
+		{% set content = block('content') %}
+		{% if content|length > 0 %}
+			{{ content|raw }}
+		{% elseif page is defined %}
+			{{ sonata_page_render_container('content', page) }}
+		{% endif %}
+	{% endif %}
+{% endblock %}
+</section>
+{% endblock section_content %}

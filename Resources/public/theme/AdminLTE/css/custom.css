@@ -1,0 +1,21 @@
+/* CUSTOM */
+.main-footer {
+    height: auto !important;
+}
+
+footer a {
+    color: #3c8dbc;
+}
+
+.profile > .list-group-item.active, .profile > .list-group-item.active:focus, .profile > .list-group-item.active:hover {
+    background-color: transparent !important;
+    border-color: #ddd;
+}
+
+.icheckbox_square-blue, .iradio_square-blue {
+    margin: 0px !important;
+}
+
+.has-error ul.list-unstyled > li {
+    color: #dd4b39;
+}
