@@ -101,7 +101,8 @@ class Configuration implements ConfigurationInterface
     }
 
 
-     private function addAdminSection(ArrayNodeDefinition $node) {
+    private function addAdminSection(ArrayNodeDefinition $node)
+    {
         $node
             ->children()
                 ->arrayNode('admin')

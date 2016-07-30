@@ -23,7 +23,7 @@ class BlockAdmin extends Admin
         $listMapper
             ->addIdentifier('type')
             ->add('name', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
-            ->add('enabled', null, array('editable' => true,'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('enabled', null, array('editable' => true, 'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
             ->add('updatedAt', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
             ->add('position', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
         ;
