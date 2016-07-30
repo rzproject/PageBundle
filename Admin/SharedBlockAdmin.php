@@ -84,7 +84,6 @@ class SharedBlockAdmin extends Admin
                 }
 
                 if (count($choices) > 1) {
-
                     $settingsField->add('template', 'choice', array('choices' => $choices));
                 }
             }

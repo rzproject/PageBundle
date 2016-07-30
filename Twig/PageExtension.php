@@ -96,13 +96,13 @@ class PageExtension extends \Twig_Extension
 
     public function getPageObject($value=null)
     {
-        if(!$value) {
+        if (!$value) {
             return null;
         }
 
         $page = $this->pageManager->findOneBy(array('id'=>$value));
 
-        if(!$page) {
+        if (!$page) {
             return null;
         }
 
@@ -112,7 +112,7 @@ class PageExtension extends \Twig_Extension
 
     public function getUrlByPage($value)
     {
-        if(!$this->seoPage->getLinkCanonical()) {
+        if (!$this->seoPage->getLinkCanonical()) {
             return;
         }
 
@@ -120,7 +120,7 @@ class PageExtension extends \Twig_Extension
             $host = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
             $baseUrl = $this->requestStack->getCurrentRequest()->getBaseUrl();
             return str_replace(sprintf('%s%s', $host, $baseUrl), '', $this->seoPage->getLinkCanonical());
-        } catch(PageNotFoundException $e) {
+        } catch (PageNotFoundException $e) {
             return;
         }
     }
@@ -131,7 +131,7 @@ class PageExtension extends \Twig_Extension
             $cmsManager = $this->cmsManagerSelector->retrieve();
             $page = $cmsManager->getPageByName($this->siteSelector->retrieve(), $value);
             return $page;
-        } catch(PageNotFoundException $e) {
+        } catch (PageNotFoundException $e) {
             return;
         }
     }
@@ -142,7 +142,7 @@ class PageExtension extends \Twig_Extension
             $cmsManager = $this->cmsManagerSelector->retrieve();
             $page = $cmsManager->getPageByPageAlias($this->siteSelector->retrieve(), $value);
             return $page;
-        } catch(PageNotFoundException $e) {
+        } catch (PageNotFoundException $e) {
             return;
         }
     }

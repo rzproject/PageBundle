@@ -155,7 +155,7 @@ class SnapshotManager extends BaseSnapshotManager
 
         $query->orderBy('s.id', 'DESC');
 
-       $query->setMaxResults(1)->setFirstResult(1);
+        $query->setMaxResults(1)->setFirstResult(1);
         $query->setParameters($parameters);
 
         return $query->getQuery()
@@ -163,14 +163,13 @@ class SnapshotManager extends BaseSnapshotManager
             ->getOneOrNullResult();
     }
 
-    public function generateRedirect(PageInterface $page, SnapshotInterface $snapshot, $redirectType = '301') {
-
-
+    public function generateRedirect(PageInterface $page, SnapshotInterface $snapshot, $redirectType = '301')
+    {
         $redirectTypes = $this->redirectManager->getRedirectTypes();
         $redirectType = array_key_exists($redirectType, $redirectTypes) ? $redirectType : $this->redirectManager->getDefaultRedirect();
         $previous = $this->findPreviousSnapshot(['pageId'=>$snapshot->getPage(), 'site'=>$snapshot->getPage()->getSite()]);
 
-        if($previous && ($snapshot->getUrl() !== $previous->getUrl())) {
+        if ($previous && ($snapshot->getUrl() !== $previous->getUrl())) {
             $redirect = $this->getRedirectManager()->create();
             $redirect->setName($page->getTitle());
             $redirect->setEnabled(true);

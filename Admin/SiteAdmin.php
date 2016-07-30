@@ -42,14 +42,14 @@ class SiteAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
-            ->add('isDefault', null, array('editable' => true,'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
-            ->add('enabled', null, array('editable' => true,'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('isDefault', null, array('editable' => true, 'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('enabled', null, array('editable' => true, 'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
             ->add('host', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
             ->add('relativePath', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
             ->add('locale', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
             ->add('enabledFrom', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
             ->add('enabledTo', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
-            ->add('create_snapshots', 'string', array('footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm'))),'template' => 'RzPageBundle:SiteAdmin:list_create_snapshots.html.twig'))
+            ->add('create_snapshots', 'string', array('footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm'))), 'template' => 'RzPageBundle:SiteAdmin:list_create_snapshots.html.twig'))
         ;
     }
 

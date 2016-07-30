@@ -48,9 +48,9 @@ class PageAdmin extends Admin
             ->add('type', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
             ->add('pageAlias', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
             ->add('site', null, array('footable'=>array('attr'=>array('data-breakpoints'=>array('all')))))
-            ->add('decorate', null, array('editable' => true,'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
-            ->add('enabled', null, array('editable' => true,'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
-            ->add('edited', null, array('editable' => true,'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('decorate', null, array('editable' => true, 'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('enabled', null, array('editable' => true, 'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
+            ->add('edited', null, array('editable' => true, 'footable'=>array('attr'=>array('data-breakpoints'=>array('xs', 'sm')))))
         ;
     }
 
